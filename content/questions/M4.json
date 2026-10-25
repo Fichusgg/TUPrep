@@ -1,0 +1,467 @@
+[
+  {
+    "id": "M4-001",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "extrema",
+      "quadratics"
+    ],
+    "prompt": "What is the minimum value of $f(x) = x^2 - 6x + 11$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Set $f'(x) = 0$.",
+    "explanation": "$f'(x) = 2x - 6 = 0$ at $x = 3$; $f(3) = 9 - 18 + 11 = 2$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*x-6*x+11; const a=(-20), b=(20); let best=f(a); for(let i=1;i<=400000;i++) best=Math.min(best, f(a+(b-a)*i/400000)); return best;"
+    }
+  },
+  {
+    "id": "M4-002",
+    "unit": "M4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "monotonicity"
+    ],
+    "prompt": "On which interval is $f(x) = x^2 - 4x$ increasing?",
+    "options": [
+      "$x > 2$",
+      "$x < 2$",
+      "$x > 4$",
+      "$0 < x < 4$"
+    ],
+    "answer": 0,
+    "hint": "Where is $f'(x) > 0$?",
+    "explanation": "$f'(x) = 2x - 4 > 0$ for $x > 2$.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> x*x-4*x; const inc=x=> h.deriv(f,x)>0; const o=[x=>x>2, x=>x<2, x=>x>4, x=>0<x&&x<4]; const xs=h.range(-60,60).map(k=>k/10+0.03); return {indices: o.flatMap((g,i)=> xs.every(x=> g(x)===inc(x))?[i]:[])};"
+    }
+  },
+  {
+    "id": "M4-003",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "critical-points"
+    ],
+    "prompt": "At which $x$ does $f(x) = x^2 - 8x + 3$ have a critical point?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Solve $f'(x) = 0$.",
+    "explanation": "$f'(x) = 2x - 8 = 0$ gives $x = 4$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const r=h.roots(x=> h.deriv(t=> t*t-8*t+3, x), -50.3, 50); if(r.length!==1) throw new Error(\"?\"); return Math.round(r[0]*1e6)/1e6;"
+    }
+  },
+  {
+    "id": "M4-004",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "kinematics"
+    ],
+    "prompt": "A particle moves with position $s(t) = t^3 - 2t$ (metres, seconds). What is its velocity at $t = 2$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "unitLabel": "m/s",
+    "hint": "Velocity is the derivative of position.",
+    "explanation": "$v(t) = 3t^2 - 2$, so $v(2) = 10$ m/s.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.deriv(t=> t**3-2*t, 2);"
+    }
+  },
+  {
+    "id": "M4-005",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "extrema"
+    ],
+    "prompt": "What is the local maximum **value** of $f(x) = x^3 - 3x$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Find the critical points and decide which one is a maximum.",
+    "explanation": "$f'(x) = 3x^2 - 3 = 0$ at $x = \\pm1$. $f'$ changes from $+$ to $-$ at $x=-1$: local maximum $f(-1) = -1 + 3 = 2$.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**3-3*x; const a=(-2), b=(0.5); let best=f(a); for(let i=1;i<=400000;i++) best=Math.max(best, f(a+(b-a)*i/400000)); return best;"
+    }
+  },
+  {
+    "id": "M4-006",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "kinematics"
+    ],
+    "prompt": "$s(t) = 4t^2 + t$. What is the acceleration at $t = 3$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 8
+    },
+    "hint": "Acceleration is the second derivative of position.",
+    "explanation": "$v(t) = 8t + 1$ and $a(t) = 8$ for every $t$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.deriv2(t=> 4*t*t+t, 3);"
+    }
+  },
+  {
+    "id": "M4-007",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "optimisation"
+    ],
+    "prompt": "A rectangle has a perimeter of 20 cm. What is its largest possible area (in cm²)?",
+    "answer": {
+      "kind": "numeric",
+      "value": 25
+    },
+    "unitLabel": "cm²",
+    "hint": "Write the area as a function of one side.",
+    "explanation": "Sides $x$ and $10-x$: $A(x) = 10x - x^2$, $A'(x) = 10 - 2x = 0$ at $x = 5$. Maximum area $25$ cm² (a square).",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*(10-x); const a=(0), b=(10); let best=f(a); for(let i=1;i<=400000;i++) best=Math.max(best, f(a+(b-a)*i/400000)); return best;"
+    }
+  },
+  {
+    "id": "M4-008",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "absolute-extrema"
+    ],
+    "prompt": "What is the absolute maximum value of $f(x) = x^3 - 3x^2$ on $[-1, 3]$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 0
+    },
+    "hint": "Compare critical points and endpoints.",
+    "explanation": "$f'(x) = 3x^2 - 6x = 0$ at $x = 0, 2$. Values: $f(-1) = -4$, $f(0) = 0$, $f(2) = -4$, $f(3) = 0$. Maximum: $0$.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**3-3*x*x; const a=(-1), b=(3); let best=f(a); for(let i=1;i<=400000;i++) best=Math.max(best, f(a+(b-a)*i/400000)); return best;"
+    }
+  },
+  {
+    "id": "M4-009",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "inflection"
+    ],
+    "prompt": "At which $x$ does $f(x) = x^3 - 6x^2 + 5$ have an inflection point?",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Where does $f''$ change sign?",
+    "explanation": "$f''(x) = 6x - 12$, which changes sign at $x = 2$.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const r=h.roots(x=> h.deriv2(t=> t**3-6*t*t+5, x), -10.3, 10, 20000); if(r.length!==1) throw new Error(\"?\"); return Math.round(r[0]*1e4)/1e4;"
+    }
+  },
+  {
+    "id": "M4-010",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "absolute-extrema"
+    ],
+    "prompt": "What is the absolute minimum value of $f(x) = x^3 - 3x$ on $[0, 3]$?",
+    "answer": {
+      "kind": "numeric",
+      "value": -2
+    },
+    "hint": "Check the critical point inside the interval and the endpoints.",
+    "explanation": "$f'(x) = 0$ at $x = 1$ (inside). $f(0) = 0$, $f(1) = -2$, $f(3) = 18$. Minimum: $-2$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**3-3*x; const a=(0), b=(3); let best=f(a); for(let i=1;i<=400000;i++) best=Math.min(best, f(a+(b-a)*i/400000)); return best;"
+    }
+  },
+  {
+    "id": "M4-011",
+    "unit": "M4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "related-rates"
+    ],
+    "prompt": "The radius of a circle grows at 2 cm/s. How fast is the area growing when $r = 5$ cm?",
+    "options": [
+      "$20\\pi$ cm²/s",
+      "$10\\pi$ cm²/s",
+      "$25\\pi$ cm²/s",
+      "$4\\pi$ cm²/s"
+    ],
+    "answer": 0,
+    "hint": "Differentiate $A = \\pi r^2$ with respect to $t$.",
+    "explanation": "$\\frac{dA}{dt} = 2\\pi r\\frac{dr}{dt} = 2\\pi \\cdot 5 \\cdot 2 = 20\\pi$ cm²/s.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const r=t=> 5+2*t; const A=t=> Math.PI*r(t)**2; return h.deriv(A,0);",
+      "optionValues": [
+        "62.83185307179586",
+        "31.41592653589793",
+        "78.53981633974483",
+        "12.566370614359172"
+      ]
+    }
+  },
+  {
+    "id": "M4-012",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "optimisation"
+    ],
+    "prompt": "From a 12 cm × 12 cm sheet, equal squares of side $x$ are cut from the corners and the sides folded up into an open box. What is the largest possible volume (in cm³)?",
+    "answer": {
+      "kind": "numeric",
+      "value": 128
+    },
+    "unitLabel": "cm³",
+    "hint": "$V(x) = x(12-2x)^2$ for $0 < x < 6$.",
+    "explanation": "$V'(x) = (12-2x)(12-6x) = 0$ gives $x = 2$ inside the interval. $V(2) = 2 \\cdot 8^2 = 128$ cm³.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*(12-2*x)**2; const a=(0), b=(6); let best=f(a); for(let i=1;i<=400000;i++) best=Math.max(best, f(a+(b-a)*i/400000)); return best;"
+    }
+  },
+  {
+    "id": "M4-013",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "extrema",
+      "counting"
+    ],
+    "prompt": "How many local extrema (maxima and minima together) does $f(x) = x^4 - 2x^2$ have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Factor $f'(x)$.",
+    "explanation": "$f'(x) = 4x^3 - 4x = 4x(x-1)(x+1)$. It changes sign at $x = -1, 0, 1$: minima at $\\pm1$ and a maximum at $0$. Three extrema.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const d=x=> 4*x**3-4*x; const r=h.roots(d,-10.3,10); return r.filter(x=> Math.sign(d(x-1e-3))!==Math.sign(d(x+1e-3))).length;"
+    }
+  },
+  {
+    "id": "M4-014",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "related-rates"
+    ],
+    "prompt": "A 10 m ladder leans against a wall. The bottom slides away from the wall at 1 m/s. How fast (in m/s) is the top sliding down when the bottom is 6 m from the wall?",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.75
+    },
+    "unitLabel": "m/s",
+    "hint": "$x^2 + y^2 = 100$; differentiate with respect to $t$.",
+    "explanation": "$2x\\dot x + 2y\\dot y = 0$. With $x = 6$, $y = 8$, $\\dot x = 1$: $\\dot y = -\\frac{6}{8} = -0.75$. The top slides down at $0.75$ m/s.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const y=t=> Math.sqrt(100-(6+t)**2); return Math.abs(h.deriv(y,0));"
+    }
+  },
+  {
+    "id": "M4-015",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "kinematics"
+    ],
+    "prompt": "$s(t) = t^3 - 6t^2 + 9t$. At what time $t > 0$ is the velocity first equal to zero?",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "Set the derivative to zero and factor.",
+    "explanation": "$v(t) = 3t^2 - 12t + 9 = 3(t-1)(t-3)$. The first positive zero is $t = 1$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const r=h.roots(t=> h.deriv(s=> s**3-6*s*s+9*s, t), 0.01, 10); return Math.round(r[0]*1e6)/1e6;"
+    }
+  },
+  {
+    "id": "M4-016",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "optimisation",
+      "distance"
+    ],
+    "prompt": "What is the shortest distance from the point $(0, 2.5)$ to the parabola $y = x^2$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 1.5
+    },
+    "hint": "Minimise the squared distance $d^2 = x^2 + (x^2 - 2.5)^2$.",
+    "explanation": "$\\frac{d}{dx}d^2 = 2x + 4x(x^2 - 2.5) = 2x(2x^2 - 4) = 0$ gives $x = 0$ or $x^2 = 2$. At $x^2 = 2$: $d^2 = 2 + 0.25 = 2.25$, so $d = 1.5$ (smaller than $2.5$ at $x=0$).",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.sqrt(x*x+(x*x-2.5)**2); const a=(-5), b=(5); let best=f(a); for(let i=1;i<=400000;i++) best=Math.min(best, f(a+(b-a)*i/400000)); return best;"
+    }
+  },
+  {
+    "id": "M4-017",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "optimisation"
+    ],
+    "prompt": "A closed cylinder must have volume $16\\pi$ cm³. For which radius $r$ (in cm) is its total surface area smallest?",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "unitLabel": "cm",
+    "hint": "Use $V = \\pi r^2 h$ to eliminate $h$ from $A = 2\\pi r^2 + 2\\pi rh$.",
+    "explanation": "$h = \\frac{16}{r^2}$, so $A(r) = 2\\pi r^2 + \\frac{32\\pi}{r}$. $A'(r) = 4\\pi r - \\frac{32\\pi}{r^2} = 0$ gives $r^3 = 8$, $r = 2$.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const A=r=> 2*Math.PI*r*r + 2*Math.PI*r*(16/(r*r)); const rs=h.range(1,600000).map(i=> i/100000); let best=rs[0]; for(const r of rs) if(A(r)<A(best)) best=r; return Math.round(best*1e4)/1e4;"
+    }
+  },
+  {
+    "id": "M4-018",
+    "unit": "M4",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "extrema",
+      "exponential"
+    ],
+    "prompt": "What is the maximum value of $f(x) = xe^{-x}$ for $x \\ge 0$?",
+    "options": [
+      "$\\dfrac1e$",
+      "$e$",
+      "$1$",
+      "$\\dfrac{2}{e^2}$"
+    ],
+    "answer": 0,
+    "hint": "Product rule, then set the derivative to zero.",
+    "explanation": "$f'(x) = e^{-x}(1 - x) = 0$ at $x = 1$; $f$ increases before and decreases after. Maximum $f(1) = \\frac1e$.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> x*Math.exp(-x); let m=0; for(let i=0;i<=400000;i++) m=Math.max(m,f(i/20000)); const vals=[1/Math.E, Math.E, 1, 2/Math.E**2]; const d=vals.map(v=> Math.abs(v-m)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-8) throw new Error(\"no match\"); return {index:i};"
+    }
+  },
+  {
+    "id": "M4-019",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "roots",
+      "curve-sketching"
+    ],
+    "prompt": "How many real solutions does $x^3 - 3x + 1 = 0$ have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Use the local extremes of the left-hand side.",
+    "explanation": "$f(x) = x^3 - 3x + 1$ has a local max $f(-1) = 3 > 0$ and a local min $f(1) = -1 < 0$. Since $f \\to \\mp\\infty$ at $\\mp\\infty$, the graph crosses the axis three times.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.roots(x=> x**3-3*x+1, -10.3, 10).length;"
+    }
+  },
+  {
+    "id": "M4-020",
+    "unit": "M4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "tangent-line"
+    ],
+    "prompt": "A line through the origin is tangent to $y = e^x$. At which $x$ does it touch the curve?",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "The tangent at $x = a$ is $y = e^a + e^a(x-a)$. It must pass through $(0,0)$.",
+    "explanation": "$0 = e^a + e^a(0 - a) = e^a(1 - a)$, so $a = 1$. The tangent is $y = ex$.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const g=a=> Math.exp(a) + h.deriv(Math.exp,a)*(0-a); const r=h.roots(g,-5.3,5); if(r.length!==1) throw new Error(\"?\"); return Math.round(r[0]*1e6)/1e6;"
+    }
+  }
+]

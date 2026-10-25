@@ -1,0 +1,1543 @@
+{
+  "id": "mock-1",
+  "title": "Full mock 1",
+  "description": "Original full-length mock. Sections 1–2 follow the TU Delft CST (Mathematics; Systematic Reasoning & Logical Thinking); section 3 adds the TU/e Algorithmic Thinking test.",
+  "sections": [
+    {
+      "part": "math",
+      "title": "Mathematics",
+      "questions": [
+        {
+          "id": "MK1-M01",
+          "unit": "M1",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "linear-equations"
+          ],
+          "prompt": "Solve for $x$: $5x - 7 = 2x + 8$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "Collect the x-terms on one side.",
+          "explanation": "$3x = 15$, so $x = 5$.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 5*x-7-(2*x+8); const r=h.roots(f,-50.3,50).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+          }
+        },
+        {
+          "id": "MK1-M02",
+          "unit": "M3",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "power-rule"
+          ],
+          "prompt": "$f(x) = x^3 - 2x$. Compute $f'(2)$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 10
+          },
+          "hint": "Differentiate term by term.",
+          "explanation": "$f'(x) = 3x^2 - 2$, so $f'(2) = 10$.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> x**3-2*x; return h.deriv(f,2);"
+          }
+        },
+        {
+          "id": "MK1-M03",
+          "unit": "M5",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "definite-integral"
+          ],
+          "prompt": "Compute $\\displaystyle\\int_0^2 3x^2\\,dx$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 8
+          },
+          "hint": "An antiderivative of $3x^2$ is $x^3$.",
+          "explanation": "$[x^3]_0^2 = 8$.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 3*x*x; return h.integrate(f,0,2);"
+          }
+        },
+        {
+          "id": "MK1-M04",
+          "unit": "M6",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "logarithms"
+          ],
+          "prompt": "Compute $\\log_5 125$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 3
+          },
+          "hint": "Which power of 5 is 125?",
+          "explanation": "$5^3 = 125$, so $\\log_5 125 = 3$.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return Math.log(125)/Math.log(5);"
+          }
+        },
+        {
+          "id": "MK1-M05",
+          "unit": "M6",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "exact-values"
+          ],
+          "prompt": "What is $\\cos\\left(\\frac{\\pi}{3}\\right)$?",
+          "options": [
+            "$\\frac12$",
+            "$\\frac{\\sqrt3}{2}$",
+            "$\\frac{\\sqrt2}{2}$",
+            "$0$"
+          ],
+          "answer": 0,
+          "hint": "$\\frac\\pi3 = 60°$.",
+          "explanation": "$\\cos 60° = \\frac12$.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const v=Math.cos(Math.PI/3); const vals=[0.5,Math.sqrt(3)/2,Math.sqrt(2)/2,0]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-6*Math.max(1,Math.abs(v))) throw new Error(\"no option matches \"+v); return {index:i};"
+          }
+        },
+        {
+          "id": "MK1-M06",
+          "unit": "M7",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "distance"
+          ],
+          "prompt": "What is the distance between $(-1, 1)$ and $(5, 9)$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 10
+          },
+          "hint": "Pythagoras on the coordinate differences.",
+          "explanation": "$\\sqrt{6^2 + 8^2} = 10$.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return Math.hypot(5-(-1), 9-1);"
+          }
+        },
+        {
+          "id": "MK1-M07",
+          "unit": "M1",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "absolute-value",
+            "inequalities"
+          ],
+          "prompt": "How many integers $x$ satisfy $|x + 1| < 3$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "Rewrite as a double inequality.",
+          "explanation": "$-3 < x + 1 < 3 \\iff -4 < x < 2$: the integers $-3, -2, -1, 0, 1$. That is 5.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.range(-100,100).filter(x=> Math.abs(x+1)<3).length;"
+          }
+        },
+        {
+          "id": "MK1-M08",
+          "unit": "M1",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "composition"
+          ],
+          "prompt": "$f(x) = x^2 - 1$ and $g(x) = 2x + 3$. Compute $f(g(-1))$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 0
+          },
+          "hint": "Inside first.",
+          "explanation": "$g(-1) = 1$, so $f(g(-1)) = f(1) = 0$.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=x=> x*x-1, g=x=> 2*x+3; return f(g(-1));"
+          }
+        },
+        {
+          "id": "MK1-M09",
+          "unit": "M2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "factoring"
+          ],
+          "prompt": "Compute $\\displaystyle\\lim_{x\\to 2} \\frac{x^2-4}{x-2}$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 4
+          },
+          "hint": "Factor the numerator.",
+          "explanation": "$\\frac{(x-2)(x+2)}{x-2} = x + 2 \\to 4$.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> (x*x-4)/(x-2); return h.limit(f,2);"
+          }
+        },
+        {
+          "id": "MK1-M10",
+          "unit": "M3",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "chain-rule"
+          ],
+          "prompt": "$f(x) = (x^2+1)^3$. Compute $f'(1)$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 24
+          },
+          "hint": "Chain rule.",
+          "explanation": "$f'(x) = 3(x^2+1)^2 \\cdot 2x$, so $f'(1) = 3 \\cdot 4 \\cdot 2 = 24$.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> (x*x+1)**3; return h.deriv(f,1);"
+          }
+        },
+        {
+          "id": "MK1-M11",
+          "unit": "M4",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "extrema"
+          ],
+          "prompt": "What is the maximum value of $f(x) = -x^2 + 4x + 1$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "Solve $f'(x) = 0$.",
+          "explanation": "$f'(x) = -2x + 4 = 0$ at $x = 2$; $f(2) = -4 + 8 + 1 = 5$.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> -x*x+4*x+1; const a=(-20), b=(20); let best=f(a); for(let i=1;i<=400000;i++) best=Math.max(best, f(a+(b-a)*i/400000)); return best;"
+          }
+        },
+        {
+          "id": "MK1-M12",
+          "unit": "M4",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "kinematics"
+          ],
+          "prompt": "$s(t) = t^3 - 3t^2$. What is the acceleration at $t = 2$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 6
+          },
+          "hint": "Differentiate twice.",
+          "explanation": "$v = 3t^2 - 6t$, $a = 6t - 6$, so $a(2) = 6$.",
+          "estSeconds": 45,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.deriv2(t=> t**3-3*t*t, 2);"
+          }
+        },
+        {
+          "id": "MK1-M13",
+          "unit": "M5",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "definite-integral"
+          ],
+          "prompt": "Compute $\\displaystyle\\int_0^1 (4x^3 + 2x)\\,dx$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 2
+          },
+          "hint": "Integrate term by term.",
+          "explanation": "$[x^4 + x^2]_0^1 = 2$.",
+          "estSeconds": 45,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 4*x**3+2*x; return h.integrate(f,0,1);"
+          }
+        },
+        {
+          "id": "MK1-M14",
+          "unit": "M5",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "area"
+          ],
+          "prompt": "What is the area between the graph of $y = 4 - x^2$ and the $x$-axis? Give an exact fraction.",
+          "answer": {
+            "kind": "numeric",
+            "value": 10.666666666666666,
+            "tolerance": 1e-06
+          },
+          "hint": "Find where the graph meets the axis.",
+          "explanation": "$4 - x^2 = 0$ at $x = \\pm2$. Area $= \\int_{-2}^{2} (4 - x^2)\\,dx = 16 - \\frac{16}{3} = \\frac{32}{3}$.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const r=h.roots(x=> 4-x*x, -10.3, 10); return h.integrate(x=> 4-x*x, r[0], r[1]);"
+          }
+        },
+        {
+          "id": "MK1-M15",
+          "unit": "M6",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "exponential-equations"
+          ],
+          "prompt": "Solve $9^x = 27$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 1.5
+          },
+          "hint": "Write both sides as powers of 3.",
+          "explanation": "$3^{2x} = 3^3$, so $x = \\frac32$.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 9**x-27; const r=h.roots(f,-10.3,10).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+          }
+        },
+        {
+          "id": "MK1-M16",
+          "unit": "M3",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "implicit"
+          ],
+          "prompt": "The point $(1, 2)$ lies on the curve $xy + y^2 = 6$. Find $\\dfrac{dy}{dx}$ there.",
+          "answer": {
+            "kind": "numeric",
+            "value": -0.4
+          },
+          "hint": "Differentiate implicitly.",
+          "explanation": "$y + xy' + 2yy' = 0$, so $y' = -\\frac{y}{x + 2y} = -\\frac{2}{5}$.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const Y=x=> h.root(y=> x*y+y*y-6, 1.5, 2.5); return h.deriv(Y, 1, 1e-3);"
+          }
+        },
+        {
+          "id": "MK1-M17",
+          "unit": "M4",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "optimisation"
+          ],
+          "prompt": "A farmer has 100 m of fence to enclose a rectangle against a long wall (the wall forms one side, so only three sides need fence). What is the largest area (in m²)?",
+          "answer": {
+            "kind": "numeric",
+            "value": 1250
+          },
+          "unitLabel": "m²",
+          "hint": "Let x be the length of each side perpendicular to the wall.",
+          "explanation": "Area $A(x) = x(100 - 2x)$. $A'(x) = 100 - 4x = 0$ at $x = 25$: $A = 25 \\cdot 50 = 1250$ m².",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> x*(100-2*x); const a=(0), b=(50); let best=f(a); for(let i=1;i<=400000;i++) best=Math.max(best, f(a+(b-a)*i/400000)); return best;"
+          }
+        },
+        {
+          "id": "MK1-M18",
+          "unit": "M5",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "u-substitution",
+            "trig"
+          ],
+          "prompt": "Compute $\\displaystyle\\int_0^{\\pi/2} \\sin x\\cos x\\,dx$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 0.5
+          },
+          "hint": "Substitute $u = \\sin x$.",
+          "explanation": "$\\int_0^1 u\\,du = \\frac12$.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> Math.sin(x)*Math.cos(x); return h.integrate(f,0,Math.PI/2);"
+          }
+        },
+        {
+          "id": "MK1-M19",
+          "unit": "M6",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "trig-equations"
+          ],
+          "prompt": "How many solutions does $2\\cos x = 1$ have in $[0, 4\\pi)$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 4
+          },
+          "hint": "Find the solutions in one period first.",
+          "explanation": "$\\cos x = \\frac12$ gives $x = \\frac\\pi3$ and $\\frac{5\\pi}3$ in $[0, 2\\pi)$, and the same plus $2\\pi$ in the second period: 4 solutions.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.roots(x=> 2*Math.cos(x)-1, 0, 4*Math.PI-1e-9).length;"
+          }
+        },
+        {
+          "id": "MK1-M20",
+          "unit": "M7",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "cosine-rule"
+          ],
+          "prompt": "A triangle has sides 7, 8 and 13. How many degrees is the angle opposite the side of length 13?",
+          "answer": {
+            "kind": "numeric",
+            "value": 120
+          },
+          "unitLabel": "°",
+          "hint": "Cosine rule, solved for the angle.",
+          "explanation": "$\\cos C = \\frac{49 + 64 - 169}{2\\cdot7\\cdot8} = \\frac{-56}{112} = -\\frac12$, so $C = 120°$.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const a=7,b=8,c=13; const x=(a*a+c*c-b*b)/(2*c); const y=Math.sqrt(a*a-x*x); const P=[0,0],Q=[c,0],R=[x,y]; const v1=[P[0]-R[0],P[1]-R[1]], v2=[Q[0]-R[0],Q[1]-R[1]]; return Math.acos((v1[0]*v2[0]+v1[1]*v2[1])/(Math.hypot(...v1)*Math.hypot(...v2)))*180/Math.PI;"
+          }
+        }
+      ]
+    },
+    {
+      "part": "logic",
+      "title": "Systematic Reasoning & Logical Thinking",
+      "questions": [
+        {
+          "id": "MK1-L01",
+          "unit": "L1",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "evaluate"
+          ],
+          "prompt": "p is false and q is true. What is the value of p ∨ ¬q?",
+          "options": [
+            "True",
+            "False"
+          ],
+          "answer": 1,
+          "hint": "Evaluate ¬q first.",
+          "explanation": "¬q is false and p is false, so p ∨ ¬q is false.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "eval",
+            "formula": "p ∨ ¬q",
+            "assignment": {
+              "p": false,
+              "q": true
+            },
+            "boolOptions": [
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "id": "MK1-L02",
+          "unit": "L1",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "truth-table",
+            "count"
+          ],
+          "prompt": "In how many of the 8 rows is p ∧ (q ∨ r) true?",
+          "answer": {
+            "kind": "numeric",
+            "value": 3
+          },
+          "hint": "p must be true.",
+          "explanation": "p must be true (4 rows) and q ∨ r true (3 of the 4 combinations): 3 rows.",
+          "estSeconds": 45,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "count",
+            "formula": "p ∧ (q ∨ r)"
+          }
+        },
+        {
+          "id": "MK1-L03",
+          "unit": "L2",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "de-morgan"
+          ],
+          "prompt": "Which formula is equivalent to ¬(p ∨ ¬q)?",
+          "options": [
+            "¬p ∧ q",
+            "¬p ∨ q",
+            "p ∧ ¬q",
+            "¬p ∧ ¬q"
+          ],
+          "answer": 0,
+          "hint": "De Morgan, then double negation.",
+          "explanation": "¬(p ∨ ¬q) ≡ ¬p ∧ ¬¬q ≡ ¬p ∧ q.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "¬(p ∨ ¬q)",
+            "formulas": [
+              "¬p ∧ q",
+              "¬p ∨ q",
+              "p ∧ ¬q",
+              "¬p ∧ ¬q"
+            ]
+          }
+        },
+        {
+          "id": "MK1-L04",
+          "unit": "L3",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "negation",
+            "quantifiers"
+          ],
+          "prompt": "Which statement is equivalent to ¬∃x (P(x) ∧ Q(x))?",
+          "options": [
+            "∀x (P(x) → ¬Q(x))",
+            "∃x (P(x) ∧ ¬Q(x))",
+            "∀x (¬P(x) ∧ ¬Q(x))",
+            "∃x ¬(P(x) ∨ Q(x))"
+          ],
+          "answer": 0,
+          "hint": "Push the negation inside and use ¬(A ∧ B) ≡ A → ¬B.",
+          "explanation": "¬∃x (P(x) ∧ Q(x)) ≡ ∀x ¬(P(x) ∧ Q(x)) ≡ ∀x (P(x) → ¬Q(x)).",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const D=[0,1,2]; const un=[]; for(let m=0;m<8;m++) un.push(x=>((m>>x)&1)===1); const all=f=>D.every(f), ex=f=>D.some(f); const t=(P,Q)=> !ex(x=> P(x)&&Q(x)); const o=[(P,Q)=> all(x=> !P(x)||!Q(x)), (P,Q)=> ex(x=> P(x)&&!Q(x)), (P,Q)=> all(x=> !P(x)&&!Q(x)), (P,Q)=> ex(x=> !(P(x)||Q(x)))]; return {indices: o.flatMap((g,i)=> un.every(P=> un.every(Q=> g(P,Q)===t(P,Q)))?[i]:[])};"
+          }
+        },
+        {
+          "id": "MK1-L05",
+          "unit": "L4",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "modus-tollens"
+          ],
+          "prompt": "\"If the shop is open, the lights are on. The lights are off. Therefore the shop is closed.\" Is this argument valid?",
+          "options": [
+            "Valid",
+            "Invalid"
+          ],
+          "answer": 0,
+          "hint": "Which classic pattern is this?",
+          "explanation": "This is modus tollens (o → l, ¬l ⊢ ¬o): valid.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "valid",
+            "premises": [
+              "o → l",
+              "¬l"
+            ],
+            "conclusion": "¬o",
+            "boolOptions": [
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "id": "MK1-L06",
+          "unit": "L5",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "necessary-sufficient"
+          ],
+          "prompt": "\"q is necessary for p.\" Which formula expresses this?",
+          "options": [
+            "p → q",
+            "q → p",
+            "p ∧ q",
+            "¬p → ¬q"
+          ],
+          "answer": 0,
+          "hint": "If q is necessary, p cannot happen without q.",
+          "explanation": "A necessary condition must hold whenever p does: p → q.",
+          "estSeconds": 35,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "¬p ∨ q",
+            "formulas": [
+              "p → q",
+              "q → p",
+              "p ∧ q",
+              "¬p → ¬q"
+            ]
+          }
+        },
+        {
+          "id": "MK1-L07",
+          "unit": "L1",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "translation"
+          ],
+          "prompt": "a = \"Ann came\", b = \"Bob came\". Which formula expresses \"Neither Ann nor Bob came\"?",
+          "options": [
+            "¬a ∧ ¬b",
+            "¬a ∨ ¬b",
+            "¬(a ∧ b)",
+            "¬a → b"
+          ],
+          "answer": 0,
+          "hint": "\"Neither … nor\" excludes both.",
+          "explanation": "Neither came: ¬a ∧ ¬b (equivalently ¬(a ∨ b)).",
+          "estSeconds": 45,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "¬(a ∨ b)",
+            "formulas": [
+              "¬a ∧ ¬b",
+              "¬a ∨ ¬b",
+              "¬(a ∧ b)",
+              "¬a → b"
+            ]
+          }
+        },
+        {
+          "id": "MK1-L08",
+          "unit": "L1",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "truth-table",
+            "tautology"
+          ],
+          "prompt": "In how many of the 8 rows is (p → q) ∨ (q → r) **false**?",
+          "answer": {
+            "kind": "numeric",
+            "value": 0
+          },
+          "hint": "Rewrite both implications with ∨.",
+          "explanation": "(p → q) ∨ (q → r) ≡ ¬p ∨ q ∨ ¬q ∨ r, which contains q ∨ ¬q: it is a tautology. 0 false rows.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "count",
+            "formula": "¬((p → q) ∨ (q → r))"
+          }
+        },
+        {
+          "id": "MK1-L09",
+          "unit": "L2",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "simplification"
+          ],
+          "prompt": "Simplify (p ∨ q) ∧ ¬p.",
+          "options": [
+            "¬p ∧ q",
+            "q",
+            "¬p",
+            "p ∨ q"
+          ],
+          "answer": 0,
+          "hint": "Distribute ¬p over the disjunction.",
+          "explanation": "(p ∨ q) ∧ ¬p ≡ (p ∧ ¬p) ∨ (q ∧ ¬p) ≡ ¬p ∧ q.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "(p ∨ q) ∧ ¬p",
+            "formulas": [
+              "¬p ∧ q",
+              "q",
+              "¬p",
+              "p ∨ q"
+            ]
+          }
+        },
+        {
+          "id": "MK1-L10",
+          "unit": "L2",
+          "type": "multi",
+          "difficulty": 2,
+          "tags": [
+            "equivalence"
+          ],
+          "prompt": "Select **all** formulas equivalent to ¬(p ∧ q).",
+          "options": [
+            "¬p ∨ ¬q",
+            "p → ¬q",
+            "q → ¬p",
+            "¬p ∧ ¬q",
+            "¬(q ∧ p)"
+          ],
+          "answer": [
+            0,
+            1,
+            2,
+            4
+          ],
+          "hint": "Rewrite each option with ∨ and ¬.",
+          "explanation": "¬p ∨ ¬q (De Morgan), p → ¬q and q → ¬p (both ≡ ¬p ∨ ¬q), and ¬(q ∧ p) (commutativity). ¬p ∧ ¬q is stronger.",
+          "estSeconds": 100,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "¬(p ∧ q)",
+            "formulas": [
+              "¬p ∨ ¬q",
+              "p → ¬q",
+              "q → ¬p",
+              "¬p ∧ ¬q",
+              "¬(q ∧ p)"
+            ]
+          }
+        },
+        {
+          "id": "MK1-L11",
+          "unit": "L3",
+          "type": "multi",
+          "difficulty": 2,
+          "tags": [
+            "finite-domain"
+          ],
+          "prompt": "The domain is {1, 2, 3, 4, 5}. Select **all** true statements.",
+          "options": [
+            "∀x (x < 6)",
+            "∃x (x² = 10)",
+            "∀x ∃y (y > x)",
+            "∃x ∀y (x ≤ y)",
+            "∃x (x is even ∧ x is prime)"
+          ],
+          "answer": [
+            0,
+            3,
+            4
+          ],
+          "hint": "Check each against the five elements.",
+          "explanation": "∀x (x < 6): true. ∃x (x² = 10): false. ∀x ∃y (y > x): false for x = 5. ∃x ∀y (x ≤ y): x = 1 — true. ∃x (x is even ∧ x is prime): x = 2 — true.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const D=h.range(1,5); const all=f=>D.every(f), ex=f=>D.some(f); return [all(x=>x<6), ex(x=>x*x===10), all(x=>ex(y=>y>x)), ex(x=>all(y=>x<=y)), ex(x=> x%2===0 && h.isPrime(x))];"
+          }
+        },
+        {
+          "id": "MK1-L12",
+          "unit": "L3",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "translation",
+            "nested"
+          ],
+          "prompt": "S(x): \"x is a student\", M(x, y): \"y mentors x\". Translate \"Every student has a mentor.\"",
+          "options": [
+            "∀x (S(x) → ∃y M(x, y))",
+            "∃y ∀x (S(x) → M(x, y))",
+            "∀x ∃y (S(x) ∧ M(x, y))",
+            "∃x (S(x) ∧ ∀y M(x, y))"
+          ],
+          "answer": 0,
+          "hint": "Who varies with whom? Each student may have a different mentor.",
+          "explanation": "For every x that is a student there is some y mentoring x: ∀x (S(x) → ∃y M(x, y)). The second option claims one mentor for all students.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const D=[0,1,2]; const all=f=>D.every(f), ex=f=>D.some(f); const target=(S,M)=> D.filter(S).every(x=> D.some(y=> M(x,y))); const o=[(S,M)=> all(x=> !S(x) || ex(y=> M(x,y))), (S,M)=> ex(y=> all(x=> !S(x)||M(x,y))), (S,M)=> all(x=> ex(y=> S(x)&&M(x,y))), (S,M)=> ex(x=> S(x)&&all(y=>M(x,y)))]; const ok=[true,true,true,true]; for(let s=0;s<8;s++) for(let m=0;m<512;m++){ const S=x=>((s>>x)&1)===1, M=(x,y)=>((m>>(3*x+y))&1)===1; const t=target(S,M); o.forEach((g,i)=>{ if(g(S,M)!==t) ok[i]=false; }); } return {indices: ok.flatMap((v,i)=>v?[i]:[])};"
+          }
+        },
+        {
+          "id": "MK1-L13",
+          "unit": "L4",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "syllogism"
+          ],
+          "prompt": "Is this argument valid? \"All C are D. No D are E. Therefore no C are E.\"",
+          "options": [
+            "Valid",
+            "Invalid"
+          ],
+          "answer": 0,
+          "hint": "C lies inside D; where is E?",
+          "explanation": "C lies inside D and D does not overlap E, so C cannot overlap E. Valid.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const N=4; const sets=[]; for(let m=0;m<(1<<N);m++) sets.push(Array.from({length:N},(_,i)=>((m>>i)&1)===1)); const S={all:(X,Y)=>X.every((x,i)=>!x||Y[i]), some:(X,Y)=>X.some((x,i)=>x&&Y[i]), no:(X,Y)=>X.every((x,i)=>!(x&&Y[i])), someNot:(X,Y)=>X.some((x,i)=>x&&!Y[i])}; const models=(k)=> h.tuples(sets,k);const ok=models(3).every(([A,B,C,D])=> !(S.all(A,B) && S.no(B,C)) || (S.no(A,C))); return {index: ok ? 0 : 1};"
+          }
+        },
+        {
+          "id": "MK1-L14",
+          "unit": "L4",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "inference"
+          ],
+          "prompt": "From p ∨ q, q → r and ¬r, what follows?",
+          "options": [
+            "p",
+            "q",
+            "r",
+            "¬p"
+          ],
+          "answer": 0,
+          "hint": "Start with the last two premises.",
+          "explanation": "q → r and ¬r give ¬q (modus tollens). With p ∨ q this gives p.",
+          "estSeconds": 70,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-implied",
+            "premises": [
+              "p ∨ q",
+              "q → r",
+              "¬r"
+            ],
+            "formulas": [
+              "p",
+              "q",
+              "r",
+              "¬p"
+            ]
+          }
+        },
+        {
+          "id": "MK1-L15",
+          "unit": "L5",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "knights-knaves"
+          ],
+          "prompt": "Knights always tell the truth; knaves always lie. A says: \"B is a knight and I am a knave.\" What are A and B?",
+          "options": [
+            "Both are knaves",
+            "A is a knave, B is a knight",
+            "Both are knights",
+            "A is a knight, B is a knave"
+          ],
+          "answer": 0,
+          "hint": "Can a knight claim to be a knave?",
+          "explanation": "A cannot be a knight (the claim \"I am a knave\" would be false). So A is a knave and the whole claim is false. Since \"I am a knave\" is true, \"B is a knight\" must be false: B is a knave too.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const sols=h.tuples([true,false],2).filter(k=> [k=> k[1] && !k[0],k=> k[1]].every((s,i)=> s(k)===k[i])); const desc=(k)=> k[0]&&k[1]?\"Both are knights\":k[0]?\"A is a knight, B is a knave\":k[1]?\"A is a knave, B is a knight\":\"Both are knaves\"; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+          }
+        },
+        {
+          "id": "MK1-L16",
+          "unit": "L1",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "xor",
+            "count"
+          ],
+          "prompt": "In how many of the 8 rows is (p ⊕ q) ∧ (q ⊕ r) true?",
+          "answer": {
+            "kind": "numeric",
+            "value": 2
+          },
+          "hint": "Both exclusive ors must be true: what does that say about p and r?",
+          "explanation": "p ≠ q and q ≠ r, so p = r and q is the opposite: (T, F, T) or (F, T, F). 2 rows.",
+          "estSeconds": 100,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "count",
+            "formula": "(p ⊕ q) ∧ (q ⊕ r)"
+          }
+        },
+        {
+          "id": "MK1-L17",
+          "unit": "L2",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "simplification"
+          ],
+          "prompt": "Simplify (p → q) ∧ (p → ¬q) as far as possible and type the result.",
+          "answer": {
+            "kind": "text",
+            "accepted": [
+              "¬p",
+              "~p",
+              "not p",
+              "!p"
+            ]
+          },
+          "placeholder": "e.g. ¬q",
+          "hint": "Combine the two implications that share the premise p.",
+          "explanation": "(p → q) ∧ (p → ¬q) ≡ p → (q ∧ ¬q) ≡ p → ⊥ ≡ ¬p.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const F=\"(p → q) ∧ (p → ¬q)\"; const c=[\"p\",\"q\",\"r\",\"¬p\",\"¬q\",\"¬r\",\"true\",\"false\",\"p ∧ q\",\"p ∨ q\",\"¬p ∧ q\",\"p ∧ ¬q\"]; return c.find(x=>h.logic.equivalent(F,x)) ?? \"none\";"
+          }
+        },
+        {
+          "id": "MK1-L18",
+          "unit": "L3",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "counting",
+            "relations"
+          ],
+          "prompt": "There are 16 relations R on {a, b} (subsets of {a, b} × {a, b}). For how many is ∃y ∀x R(x, y) true?",
+          "answer": {
+            "kind": "numeric",
+            "value": 7
+          },
+          "hint": "∃y ∀x R(x, y) means some element is related **from** both a and b.",
+          "explanation": "y = a needs (a, a) and (b, a): 2² = 4 relations. y = b similarly 4. Both: 1. Inclusion–exclusion: 4 + 4 − 1 = 7.",
+          "estSeconds": 180,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "let n=0; for(let m=0;m<16;m++){ const R=(x,y)=>((m>>(2*x+y))&1)===1; if([0,1].some(y=>[0,1].every(x=>R(x,y)))) n++; } return n;"
+          }
+        },
+        {
+          "id": "MK1-L19",
+          "unit": "L4",
+          "type": "multi",
+          "difficulty": 3,
+          "tags": [
+            "validity"
+          ],
+          "prompt": "Select **all** valid arguments.",
+          "options": [
+            "p → q, q → r, ¬r ⊢ ¬p",
+            "p ∨ q, ¬q ⊢ p",
+            "p → q, r → q, q ⊢ p ∨ r",
+            "(p ∧ q) → r, ¬r ⊢ ¬p ∨ ¬q",
+            "p ↔ q, ¬p ⊢ ¬q"
+          ],
+          "answer": [
+            0,
+            1,
+            3,
+            4
+          ],
+          "hint": "Look for a counterexample row for each.",
+          "explanation": "1: two applications of modus tollens — valid. 2: disjunctive syllogism — valid. 3: q could hold for another reason — invalid. 4: ¬r gives ¬(p ∧ q) — valid. 5: p ↔ q and ¬p give ¬q — valid.",
+          "estSeconds": 200,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-valid",
+            "arguments": [
+              {
+                "premises": [
+                  "p → q",
+                  "q → r",
+                  "¬r"
+                ],
+                "conclusion": "¬p"
+              },
+              {
+                "premises": [
+                  "p ∨ q",
+                  "¬q"
+                ],
+                "conclusion": "p"
+              },
+              {
+                "premises": [
+                  "p → q",
+                  "r → q",
+                  "q"
+                ],
+                "conclusion": "p ∨ r"
+              },
+              {
+                "premises": [
+                  "(p ∧ q) → r",
+                  "¬r"
+                ],
+                "conclusion": "¬p ∨ ¬q"
+              },
+              {
+                "premises": [
+                  "p ↔ q",
+                  "¬p"
+                ],
+                "conclusion": "¬q"
+              }
+            ]
+          }
+        },
+        {
+          "id": "MK1-L20",
+          "unit": "L5",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "arrangement",
+            "counting"
+          ],
+          "prompt": "Five people A, B, C, D and E sit in seats 1–5. C sits in seat 3. B sits at one of the ends. A does not sit next to B. D sits somewhere to the left of E. How many seatings are possible?",
+          "answer": {
+            "kind": "numeric",
+            "value": 4
+          },
+          "hint": "Case split on B's seat.",
+          "explanation": "If B is in seat 1, A must take seat 4 or 5, and D, E fill the rest in the one allowed order: 2 seatings. By symmetry B in seat 5 also gives 2. Total 4.",
+          "estSeconds": 200,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.permutations([\"A\",\"B\",\"C\",\"D\",\"E\"]).filter(o=>{const i=x=>o.indexOf(x); return o[2]===\"C\" && (i(\"B\")===0||i(\"B\")===4) && Math.abs(i(\"A\")-i(\"B\"))!==1 && i(\"D\")<i(\"E\");}).length;"
+          }
+        }
+      ]
+    },
+    {
+      "part": "algorithmic",
+      "title": "Algorithmic & Computational Thinking",
+      "questions": [
+        {
+          "id": "MK1-A01",
+          "unit": "A1",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "arithmetic"
+          ],
+          "prompt": "What number comes next? 5, 11, 17, 23, …",
+          "answer": {
+            "kind": "numeric",
+            "value": 29
+          },
+          "hint": "Look at the differences.",
+          "explanation": "Each term adds 6: 23 + 6 = 29.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const s=[5,11,17,23]; const d=s[1]-s[0]; if(!s.every((x,i)=>i===0||x-s[i-1]===d)) throw new Error(\"x\"); return s[3]+d;"
+          }
+        },
+        {
+          "id": "MK1-A02",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "for"
+          ],
+          "prompt": "What value is printed?",
+          "code": "s ← 1\nfor i from 1 to 4\n  s ← s · 2\nprint s",
+          "answer": {
+            "kind": "numeric",
+            "value": 16
+          },
+          "hint": "Double s four times.",
+          "explanation": "s = 1 · 2 · 2 · 2 · 2 = 16.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK1-A03",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "trees"
+          ],
+          "prompt": "A tree has 15 nodes. How many edges does it have?",
+          "answer": {
+            "kind": "numeric",
+            "value": 14
+          },
+          "hint": "Trees have one edge fewer than nodes.",
+          "explanation": "n − 1 = 14.",
+          "estSeconds": 20,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const E=h.range(2,15).map(i=> i+\"-\"+(i>>1)); if(Object.keys(h.bfsDist(h.graph(E),\"1\")).length!==15) throw new Error(\"x\"); return E.length;"
+          }
+        },
+        {
+          "id": "MK1-A04",
+          "unit": "A4",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "binary-search"
+          ],
+          "prompt": "Binary search on a sorted list of 100 elements: what is the maximum number of elements inspected?",
+          "answer": {
+            "kind": "numeric",
+            "value": 7
+          },
+          "hint": "Halve 100 repeatedly.",
+          "explanation": "⌊log₂ 100⌋ + 1 = 6 + 1 = 7.",
+          "estSeconds": 35,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const W=n=> n===0 ? 0 : 1 + W(Math.ceil((n-1)/2)); return W(100);"
+          }
+        },
+        {
+          "id": "MK1-A05",
+          "unit": "A6",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "binary"
+          ],
+          "prompt": "What is the binary number 11010 in decimal?",
+          "answer": {
+            "kind": "numeric",
+            "value": 26
+          },
+          "hint": "Add the place values of the 1-bits.",
+          "explanation": "16 + 8 + 2 = 26.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return parseInt(\"11010\",2);"
+          }
+        },
+        {
+          "id": "MK1-A06",
+          "unit": "A5",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "permutations"
+          ],
+          "prompt": "A club of 5 people chooses a president and a (different) secretary. In how many ways can this be done?",
+          "answer": {
+            "kind": "numeric",
+            "value": 20
+          },
+          "hint": "Order matters: the two roles are different.",
+          "explanation": "5 choices for president, then 4 for secretary: 20.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.tuples(h.range(1,5),2).filter(([a,b])=> a!==b).length;"
+          }
+        },
+        {
+          "id": "MK1-A07",
+          "unit": "A1",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "differences"
+          ],
+          "prompt": "What number comes next? 2, 3, 5, 8, 12, 17, …",
+          "answer": {
+            "kind": "numeric",
+            "value": 23
+          },
+          "hint": "Look at the differences.",
+          "explanation": "Differences 1, 2, 3, 4, 5 → next 6: 17 + 6 = 23.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const s=[2,3,5,8,12,17]; const d=s.slice(1).map((x,i)=>x-s[i]); if(!d.every((x,i)=> i===0||x===d[i-1]+1)) throw new Error(\"x\"); return s[5]+d[4]+1;"
+          }
+        },
+        {
+          "id": "MK1-A08",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "while",
+            "div"
+          ],
+          "prompt": "What value is printed?",
+          "code": "n ← 100\nc ← 0\nwhile n ≥ 1\n  n ← n div 3\n  c ← c + 1\nprint c",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "Keep a table of n and c.",
+          "explanation": "n: 100 → 33 → 11 → 3 → 1 → 0. The loop body ran 5 times, so c = 5.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK1-A09",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "arrays",
+            "conditions"
+          ],
+          "prompt": "What value is printed?",
+          "code": "A ← [2, 7, 1, 8, 2, 8]\nc ← 0\nfor i from 1 to 6\n  if A[i] > 3 then\n    c ← c + A[i]\nprint c",
+          "answer": {
+            "kind": "numeric",
+            "value": 23
+          },
+          "hint": "Only elements larger than 3 are added.",
+          "explanation": "Elements larger than 3: 7, 8, 8. Sum 23.",
+          "estSeconds": 45,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK1-A10",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "dijkstra"
+          ],
+          "prompt": "Roads and their lengths are listed. What is the length of the shortest route from A to E?",
+          "code": "A — B : 2\nA — C : 6\nB — C : 3\nB — D : 8\nC — D : 2\nD — E : 1\nC — E : 7",
+          "answer": {
+            "kind": "numeric",
+            "value": 8
+          },
+          "hint": "Fix the closest town first, repeatedly.",
+          "explanation": "A–B (2), B–C (3), C–D (2), D–E (1): total 8. Every other route is longer (e.g. A–C–E = 13).",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.dijkstra([\"A-B:2\",\"A-C:6\",\"B-C:3\",\"B-D:8\",\"C-D:2\",\"D-E:1\",\"C-E:7\"],\"A\").E;"
+          }
+        },
+        {
+          "id": "MK1-A11",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "dag",
+            "path-counting"
+          ],
+          "prompt": "The arrows are one-way streets. How many different routes lead from S to T?",
+          "code": "S → A\nS → B\nA → B\nA → C\nB → C\nB → T\nC → T",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "Count the ways to reach each node.",
+          "explanation": "S→A→B→C→T, S→A→B→T, S→A→C→T, S→B→C→T, S→B→T: 5 routes.",
+          "estSeconds": 80,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.countPaths([\"S>A\",\"S>B\",\"A>B\",\"A>C\",\"B>C\",\"B>T\",\"C>T\"],\"S\",\"T\");"
+          }
+        },
+        {
+          "id": "MK1-A12",
+          "unit": "A4",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "bubble-sort",
+            "inversions"
+          ],
+          "prompt": "How many swaps does bubble sort make to sort [4, 3, 1, 2]?",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "Count the pairs in the wrong order.",
+          "explanation": "Inverted pairs: (4,3), (4,1), (4,2), (3,1), (3,2) — 5 swaps.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const A=[4,3,1,2]; let s=0; for(let p=1;p<A.length;p++) for(let i=0;i<A.length-p;i++) if(A[i]>A[i+1]){ [A[i],A[i+1]]=[A[i+1],A[i]]; s++; } return s;"
+          }
+        },
+        {
+          "id": "MK1-A13",
+          "unit": "A5",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "combinations"
+          ],
+          "prompt": "A committee of 3 is chosen from 6 people, and Anna must be on it. How many committees are possible?",
+          "answer": {
+            "kind": "numeric",
+            "value": 10
+          },
+          "hint": "Anna's seat is fixed; choose the rest.",
+          "explanation": "Choose the other 2 members from the remaining 5: C(5, 2) = 10.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.combinations(h.range(1,6),3).filter(c=> c.includes(1)).length;"
+          }
+        },
+        {
+          "id": "MK1-A14",
+          "unit": "A6",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "state-machine",
+            "counting"
+          ],
+          "prompt": "A machine starts in X; Z is the only accepting state. How many bit strings of length 4 does it accept?",
+          "code": "state | on 0 | on 1\n  X   |  Y   |  X\n  Y   |  Z   |  X\n  Z   |  Z   |  Z",
+          "answer": {
+            "kind": "numeric",
+            "value": 8
+          },
+          "hint": "Find out what kind of string ends in Z.",
+          "explanation": "The machine reaches Z exactly when it reads two 0s in a row, and then stays there. Length-4 strings without \"00\": 8 (Fibonacci). So 16 − 8 = 8 are accepted.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const T={X:[\"Y\",\"X\"],Y:[\"Z\",\"X\"],Z:[\"Z\",\"Z\"]}; return h.tuples([0,1],4).filter(t=> t.reduce((s,b)=> T[s][b],\"X\")===\"Z\").length;"
+          }
+        },
+        {
+          "id": "MK1-A15",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "recursion"
+          ],
+          "prompt": "What value is printed?",
+          "code": "function f(n)\n  if n < 3 then return n\n  return f(n − 1) + f(n − 3)\nprint f(7)",
+          "answer": {
+            "kind": "numeric",
+            "value": 10
+          },
+          "hint": "Evaluate f bottom-up from f(0).",
+          "explanation": "f(0..2) = 0, 1, 2; f(3) = f(2) + f(0) = 2; f(4) = 3; f(5) = 5; f(6) = 7; f(7) = f(6) + f(4) = 10.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK1-A16",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "nested-loops",
+            "parity"
+          ],
+          "prompt": "What value is printed?",
+          "code": "c ← 0\nfor i from 1 to 5\n  for j from i to 5\n    if (i + j) mod 2 = 0 then\n      c ← c + 1\nprint c",
+          "answer": {
+            "kind": "numeric",
+            "value": 9
+          },
+          "hint": "When is i + j even?",
+          "explanation": "i + j is even when i and j have the same parity. Odd values {1, 3, 5}: 6 pairs with i ≤ j. Even values {2, 4}: 3 pairs. Total 9.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK1-A17",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "spanning-tree"
+          ],
+          "prompt": "Connect all towns A–E with cables along the listed connections, using minimum total length. What is that length?",
+          "code": "A — B : 3\nA — C : 1\nB — C : 4\nB — D : 2\nC — D : 5\nC — E : 6\nD — E : 7",
+          "answer": {
+            "kind": "numeric",
+            "value": 12
+          },
+          "hint": "Kruskal: cheapest edge that does not close a cycle.",
+          "explanation": "A–C (1), B–D (2), A–B (3); B–C (4) and C–D (5) would close cycles; C–E (6). Total 1 + 2 + 3 + 6 = 12.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.mstWeight([\"A-B:3\",\"A-C:1\",\"B-C:4\",\"B-D:2\",\"C-D:5\",\"C-E:6\",\"D-E:7\"]);"
+          }
+        },
+        {
+          "id": "MK1-A18",
+          "unit": "A4",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "recursion",
+            "call-count"
+          ],
+          "prompt": "C is a one-element counter array (passed by reference). What value is printed?",
+          "code": "function g(n, C)\n  C[1] ← C[1] + 1\n  if n ≤ 1 then return 1\n  return g(n div 2, C) + g(n div 2, C)\nC ← [0]\nx ← g(8, C)\nprint C[1]",
+          "answer": {
+            "kind": "numeric",
+            "value": 15
+          },
+          "hint": "calls(n) = 1 + 2 · calls(n div 2) and calls(1) = 1.",
+          "explanation": "calls(1) = 1, calls(2) = 3, calls(4) = 7, calls(8) = 15.",
+          "estSeconds": 150,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK1-A19",
+          "unit": "A5",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "lattice-paths"
+          ],
+          "prompt": "A robot walks from (0, 0) to (3, 3) with unit steps right or up. The point (1, 1) is blocked. How many routes are possible?",
+          "answer": {
+            "kind": "numeric",
+            "value": 8
+          },
+          "hint": "All routes minus those through (1, 1).",
+          "explanation": "All routes: C(6, 3) = 20. Through (1, 1): C(2, 1) · C(4, 2) = 2 · 6 = 12. So 20 − 12 = 8.",
+          "estSeconds": 150,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const W={}; const f=(x,y)=>{ if(x===1&&y===1) return 0; if(x===0&&y===0) return 1; if(x<0||y<0) return 0; return W[x+\",\"+y] ??= f(x-1,y)+f(x,y-1); }; return f(3,3);"
+          }
+        },
+        {
+          "id": "MK1-A20",
+          "unit": "A1",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "rewriting"
+          ],
+          "prompt": "Start with the word B. In every step, every A becomes AB and every B becomes A (simultaneously). How many letters does the word have after 6 steps?",
+          "answer": {
+            "kind": "numeric",
+            "value": 13
+          },
+          "hint": "Track only the lengths.",
+          "explanation": "Words: B, A, AB, ABA, ABAAB, … Lengths 1, 1, 2, 3, 5, 8, 13: after 6 steps the word has 13 letters.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const R={A:\"AB\",B:\"A\"}; let w=\"B\"; for(let i=0;i<6;i++) w=w.split(\"\").map(c=>R[c]).join(\"\"); return w.length;"
+          }
+        }
+      ]
+    }
+  ]
+}

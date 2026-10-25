@@ -1,0 +1,746 @@
+[
+  {
+    "id": "L1-001",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "implication",
+      "truth-table"
+    ],
+    "prompt": "For which truth values is the statement p → q **false**?",
+    "options": [
+      "p true, q false",
+      "p false, q true",
+      "p false, q false",
+      "p true, q true"
+    ],
+    "answer": 0,
+    "hint": "An implication is a promise: when is that promise broken?",
+    "explanation": "p → q only fails when the premise p holds but the conclusion q does not. In every other row it is true — in particular it is (vacuously) true whenever p is false.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const rows=[[true,false],[false,true],[false,false],[true,true]]; return {indices: rows.flatMap((r,i)=> h.logic.evalWith(\"p -> q\",{p:r[0],q:r[1]}) ? [] : [i])};"
+    }
+  },
+  {
+    "id": "L1-002",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "truth-table"
+    ],
+    "prompt": "How many rows does a complete truth table for a formula with the four variables a, b, c and d have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 16
+    },
+    "hint": "Each variable can independently be true or false.",
+    "explanation": "Every variable doubles the number of combinations: 2 · 2 · 2 · 2 = 2⁴ = 16 rows.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return [...h.logic.assignments([\"a\",\"b\",\"c\",\"d\"])].length;"
+    }
+  },
+  {
+    "id": "L1-003",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "evaluate"
+    ],
+    "prompt": "Let p be true, q false and r true. What is the truth value of (p ∨ q) → ¬r?",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "hint": "Evaluate the brackets first, then the implication.",
+    "explanation": "p ∨ q = T ∨ F = T and ¬r = F. So the formula is T → F, which is false.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "eval",
+      "formula": "(p ∨ q) → ¬r",
+      "assignment": {
+        "p": true,
+        "q": false,
+        "r": true
+      },
+      "boolOptions": [
+        0,
+        1
+      ]
+    }
+  },
+  {
+    "id": "L1-004",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "translation"
+    ],
+    "prompt": "Let r = \"it is raining\" and c = \"it is cold\". Which formula expresses: \"It is raining, but it is not cold.\"?",
+    "options": [
+      "r ∧ ¬c",
+      "r ∨ ¬c",
+      "¬(r ∧ c)",
+      "r → ¬c"
+    ],
+    "answer": 0,
+    "hint": "What does the word \"but\" mean logically?",
+    "explanation": "\"But\" is a logical and with a contrast in tone. So the sentence says r holds and c does not: r ∧ ¬c.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "r & !c",
+      "formulas": [
+        "r ∧ ¬c",
+        "r ∨ ¬c",
+        "¬(r ∧ c)",
+        "r → ¬c"
+      ]
+    }
+  },
+  {
+    "id": "L1-005",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "tautology"
+    ],
+    "prompt": "Which of these formulas is a tautology (true in every row of its truth table)?",
+    "options": [
+      "p ∨ ¬p",
+      "p ∧ ¬p",
+      "p → ¬p",
+      "(p → q) → p"
+    ],
+    "answer": 0,
+    "hint": "Try to make each formula false. If you cannot, it is a tautology.",
+    "explanation": "p ∨ ¬p is always true. p ∧ ¬p is always false. p → ¬p is false when p is true. (p → q) → p is false when p is false (then p → q is true and the conclusion p is false).",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-tautology",
+      "formulas": [
+        "p ∨ ¬p",
+        "p ∧ ¬p",
+        "p → ¬p",
+        "(p → q) → p"
+      ]
+    }
+  },
+  {
+    "id": "L1-006",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "truth-table",
+      "count"
+    ],
+    "prompt": "In how many of the 8 rows of the truth table of (p ∨ q) ∧ ¬r is the formula true?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "The formula needs ¬r to be true. How many rows have r false, and in how many of those is p ∨ q true?",
+    "explanation": "We need r false (4 rows) and p ∨ q true. Among the 4 combinations of p and q, only p = q = false makes p ∨ q false, so 3 rows remain.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "count",
+      "formula": "(p ∨ q) ∧ ¬r"
+    }
+  },
+  {
+    "id": "L1-007",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "translation",
+      "implication"
+    ],
+    "prompt": "Which formula expresses \"q, if p\"?",
+    "options": [
+      "p → q",
+      "q → p",
+      "p ∧ q",
+      "p ↔ q"
+    ],
+    "answer": 0,
+    "hint": "Where is the condition in this sentence?",
+    "explanation": "\"q, if p\" puts the condition p after the conclusion, but the condition is still p: if p holds then q holds, i.e. p → q.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "!p | q",
+      "formulas": [
+        "p → q",
+        "q → p",
+        "p ∧ q",
+        "p ↔ q"
+      ]
+    }
+  },
+  {
+    "id": "L1-008",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "precedence"
+    ],
+    "prompt": "With the standard precedence (¬ before ∧ before ∨), how is ¬p ∧ q ∨ r read?",
+    "options": [
+      "((¬p) ∧ q) ∨ r",
+      "¬(p ∧ q) ∨ r",
+      "¬p ∧ (q ∨ r)",
+      "¬(p ∧ (q ∨ r))"
+    ],
+    "answer": 0,
+    "hint": "¬ binds tightest, then ∧, then ∨.",
+    "explanation": "First ¬ applies to p only, then ∧ joins ¬p and q, and finally ∨ adds r: ((¬p) ∧ q) ∨ r.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬p ∧ q ∨ r",
+      "formulas": [
+        "((¬p) ∧ q) ∨ r",
+        "¬(p ∧ q) ∨ r",
+        "¬p ∧ (q ∨ r)",
+        "¬(p ∧ (q ∨ r))"
+      ]
+    }
+  },
+  {
+    "id": "L1-009",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "truth-table",
+      "count"
+    ],
+    "prompt": "In how many of the 8 rows is (p → q) ∧ (q → r) true?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Think of it as a chain: once one variable is true, the later ones must be true too.",
+    "explanation": "Both implications hold exactly when the values never go from true to false along p, q, r. That allows FFF, FFT, FTT and TTT: 4 rows.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "count",
+      "formula": "(p → q) ∧ (q → r)"
+    }
+  },
+  {
+    "id": "L1-010",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "biconditional"
+    ],
+    "prompt": "Which formula is equivalent to p ↔ q?",
+    "options": [
+      "(p ∧ q) ∨ (¬p ∧ ¬q)",
+      "(p ∨ q) ∧ (¬p ∨ ¬q)",
+      "p → q",
+      "(p ∧ ¬q) ∨ (¬p ∧ q)"
+    ],
+    "answer": 0,
+    "hint": "p ↔ q is true when p and q have the same value.",
+    "explanation": "p ↔ q holds when both are true or both are false: (p ∧ q) ∨ (¬p ∧ ¬q). The second and fourth options describe exclusive or (different values); p → q is only one direction.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "(p → q) ∧ (q → p)",
+      "formulas": [
+        "(p ∧ q) ∨ (¬p ∧ ¬q)",
+        "(p ∨ q) ∧ (¬p ∨ ¬q)",
+        "p → q",
+        "(p ∧ ¬q) ∨ (¬p ∧ q)"
+      ]
+    }
+  },
+  {
+    "id": "L1-011",
+    "unit": "L1",
+    "type": "multi",
+    "difficulty": 2,
+    "tags": [
+      "evaluate"
+    ],
+    "prompt": "Let p be true and q and r false. Select **all** formulas that are true.",
+    "options": [
+      "p ∨ q",
+      "p → q",
+      "¬q ∧ ¬r",
+      "(p ∧ q) → r",
+      "q ∨ r",
+      "p ↔ r"
+    ],
+    "answer": [
+      0,
+      2,
+      3
+    ],
+    "hint": "Substitute T/F and evaluate each formula separately.",
+    "explanation": "p ∨ q = T. p → q = T → F = F. ¬q ∧ ¬r = T ∧ T = T. (p ∧ q) → r has a false premise, so it is T. q ∨ r = F. p ↔ r = T ↔ F = F.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-eval",
+      "assignment": {
+        "p": true,
+        "q": false,
+        "r": false
+      },
+      "formulas": [
+        "p ∨ q",
+        "p → q",
+        "¬q ∧ ¬r",
+        "(p ∧ q) → r",
+        "q ∨ r",
+        "p ↔ r"
+      ]
+    }
+  },
+  {
+    "id": "L1-012",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "translation",
+      "only-if"
+    ],
+    "prompt": "c = \"I go cycling\", d = \"it is dry\", w = \"it is windy\". Translate: \"I go cycling only if it is dry and not windy.\"",
+    "options": [
+      "c → (d ∧ ¬w)",
+      "(d ∧ ¬w) → c",
+      "c ↔ (d ∧ ¬w)",
+      "c ∧ d ∧ ¬w"
+    ],
+    "answer": 0,
+    "hint": "\"A only if B\" says B is necessary for A.",
+    "explanation": "\"c only if X\" means c → X: cycling guarantees the condition. So c → (d ∧ ¬w). The reverse direction would say that good weather forces you to cycle.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬c ∨ (d ∧ ¬w)",
+      "formulas": [
+        "c → (d ∧ ¬w)",
+        "(d ∧ ¬w) → c",
+        "c ↔ (d ∧ ¬w)",
+        "c ∧ d ∧ ¬w"
+      ]
+    }
+  },
+  {
+    "id": "L1-013",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "translation",
+      "xor"
+    ],
+    "prompt": "s = \"the server is down\", n = \"the network is slow\". Which formula expresses \"Either the server is down or the network is slow, but not both\"?",
+    "options": [
+      "(s ∨ n) ∧ ¬(s ∧ n)",
+      "s ∨ n",
+      "¬(s ∧ n)",
+      "(s ∧ n) ∨ ¬(s ∨ n)"
+    ],
+    "answer": 0,
+    "hint": "\"But not both\" turns an inclusive or into an exclusive one.",
+    "explanation": "At least one holds (s ∨ n) and not both hold (¬(s ∧ n)): (s ∨ n) ∧ ¬(s ∧ n), which is s ⊕ n.",
+    "estSeconds": 75,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "s ⊕ n",
+      "formulas": [
+        "(s ∨ n) ∧ ¬(s ∧ n)",
+        "s ∨ n",
+        "¬(s ∧ n)",
+        "(s ∧ n) ∨ ¬(s ∨ n)"
+      ]
+    }
+  },
+  {
+    "id": "L1-014",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "contradiction"
+    ],
+    "prompt": "Which formula is a contradiction (false in every row)?",
+    "options": [
+      "(p → q) ∧ p ∧ ¬q",
+      "(p → q) ∧ ¬p",
+      "p ↔ (¬p ∨ p)",
+      "(p ∨ q) ∧ ¬p"
+    ],
+    "answer": 0,
+    "hint": "Look for a formula that demands something and its opposite at the same time.",
+    "explanation": "(p → q) ∧ p forces q to be true, but ¬q demands it false: impossible. The other formulas are true for p = false, q = true, for instance.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=[\"(p → q) ∧ p ∧ ¬q\", \"(p → q) ∧ ¬p\", \"p ↔ (¬p ∨ p)\", \"(p ∨ q) ∧ ¬p\"]; return {indices: f.flatMap((x,i)=> h.logic.isSatisfiable(x)?[]:[i])};"
+    }
+  },
+  {
+    "id": "L1-015",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "truth-table",
+      "count"
+    ],
+    "prompt": "In how many of the 8 rows is (p ∨ q) → r **false**?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "An implication is false only when its premise is true and its conclusion false.",
+    "explanation": "We need p ∨ q true (3 of the 4 pq-combinations) and r false (1 choice): 3 rows.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "count",
+      "formula": "¬((p ∨ q) → r)"
+    }
+  },
+  {
+    "id": "L1-016",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "evaluate"
+    ],
+    "prompt": "Let p be false and q and r true. What is the value of (p → q) → (q → p)?",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "hint": "Evaluate both brackets first.",
+    "explanation": "p → q = F → T = T. q → p = T → F = F. So the whole formula is T → F = false.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "eval",
+      "formula": "(p → q) → (q → p)",
+      "assignment": {
+        "p": false,
+        "q": true,
+        "r": true
+      },
+      "boolOptions": [
+        0,
+        1
+      ]
+    }
+  },
+  {
+    "id": "L1-017",
+    "unit": "L1",
+    "type": "multi",
+    "difficulty": 2,
+    "tags": [
+      "tautology"
+    ],
+    "prompt": "Select **all** tautologies.",
+    "options": [
+      "p → (q → p)",
+      "(p → q) ∨ (q → p)",
+      "(p ∧ q) → p",
+      "p → (p ∧ q)",
+      "(p → q) → (¬q → ¬p)",
+      "(p ∨ q) → p"
+    ],
+    "answer": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "hint": "For each formula, try to find a row that makes it false.",
+    "explanation": "p → (q → p): to be false, p must be true and q → p false, which needs p false — impossible, so tautology. (p → q) ∨ (q → p): one of the two directions always holds — tautology. (p ∧ q) → p — tautology. p → (p ∧ q) fails for p = T, q = F. (p → q) → (¬q → ¬p) is the contrapositive law — tautology. (p ∨ q) → p fails for p = F, q = T.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-tautology",
+      "formulas": [
+        "p → (q → p)",
+        "(p → q) ∨ (q → p)",
+        "(p ∧ q) → p",
+        "p → (p ∧ q)",
+        "(p → q) → (¬q → ¬p)",
+        "(p ∨ q) → p"
+      ]
+    }
+  },
+  {
+    "id": "L1-018",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "truth-table"
+    ],
+    "prompt": "A complete truth table has 32 rows. How many different variables does the formula contain?",
+    "answer": {
+      "kind": "numeric",
+      "value": 5
+    },
+    "hint": "Which power of 2 is 32?",
+    "explanation": "n variables give 2ⁿ rows, and 2⁵ = 32, so there are 5 variables.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let n=0; while (2**n < 32) n++; return n;"
+    }
+  },
+  {
+    "id": "L1-019",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "translation",
+      "unless"
+    ],
+    "prompt": "r = \"it rains\", o = \"we play outside\". Which formula expresses \"Unless it rains, we play outside\"?",
+    "options": [
+      "r ∨ o",
+      "r → ¬o",
+      "¬r ↔ o",
+      "¬o → ¬r"
+    ],
+    "answer": 0,
+    "hint": "\"A unless B\" means: if not B, then A.",
+    "explanation": "\"o unless r\" means ¬r → o, which is equivalent to r ∨ o: at least one of the two happens.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬r → o",
+      "formulas": [
+        "r ∨ o",
+        "r → ¬o",
+        "¬r ↔ o",
+        "¬o → ¬r"
+      ]
+    }
+  },
+  {
+    "id": "L1-020",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "truth-table",
+      "xor",
+      "count"
+    ],
+    "prompt": "In how many of the 8 rows is (p ↔ q) ⊕ (q ↔ r) true?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Each ↔ is the negation of an ⊕. What happens when you combine them?",
+    "explanation": "p ↔ q = ¬(p ⊕ q) and q ↔ r = ¬(q ⊕ r). The ⊕ of two negations equals the ⊕ of the originals: (p ⊕ q) ⊕ (q ⊕ r) = p ⊕ r, because q cancels. p ⊕ r is true in half of the rows: 4.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "count",
+      "formula": "(p ↔ q) ⊕ (q ↔ r)"
+    }
+  },
+  {
+    "id": "L1-021",
+    "unit": "L1",
+    "type": "multi",
+    "difficulty": 3,
+    "tags": [
+      "xor",
+      "biconditional"
+    ],
+    "prompt": "Select **all** formulas that are true exactly when an odd number of p, q, r is true. (⊕ and ↔ group from the left.)",
+    "options": [
+      "p ⊕ q ⊕ r",
+      "(p ∨ q ∨ r) ∧ ¬(p ∧ q ∧ r)",
+      "(p ↔ q) ↔ r",
+      "(p ∧ q) ∨ r"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "hint": "⊕ behaves like addition mod 2. How does ↔ relate to ⊕?",
+    "explanation": "p ⊕ q ⊕ r is the parity function directly. (p ↔ q) ↔ r is also parity: x ↔ y = ¬(x ⊕ y), and the two negations cancel, giving p ⊕ q ⊕ r. (p ∨ q ∨ r) ∧ ¬(p ∧ q ∧ r) is false when all three are true (3 is odd) — wrong. (p ∧ q) ∨ r is true for r alone and also for p, q, r all true, but false for p alone — wrong.",
+    "estSeconds": 200,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=[\"p ⊕ q ⊕ r\", \"(p ∨ q ∨ r) ∧ ¬(p ∧ q ∧ r)\", \"(p ↔ q) ↔ r\", \"(p ∧ q) ∨ r\"]; const envs=[...h.logic.assignments([\"p\",\"q\",\"r\"])]; return {indices: f.flatMap((x,i)=> envs.every(e=> h.logic.evalWith(x,e) === ([e.p,e.q,e.r].filter(Boolean).length % 2 === 1)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L1-022",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "count"
+    ],
+    "prompt": "Consider the statement \"at least two of p, q, r, s are true\". For how many of the 16 assignments is it true?",
+    "answer": {
+      "kind": "numeric",
+      "value": 11
+    },
+    "hint": "Count the assignments with exactly 2, exactly 3 and exactly 4 true variables.",
+    "explanation": "Exactly two true: C(4,2) = 6. Exactly three: C(4,3) = 4. All four: 1. Total 6 + 4 + 1 = 11.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return [...h.logic.assignments([\"p\",\"q\",\"r\",\"s\"])].filter(e=> Object.values(e).filter(Boolean).length >= 2).length;"
+    }
+  },
+  {
+    "id": "L1-023",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "translation",
+      "biconditional"
+    ],
+    "prompt": "a = \"the alarm goes off\", h = \"somebody is home\", p = \"the police are called\". Translate: \"The police are called if the alarm goes off while nobody is home; otherwise they are not called.\"",
+    "options": [
+      "p ↔ (a ∧ ¬h)",
+      "(a ∧ ¬h) → p",
+      "(a ∧ ¬h) ∧ p",
+      "p → (a ∧ ¬h)"
+    ],
+    "answer": 0,
+    "hint": "\"Otherwise they are not\" adds the second direction.",
+    "explanation": "The first half gives (a ∧ ¬h) → p. \"Otherwise not\" gives ¬(a ∧ ¬h) → ¬p, i.e. p → (a ∧ ¬h). Both directions together: p ↔ (a ∧ ¬h).",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "((a ∧ ¬h) → p) ∧ (¬(a ∧ ¬h) → ¬p)",
+      "formulas": [
+        "p ↔ (a ∧ ¬h)",
+        "(a ∧ ¬h) → p",
+        "(a ∧ ¬h) ∧ p",
+        "p → (a ∧ ¬h)"
+      ]
+    }
+  },
+  {
+    "id": "L1-024",
+    "unit": "L1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "circuits",
+      "count"
+    ],
+    "prompt": "A logic circuit outputs 1 exactly when (x ∧ y) ∨ (¬x ∧ z) is true. For how many of the 8 input combinations is the output 1?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Split into the cases x = 1 and x = 0.",
+    "explanation": "If x = 1 the output equals y: 2 of the 4 (y, z) combinations. If x = 0 the output equals z: again 2. Total 4. (This circuit is a multiplexer: x selects y or z.)",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "count",
+      "formula": "(x ∧ y) ∨ (¬x ∧ z)"
+    }
+  },
+  {
+    "id": "L1-025",
+    "unit": "L1",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "implication",
+      "inference"
+    ],
+    "prompt": "You are told that p → q is **false**. Which statement must then be true?",
+    "options": [
+      "p ∧ ¬q",
+      "¬p",
+      "q",
+      "p ↔ q"
+    ],
+    "answer": 0,
+    "hint": "There is only one row in which p → q is false.",
+    "explanation": "p → q is false only when p is true and q is false. So p ∧ ¬q must hold. ¬p and q are both false there, and p ↔ q is false.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "¬(p → q)"
+      ],
+      "formulas": [
+        "p ∧ ¬q",
+        "¬p",
+        "q",
+        "p ↔ q"
+      ]
+    }
+  }
+]

@@ -1,0 +1,1526 @@
+{
+  "id": "mock-2",
+  "title": "Full mock 2",
+  "description": "Second original full-length mock with new items. Sections 1–2 follow the TU Delft CST; section 3 adds the TU/e Algorithmic Thinking test.",
+  "sections": [
+    {
+      "part": "math",
+      "title": "Mathematics",
+      "questions": [
+        {
+          "id": "MK2-M01",
+          "unit": "M1",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "linear-equations"
+          ],
+          "prompt": "Solve for $x$: $4(x+1) = 2x + 10$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 3
+          },
+          "hint": "Expand, then collect terms.",
+          "explanation": "$4x + 4 = 2x + 10$, so $2x = 6$ and $x = 3$.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 4*(x+1)-(2*x+10); const r=h.roots(f,-50.3,50).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+          }
+        },
+        {
+          "id": "MK2-M02",
+          "unit": "M3",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "power-rule"
+          ],
+          "prompt": "$f(x) = 2x^3 + x$. Compute $f'(1)$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 7
+          },
+          "hint": "Power rule, term by term.",
+          "explanation": "$f'(x) = 6x^2 + 1$, so $f'(1) = 7$.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 2*x**3+x; return h.deriv(f,1);"
+          }
+        },
+        {
+          "id": "MK2-M03",
+          "unit": "M5",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "definite-integral"
+          ],
+          "prompt": "Compute $\\displaystyle\\int_1^3 2x\\,dx$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 8
+          },
+          "hint": "An antiderivative of $2x$ is $x^2$.",
+          "explanation": "$[x^2]_1^3 = 9 - 1 = 8$.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 2*x; return h.integrate(f,1,3);"
+          }
+        },
+        {
+          "id": "MK2-M04",
+          "unit": "M6",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "exponent-rules"
+          ],
+          "prompt": "Compute $16^{3/4}$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 8
+          },
+          "hint": "Take the fourth root first.",
+          "explanation": "$\\sqrt[4]{16} = 2$ and $2^3 = 8$.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return 16**0.75;"
+          }
+        },
+        {
+          "id": "MK2-M05",
+          "unit": "M6",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "exact-values"
+          ],
+          "prompt": "What is $\\sin\\left(\\frac{\\pi}{4}\\right)$?",
+          "options": [
+            "$\\frac{\\sqrt2}{2}$",
+            "$\\frac12$",
+            "$\\frac{\\sqrt3}{2}$",
+            "$1$"
+          ],
+          "answer": 0,
+          "hint": "$\\frac\\pi4 = 45°$.",
+          "explanation": "$\\sin 45° = \\frac{\\sqrt2}{2}$.",
+          "estSeconds": 20,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const v=Math.sin(Math.PI/4); const vals=[Math.SQRT2/2,0.5,Math.sqrt(3)/2,1]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-6*Math.max(1,Math.abs(v))) throw new Error(\"no option matches \"+v); return {index:i};"
+          }
+        },
+        {
+          "id": "MK2-M06",
+          "unit": "M7",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "area"
+          ],
+          "prompt": "A triangle has a base of 10 and a height of 7. What is its area?",
+          "answer": {
+            "kind": "numeric",
+            "value": 35
+          },
+          "hint": "Area $= \\frac12 \\cdot$ base $\\cdot$ height.",
+          "explanation": "$\\frac12 \\cdot 10 \\cdot 7 = 35$.",
+          "estSeconds": 20,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const A=[0,0],B=[10,0],C=[3,7]; return Math.abs((B[0]-A[0])*(C[1]-A[1])-(C[0]-A[0])*(B[1]-A[1]))/2;"
+          }
+        },
+        {
+          "id": "MK2-M07",
+          "unit": "M1",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "systems"
+          ],
+          "prompt": "$2x + y = 7$ and $x - y = 2$. Compute $x \\cdot y$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 3
+          },
+          "hint": "Add the two equations.",
+          "explanation": "Adding gives $3x = 9$, so $x = 3$ and $y = 1$: $xy = 3$.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const s=[]; for(let x=-20;x<=20;x++) for(let y=-20;y<=20;y++) if(2*x+y===7 && x-y===2) s.push(x*y); if(s.length!==1) throw new Error(\"x\"); return s[0];"
+          }
+        },
+        {
+          "id": "MK2-M08",
+          "unit": "M1",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "inverse"
+          ],
+          "prompt": "$f(x) = 2x - 5$. Compute $f^{-1}(7)$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 6
+          },
+          "hint": "Solve $f(x) = 7$.",
+          "explanation": "$2x - 5 = 7 \\Rightarrow x = 6$.",
+          "estSeconds": 35,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 2*x-5-7; const r=h.roots(f,-50.3,50).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+          }
+        },
+        {
+          "id": "MK2-M09",
+          "unit": "M2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "infinity"
+          ],
+          "prompt": "Compute $\\displaystyle\\lim_{x\\to\\infty} \\frac{4x+1}{2x-3}$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 2
+          },
+          "hint": "Compare leading coefficients.",
+          "explanation": "$\\frac{4 + 1/x}{2 - 3/x} \\to 2$.",
+          "estSeconds": 35,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=x=> (4*x+1)/(2*x-3); return f(1e9);"
+          }
+        },
+        {
+          "id": "MK2-M10",
+          "unit": "M3",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "product-rule",
+            "logarithm"
+          ],
+          "prompt": "$f(x) = x\\ln x$. Compute $f'(e)$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 2
+          },
+          "hint": "Product rule.",
+          "explanation": "$f'(x) = \\ln x + 1$, so $f'(e) = 2$.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> x*Math.log(x); return h.deriv(f,Math.E);"
+          }
+        },
+        {
+          "id": "MK2-M11",
+          "unit": "M4",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "optimisation"
+          ],
+          "prompt": "What is the minimum value of $f(x) = x + \\dfrac{4}{x}$ for $x > 0$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 4
+          },
+          "hint": "Solve $f'(x) = 0$ for $x > 0$.",
+          "explanation": "$f'(x) = 1 - \\frac{4}{x^2} = 0$ at $x = 2$; $f(2) = 4$.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> x+4/x; const a=(0.01), b=(50); let best=f(a); for(let i=1;i<=400000;i++) best=Math.min(best, f(a+(b-a)*i/400000)); return best;"
+          }
+        },
+        {
+          "id": "MK2-M12",
+          "unit": "M4",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "inflection"
+          ],
+          "prompt": "At which $x$ does $f(x) = x^3 + 3x^2$ have an inflection point?",
+          "answer": {
+            "kind": "numeric",
+            "value": -1
+          },
+          "hint": "Where does $f''$ change sign?",
+          "explanation": "$f''(x) = 6x + 6$ changes sign at $x = -1$.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const r=h.roots(x=> h.deriv2(t=> t**3+3*t*t, x), -10.3, 10, 20000); return Math.round(r[0]*1e4)/1e4;"
+          }
+        },
+        {
+          "id": "MK2-M13",
+          "unit": "M5",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "definite-integral"
+          ],
+          "prompt": "Compute $\\displaystyle\\int_1^2 (6x^2 - 2x)\\,dx$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 11
+          },
+          "hint": "Integrate term by term.",
+          "explanation": "$[2x^3 - x^2]_1^2 = (16 - 4) - (2 - 1) = 11$.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> 6*x*x-2*x; return h.integrate(f,1,2);"
+          }
+        },
+        {
+          "id": "MK2-M14",
+          "unit": "M5",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "mean-value"
+          ],
+          "prompt": "What is the mean value of $f(x) = 2x + 1$ on $[1, 5]$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 7
+          },
+          "hint": "$\\frac{1}{b-a}\\int_a^b f$.",
+          "explanation": "$\\frac14[x^2 + x]_1^5 = \\frac14(30 - 2) = 7$.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.integrate(x=> 2*x+1, 1, 5)/4;"
+          }
+        },
+        {
+          "id": "MK2-M15",
+          "unit": "M6",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "log-equations"
+          ],
+          "prompt": "Solve $\\log_2(x + 3) = 4$.",
+          "answer": {
+            "kind": "numeric",
+            "value": 13
+          },
+          "hint": "Rewrite in exponential form.",
+          "explanation": "$x + 3 = 2^4 = 16$, so $x = 13$.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=(x)=> Math.log2(x+3)-4; const r=h.roots(f,-2.99,100).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+          }
+        },
+        {
+          "id": "MK2-M16",
+          "unit": "M3",
+          "type": "mc",
+          "difficulty": 3,
+          "tags": [
+            "chain-rule"
+          ],
+          "prompt": "What is the derivative of $f(x) = e^{\\sin x}$?",
+          "options": [
+            "$\\cos x \\cdot e^{\\sin x}$",
+            "$e^{\\cos x}$",
+            "$\\sin x\\cdot e^{\\sin x - 1}$",
+            "$e^{\\sin x}$"
+          ],
+          "answer": 0,
+          "hint": "Chain rule: outer derivative times inner derivative.",
+          "explanation": "$f'(x) = e^{\\sin x}\\cdot\\cos x$.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const f=x=> Math.exp(Math.sin(x)); const o=[x=> Math.cos(x)*Math.exp(Math.sin(x)), x=> Math.exp(Math.cos(x)), x=> Math.sin(x)*Math.exp(Math.sin(x)-1), x=> Math.exp(Math.sin(x))]; const xs=[0.3,1.2,2.5,4.1]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(g(x)-h.deriv(f,x))<1e-6)?[i]:[])};"
+          }
+        },
+        {
+          "id": "MK2-M17",
+          "unit": "M4",
+          "type": "mc",
+          "difficulty": 3,
+          "tags": [
+            "related-rates"
+          ],
+          "prompt": "The radius of a sphere grows at 1 cm/s. How fast is the volume growing when $r = 3$ cm?",
+          "options": [
+            "$36\\pi$ cm³/s",
+            "$12\\pi$ cm³/s",
+            "$108\\pi$ cm³/s",
+            "$9\\pi$ cm³/s"
+          ],
+          "answer": 0,
+          "hint": "$V = \\frac43\\pi r^3$.",
+          "explanation": "$\\frac{dV}{dt} = 4\\pi r^2\\frac{dr}{dt} = 4\\pi\\cdot 9 = 36\\pi$ cm³/s.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const v=h.deriv(t=> 4/3*Math.PI*(3+t)**3, 0); const vals=[36*Math.PI,12*Math.PI,108*Math.PI,9*Math.PI]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-6*Math.max(1,Math.abs(v))) throw new Error(\"no option matches \"+v); return {index:i};"
+          }
+        },
+        {
+          "id": "MK2-M18",
+          "unit": "M5",
+          "type": "mc",
+          "difficulty": 3,
+          "tags": [
+            "volume-of-revolution"
+          ],
+          "prompt": "The region under $y = x$ for $0 \\le x \\le 3$ is rotated about the $x$-axis. What is the volume?",
+          "options": [
+            "$9\\pi$",
+            "$27\\pi$",
+            "$3\\pi$",
+            "$\\frac{9\\pi}{2}$"
+          ],
+          "answer": 0,
+          "hint": "$V = \\pi\\int_0^3 x^2\\,dx$.",
+          "explanation": "$\\pi\\left[\\frac{x^3}{3}\\right]_0^3 = 9\\pi$ (a cone with $r = 3$, $h = 3$).",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const v=Math.PI*h.integrate(x=> x*x, 0, 3); const vals=[9*Math.PI,27*Math.PI,3*Math.PI,4.5*Math.PI]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-6*Math.max(1,Math.abs(v))) throw new Error(\"no option matches \"+v); return {index:i};"
+          }
+        },
+        {
+          "id": "MK2-M19",
+          "unit": "M6",
+          "type": "mc",
+          "difficulty": 3,
+          "tags": [
+            "trig-equations"
+          ],
+          "prompt": "What is the sum of all solutions of $\\sin(2x) = 0$ in $[0, \\pi)$?",
+          "options": [
+            "$\\frac{\\pi}{2}$",
+            "$\\pi$",
+            "$\\frac{3\\pi}{2}$",
+            "$0$"
+          ],
+          "answer": 0,
+          "hint": "$\\sin u = 0$ for $u = k\\pi$.",
+          "explanation": "$2x = k\\pi$ gives $x = 0$ or $x = \\frac\\pi2$ in $[0, \\pi)$. Sum: $\\frac\\pi2$.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const v=h.sum(h.roots(x=> Math.sin(2*x), -1e-7, Math.PI-1e-7)); const vals=[Math.PI/2,Math.PI,1.5*Math.PI,0]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-5*Math.max(1,Math.abs(v))) throw new Error(\"no option matches \"+v); return {index:i};"
+          }
+        },
+        {
+          "id": "MK2-M20",
+          "unit": "M7",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "tangent-lines",
+            "circles"
+          ],
+          "prompt": "The tangent line to the circle $x^2 + y^2 = 10$ at $(1, 3)$ crosses the $x$-axis at $(c, 0)$. What is $c$?",
+          "answer": {
+            "kind": "numeric",
+            "value": 10
+          },
+          "hint": "The tangent is perpendicular to the radius to (1, 3).",
+          "explanation": "The tangent at $(x_0, y_0)$ is $x_0x + y_0y = 10$: $x + 3y = 10$. With $y = 0$: $c = 10$.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const y=x=> Math.sqrt(10-x*x); const m=h.deriv(y,1); return 1 - y(1)/m;"
+          }
+        }
+      ]
+    },
+    {
+      "part": "logic",
+      "title": "Systematic Reasoning & Logical Thinking",
+      "questions": [
+        {
+          "id": "MK2-L01",
+          "unit": "L1",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "evaluate"
+          ],
+          "prompt": "p and q are true and r is false. What is the value of (p ∧ q) → r?",
+          "options": [
+            "True",
+            "False"
+          ],
+          "answer": 1,
+          "hint": "Evaluate the premise first.",
+          "explanation": "p ∧ q = T and r = F, so T → F = false.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "eval",
+            "formula": "(p ∧ q) → r",
+            "assignment": {
+              "p": true,
+              "q": true,
+              "r": false
+            },
+            "boolOptions": [
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "id": "MK2-L02",
+          "unit": "L1",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "truth-table",
+            "count"
+          ],
+          "prompt": "In how many of the 8 rows is p → (q ∧ r) true?",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "It is automatically true when p is false.",
+          "explanation": "p false: 4 rows, all true. p true: needs q ∧ r, 1 row. Total 5.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "count",
+            "formula": "p → (q ∧ r)"
+          }
+        },
+        {
+          "id": "MK2-L03",
+          "unit": "L2",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "contrapositive"
+          ],
+          "prompt": "Which formula is equivalent to ¬p → q?",
+          "options": [
+            "¬q → p",
+            "q → ¬p",
+            "p → ¬q",
+            "¬p ∧ q"
+          ],
+          "answer": 0,
+          "hint": "Use the contrapositive.",
+          "explanation": "The contrapositive of ¬p → q is ¬q → ¬¬p, i.e. ¬q → p. (Also ≡ p ∨ q.)",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "¬p → q",
+            "formulas": [
+              "¬q → p",
+              "q → ¬p",
+              "p → ¬q",
+              "¬p ∧ q"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L04",
+          "unit": "L3",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "translation"
+          ],
+          "prompt": "B(x): \"x is a bird\", F(x): \"x can fly\". Translate \"Some birds cannot fly.\"",
+          "options": [
+            "∃x (B(x) ∧ ¬F(x))",
+            "∃x (B(x) → ¬F(x))",
+            "¬∀x (B(x) ∧ F(x))",
+            "∀x (B(x) → ¬F(x))"
+          ],
+          "answer": 0,
+          "hint": "\"Some\" uses ∃ with ∧.",
+          "explanation": "There is an x that is a bird and cannot fly: ∃x (B(x) ∧ ¬F(x)).",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const D=[0,1,2]; const un=[]; for(let m=0;m<8;m++) un.push(x=>((m>>x)&1)===1); const all=f=>D.every(f), ex=f=>D.some(f); const t=(B,F)=> D.some(x=> B(x) && !F(x)); const o=[(B,F)=> ex(x=> B(x)&&!F(x)), (B,F)=> ex(x=> !B(x)||!F(x)), (B,F)=> !all(x=> B(x)&&F(x)), (B,F)=> all(x=> !B(x)||!F(x))]; return {indices: o.flatMap((g,i)=> un.every(B=> un.every(F=> g(B,F)===t(B,F)))?[i]:[])};"
+          }
+        },
+        {
+          "id": "MK2-L05",
+          "unit": "L4",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "disjunctive-syllogism"
+          ],
+          "prompt": "Is the argument \"p ∨ q, ¬p, therefore q\" valid?",
+          "options": [
+            "Valid",
+            "Invalid"
+          ],
+          "answer": 0,
+          "hint": "If one option is excluded …",
+          "explanation": "Disjunctive syllogism: valid.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "valid",
+            "premises": [
+              "p ∨ q",
+              "¬p"
+            ],
+            "conclusion": "q",
+            "boolOptions": [
+              0,
+              1
+            ]
+          }
+        },
+        {
+          "id": "MK2-L06",
+          "unit": "L5",
+          "type": "mc",
+          "difficulty": 1,
+          "tags": [
+            "only-if"
+          ],
+          "prompt": "p = \"you pass\", s = \"you study\". Translate \"You pass only if you study.\"",
+          "options": [
+            "p → s",
+            "s → p",
+            "p ↔ s",
+            "¬p → ¬s"
+          ],
+          "answer": 0,
+          "hint": "\"Only if\" introduces the necessary condition.",
+          "explanation": "Passing requires studying: p → s.",
+          "estSeconds": 30,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "¬p ∨ s",
+            "formulas": [
+              "p → s",
+              "s → p",
+              "p ↔ s",
+              "¬p → ¬s"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L07",
+          "unit": "L1",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "translation",
+            "unless"
+          ],
+          "prompt": "s = \"it is sunny\", w = \"it is a weekday\", b = \"we go to the beach\". Translate: \"Unless it is a weekday, we go to the beach if it is sunny.\"",
+          "options": [
+            "(s ∧ ¬w) → b",
+            "s → (b ∧ ¬w)",
+            "(s → b) ∧ w",
+            "¬w → b"
+          ],
+          "answer": 0,
+          "hint": "\"X unless w\" means ¬w → X.",
+          "explanation": "¬w → (s → b), which is equivalent to (s ∧ ¬w) → b.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "¬w → (s → b)",
+            "formulas": [
+              "(s ∧ ¬w) → b",
+              "s → (b ∧ ¬w)",
+              "(s → b) ∧ w",
+              "¬w → b"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L08",
+          "unit": "L1",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "truth-table",
+            "count"
+          ],
+          "prompt": "In how many of the 8 rows is (p ↔ q) ∨ r true?",
+          "answer": {
+            "kind": "numeric",
+            "value": 6
+          },
+          "hint": "Count the rows where it is false instead.",
+          "explanation": "It is false only when p ↔ q is false (2 of the 4 pq-combinations) and r is false: 2 rows. So 8 − 2 = 6 rows are true.",
+          "estSeconds": 70,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "count",
+            "formula": "(p ↔ q) ∨ r"
+          }
+        },
+        {
+          "id": "MK2-L09",
+          "unit": "L2",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "absorption"
+          ],
+          "prompt": "Simplify p ∧ (p ∨ q).",
+          "options": [
+            "p",
+            "q",
+            "p ∨ q",
+            "p ∧ q"
+          ],
+          "answer": 0,
+          "hint": "Absorption.",
+          "explanation": "If p is true, p ∨ q is true; if p is false, the conjunction is false. So p ∧ (p ∨ q) ≡ p.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "p ∧ (p ∨ q)",
+            "formulas": [
+              "p",
+              "q",
+              "p ∨ q",
+              "p ∧ q"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L10",
+          "unit": "L2",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "implication",
+            "laws"
+          ],
+          "prompt": "Which formula is equivalent to (p → q) ∨ (p → r)?",
+          "options": [
+            "p → (q ∨ r)",
+            "p → (q ∧ r)",
+            "(p ∨ p) → (q ∧ r)",
+            "(q ∨ r) → p"
+          ],
+          "answer": 0,
+          "hint": "Rewrite both implications with ∨.",
+          "explanation": "(¬p ∨ q) ∨ (¬p ∨ r) ≡ ¬p ∨ q ∨ r ≡ p → (q ∨ r).",
+          "estSeconds": 80,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-equivalent",
+            "target": "(p → q) ∨ (p → r)",
+            "formulas": [
+              "p → (q ∨ r)",
+              "p → (q ∧ r)",
+              "(p ∨ p) → (q ∧ r)",
+              "(q ∨ r) → p"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L11",
+          "unit": "L3",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "finite-domain"
+          ],
+          "prompt": "The domain is {1, 2, 3, 4}. Is ∀x ∃y (x + y = 5) true?",
+          "options": [
+            "True",
+            "False"
+          ],
+          "answer": 0,
+          "hint": "For each x, is 5 − x in the domain?",
+          "explanation": "x = 1, 2, 3, 4 need y = 4, 3, 2, 1 — all in the domain. True.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const D=[1,2,3,4]; return {index: D.every(x=> D.some(y=> x+y===5)) ? 0 : 1};"
+          }
+        },
+        {
+          "id": "MK2-L12",
+          "unit": "L3",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "negation",
+            "quantifiers"
+          ],
+          "prompt": "Which statement is equivalent to ¬∀x (P(x) → Q(x))?",
+          "options": [
+            "∃x (P(x) ∧ ¬Q(x))",
+            "∀x (P(x) → ¬Q(x))",
+            "∃x (¬P(x) → Q(x))",
+            "∀x (¬P(x) ∧ Q(x))"
+          ],
+          "answer": 0,
+          "hint": "Push the negation in; ¬(A → B) ≡ A ∧ ¬B.",
+          "explanation": "¬∀x (P(x) → Q(x)) ≡ ∃x ¬(P(x) → Q(x)) ≡ ∃x (P(x) ∧ ¬Q(x)).",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const D=[0,1,2]; const un=[]; for(let m=0;m<8;m++) un.push(x=>((m>>x)&1)===1); const all=f=>D.every(f), ex=f=>D.some(f); const t=(P,Q)=> !all(x=> !P(x)||Q(x)); const o=[(P,Q)=> ex(x=> P(x)&&!Q(x)), (P,Q)=> all(x=> !P(x)||!Q(x)), (P,Q)=> ex(x=> P(x)||Q(x)), (P,Q)=> all(x=> !P(x)&&Q(x))]; return {indices: o.flatMap((g,i)=> un.every(P=> un.every(Q=> g(P,Q)===t(P,Q)))?[i]:[])};"
+          }
+        },
+        {
+          "id": "MK2-L13",
+          "unit": "L4",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "syllogism",
+            "fallacy"
+          ],
+          "prompt": "Is this argument valid? \"All A are B. Some C are not A. Therefore some C are not B.\"",
+          "options": [
+            "Valid",
+            "Invalid"
+          ],
+          "answer": 1,
+          "hint": "The C's outside A might still be inside B.",
+          "explanation": "Counterexample: A = {1}, B = {1, 2}, C = {2}. Both premises hold but every C is a B. Invalid.",
+          "estSeconds": 70,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const N=4; const sets=[]; for(let m=0;m<(1<<N);m++) sets.push(Array.from({length:N},(_,i)=>((m>>i)&1)===1)); const S={all:(X,Y)=>X.every((x,i)=>!x||Y[i]), some:(X,Y)=>X.some((x,i)=>x&&Y[i]), no:(X,Y)=>X.every((x,i)=>!(x&&Y[i])), someNot:(X,Y)=>X.some((x,i)=>x&&!Y[i])}; const models=(k)=> h.tuples(sets,k);const ok=models(3).every(([A,B,C,D])=> !(S.all(A,B) && S.someNot(C,A)) || (S.someNot(C,B))); return {index: ok ? 0 : 1};"
+          }
+        },
+        {
+          "id": "MK2-L14",
+          "unit": "L4",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "inference"
+          ],
+          "prompt": "From p → q, ¬q ∨ r and ¬r, what follows?",
+          "options": [
+            "¬p",
+            "p",
+            "q",
+            "r"
+          ],
+          "answer": 0,
+          "hint": "Work backwards from ¬r.",
+          "explanation": "¬r with ¬q ∨ r gives ¬q; with p → q this gives ¬p.",
+          "estSeconds": 70,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-implied",
+            "premises": [
+              "p → q",
+              "¬q ∨ r",
+              "¬r"
+            ],
+            "formulas": [
+              "¬p",
+              "p",
+              "q",
+              "r"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L15",
+          "unit": "L5",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "knights-knaves"
+          ],
+          "prompt": "Knights always tell the truth; knaves always lie. A says \"B is a knave.\" B says \"A and C are both knights.\" C says \"B is a knight.\" Who is a knight?",
+          "options": [
+            "Only A is a knight",
+            "Only B is a knight",
+            "A and C are knights",
+            "Nobody is a knight"
+          ],
+          "answer": 0,
+          "hint": "Case split on A.",
+          "explanation": "If A were a knave, B would be a knight, but then B's claim makes A a knight — contradiction. So A is a knight, B is a knave, B's claim is false (so C is a knave), and C's claim \"B is a knight\" is indeed false.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const sols=h.tuples([true,false],3).filter(k=> [k=> !k[1],k=> k[0]&&k[2],k=> k[1]].every((s,i)=> s(k)===k[i])); const desc=(k)=> {const n=[\"A\",\"B\",\"C\"].filter((_,i)=>k[i]); return n.length===0?\"Nobody is a knight\":n.length===3?\"All three are knights\":n.length===1?\"Only \"+n[0]+\" is a knight\":n.join(\" and \")+\" are knights\";}; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+          }
+        },
+        {
+          "id": "MK2-L16",
+          "unit": "L1",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "count",
+            "four-variables"
+          ],
+          "prompt": "In how many of the 16 rows (variables p, q, r, s) is (p → q) → (r → s) true?",
+          "answer": {
+            "kind": "numeric",
+            "value": 13
+          },
+          "hint": "Count the false rows: when is an implication between two implications false?",
+          "explanation": "It is false only when p → q is true (3 of 4 pq-rows) and r → s is false (r = T, s = F: 1 of 4). That is 3 false rows, so 16 − 3 = 13 true rows.",
+          "estSeconds": 150,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "count",
+            "formula": "(p → q) → (r → s)"
+          }
+        },
+        {
+          "id": "MK2-L17",
+          "unit": "L2",
+          "type": "multi",
+          "difficulty": 3,
+          "tags": [
+            "tautology"
+          ],
+          "prompt": "Select **all** tautologies.",
+          "options": [
+            "(p ∧ (p → q)) → q",
+            "((p → q) ∧ ¬q) → ¬p",
+            "(p → q) → (q → p)",
+            "(p ∨ q) → (p ∧ q)",
+            "p → (q ∨ ¬q)"
+          ],
+          "answer": [
+            0,
+            1,
+            4
+          ],
+          "hint": "Name the rule behind each one, or find a falsifying row.",
+          "explanation": "1 is modus ponens and 2 is modus tollens written as formulas — both tautologies. 3 (the converse) fails for p = F, q = T. 4 fails for p = T, q = F. 5: the conclusion q ∨ ¬q is always true — tautology.",
+          "estSeconds": 200,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-tautology",
+            "formulas": [
+              "(p ∧ (p → q)) → q",
+              "((p → q) ∧ ¬q) → ¬p",
+              "(p → q) → (q → p)",
+              "(p ∨ q) → (p ∧ q)",
+              "p → (q ∨ ¬q)"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L18",
+          "unit": "L3",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "finite-domain",
+            "divisibility"
+          ],
+          "prompt": "The domain is {1, 2, …, 10}. For how many x is ∀y (y divides x → (y = 1 ∨ y = x)) true?",
+          "answer": {
+            "kind": "numeric",
+            "value": 5
+          },
+          "hint": "Which numbers have no divisors other than 1 and themselves? Don't forget 1.",
+          "explanation": "The condition holds for the primes 2, 3, 5, 7 and also for x = 1 (its only divisor is 1). That makes 5.",
+          "estSeconds": 150,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const D=h.range(1,10); return D.filter(x=> D.every(y=> x%y!==0 || y===1 || y===x)).length;"
+          }
+        },
+        {
+          "id": "MK2-L19",
+          "unit": "L4",
+          "type": "mc",
+          "difficulty": 3,
+          "tags": [
+            "inference"
+          ],
+          "prompt": "If Ann goes, Bob goes. If Bob goes, Cas does not go. Cas goes. What follows?",
+          "options": [
+            "Ann does not go.",
+            "Ann goes.",
+            "Bob goes.",
+            "Cas does not go."
+          ],
+          "answer": 0,
+          "hint": "Work backwards from \"Cas goes\".",
+          "explanation": "Cas goes, so (by b → ¬c and modus tollens) Bob does not go; then (by a → b) Ann does not go.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "logic",
+            "task": "options-implied",
+            "premises": [
+              "a → b",
+              "b → ¬c",
+              "c"
+            ],
+            "formulas": [
+              "¬a",
+              "a",
+              "b",
+              "¬c"
+            ]
+          }
+        },
+        {
+          "id": "MK2-L20",
+          "unit": "L5",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "arrangement",
+            "counting"
+          ],
+          "prompt": "Six people P, Q, R, S, T and U stand in a row. P is somewhere left of Q, Q is somewhere left of R, and S and T stand next to each other. How many orders are possible?",
+          "answer": {
+            "kind": "numeric",
+            "value": 40
+          },
+          "hint": "Glue S and T into a block, then handle P, Q, R.",
+          "explanation": "Treat S–T as a block (2 internal orders): 5 units give 5! = 120 orders, and P, Q, R appear in the required order in 1/6 of them: 20. Times 2 = 40.",
+          "estSeconds": 200,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.permutations([\"P\",\"Q\",\"R\",\"S\",\"T\",\"U\"]).filter(o=>{const i=x=>o.indexOf(x); return i(\"P\")<i(\"Q\") && i(\"Q\")<i(\"R\") && Math.abs(i(\"S\")-i(\"T\"))===1;}).length;"
+          }
+        }
+      ]
+    },
+    {
+      "part": "algorithmic",
+      "title": "Algorithmic & Computational Thinking",
+      "questions": [
+        {
+          "id": "MK2-A01",
+          "unit": "A1",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "geometric"
+          ],
+          "prompt": "What number comes next? 1, 2, 4, 8, 16, …",
+          "answer": {
+            "kind": "numeric",
+            "value": 32
+          },
+          "hint": "Look at the ratio.",
+          "explanation": "Each term doubles: 32.",
+          "estSeconds": 20,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const s=[1,2,4,8,16]; if(!s.every((x,i)=> i===0||x===2*s[i-1])) throw new Error(\"x\"); return 2*s[4];"
+          }
+        },
+        {
+          "id": "MK2-A02",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "assignment"
+          ],
+          "prompt": "What value is printed?",
+          "code": "x ← 10\nx ← x − 3\nx ← x · 2\nprint x",
+          "answer": {
+            "kind": "numeric",
+            "value": 14
+          },
+          "hint": "Apply the lines in order.",
+          "explanation": "x = 10 → 7 → 14.",
+          "estSeconds": 20,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK2-A03",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "complete-graph"
+          ],
+          "prompt": "Five people each shake hands once with every other person. How many handshakes?",
+          "answer": {
+            "kind": "numeric",
+            "value": 10
+          },
+          "hint": "Each handshake is a pair.",
+          "explanation": "C(5, 2) = 10.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.combinations(h.range(1,5),2).length;"
+          }
+        },
+        {
+          "id": "MK2-A04",
+          "unit": "A4",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "linear-search"
+          ],
+          "prompt": "Linear search in an unsorted list of 200 items: what is the maximum number of items inspected?",
+          "answer": {
+            "kind": "numeric",
+            "value": 200
+          },
+          "hint": "Worst case: the item is last or absent.",
+          "explanation": "All 200 items.",
+          "estSeconds": 20,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const A=h.range(1,200); let w=0; for(const t of [...A,-1]){ let k=0; for(const x of A){ k++; if(x===t) break; } w=Math.max(w,k); } return w;"
+          }
+        },
+        {
+          "id": "MK2-A05",
+          "unit": "A6",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "binary"
+          ],
+          "prompt": "Write the decimal number 45 in binary.",
+          "answer": {
+            "kind": "text",
+            "accepted": [
+              "101101"
+            ],
+            "ignoreSpaces": true
+          },
+          "hint": "45 = 32 + 8 + 4 + 1.",
+          "explanation": "45 = 32 + 8 + 4 + 1 → 101101.",
+          "estSeconds": 35,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return (45).toString(2);"
+          }
+        },
+        {
+          "id": "MK2-A06",
+          "unit": "A5",
+          "type": "short",
+          "difficulty": 1,
+          "tags": [
+            "multiplication-principle"
+          ],
+          "prompt": "How many 3-letter strings can be made from the letters A, B, C, D if letters may repeat?",
+          "answer": {
+            "kind": "numeric",
+            "value": 64
+          },
+          "hint": "4 choices for each position.",
+          "explanation": "4 · 4 · 4 = 64.",
+          "estSeconds": 25,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.tuples([\"A\",\"B\",\"C\",\"D\"],3).length;"
+          }
+        },
+        {
+          "id": "MK2-A07",
+          "unit": "A1",
+          "type": "mc",
+          "difficulty": 2,
+          "tags": [
+            "letters",
+            "growing-step"
+          ],
+          "prompt": "Which letter comes next? A, B, D, G, K, …",
+          "options": [
+            "P",
+            "O",
+            "Q",
+            "N"
+          ],
+          "answer": 0,
+          "hint": "Alphabet positions and their differences.",
+          "explanation": "Positions 1, 2, 4, 7, 11: steps 1, 2, 3, 4. Next step 5 → position 16 = P.",
+          "estSeconds": 45,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const s=[\"A\",\"B\",\"D\",\"G\",\"K\"].map(c=>c.charCodeAt(0)-64); const d=s.slice(1).map((x,i)=>x-s[i]); if(!d.every((x,i)=>i===0||x===d[i-1]+1)) throw new Error(\"x\"); return String.fromCharCode(64+s[4]+d[3]+1);"
+          }
+        },
+        {
+          "id": "MK2-A08",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "for",
+            "step"
+          ],
+          "prompt": "What value is printed?",
+          "code": "s ← 0\nfor i from 1 to 10 step 3\n  s ← s + i\nprint s",
+          "answer": {
+            "kind": "numeric",
+            "value": 22
+          },
+          "hint": "Which values does i take?",
+          "explanation": "i = 1, 4, 7, 10 (step 3, 10 is included): s = 22.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK2-A09",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "stack"
+          ],
+          "prompt": "What value is printed?",
+          "code": "S ← []\nfor i from 1 to 5\n  push(S, i)\n  if i mod 2 = 0 then\n    x ← pop(S)\nprint S[1] + S[length(S)]",
+          "answer": {
+            "kind": "numeric",
+            "value": 6
+          },
+          "hint": "Track the stack after every iteration.",
+          "explanation": "Push 1; push 2, pop; push 3; push 4, pop; push 5. The stack is [1, 3, 5]: S[1] + S[3] = 1 + 5 = 6.",
+          "estSeconds": 70,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK2-A10",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "bfs"
+          ],
+          "prompt": "How many nodes are at distance exactly 2 (in number of edges) from A?",
+          "code": "A — B\nA — C\nB — D\nC — D\nC — E\nD — F\nE — F\nF — G",
+          "answer": {
+            "kind": "numeric",
+            "value": 2
+          },
+          "hint": "Breadth-first search, level by level.",
+          "explanation": "Level 1: B, C. Level 2: D, E. Level 3: F. Level 4: G. Two nodes at distance 2.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const d=h.bfsDist(h.graph([\"A-B\",\"A-C\",\"B-D\",\"C-D\",\"C-E\",\"D-F\",\"E-F\",\"F-G\"]),\"A\"); return Object.values(d).filter(x=> x===2).length;"
+          }
+        },
+        {
+          "id": "MK2-A11",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "degree",
+            "euler-path"
+          ],
+          "prompt": "How many nodes of this graph have odd degree?",
+          "code": "A — B\nA — C\nA — D\nB — C\nC — D\nD — E",
+          "answer": {
+            "kind": "numeric",
+            "value": 4
+          },
+          "hint": "Count the edges at each node.",
+          "explanation": "Degrees: A 3, B 2, C 3, D 3, E 1. Odd: A, C, D, E — 4 nodes (so no Euler path exists).",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const g=h.graph([\"A-B\",\"A-C\",\"A-D\",\"B-C\",\"C-D\",\"D-E\"]); return Object.values(g).filter(n=> n.length%2===1).length;"
+          }
+        },
+        {
+          "id": "MK2-A12",
+          "unit": "A4",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "insertion-sort",
+            "inversions"
+          ],
+          "prompt": "How many single shifts does insertion sort perform to sort [3, 1, 2, 5, 4]?",
+          "answer": {
+            "kind": "numeric",
+            "value": 3
+          },
+          "hint": "Each shift fixes one inverted pair.",
+          "explanation": "Inverted pairs: (3,1), (3,2), (5,4) — 3 shifts.",
+          "estSeconds": 60,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const A=[3,1,2,5,4]; let s=0; for(let i=1;i<A.length;i++){ const k=A[i]; let j=i-1; while(j>=0 && A[j]>k){ A[j+1]=A[j]; j--; s++; } A[j+1]=k; } return s;"
+          }
+        },
+        {
+          "id": "MK2-A13",
+          "unit": "A5",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "inclusion-exclusion"
+          ],
+          "prompt": "How many of the numbers 1, 2, …, 60 are divisible by 3 or by 4?",
+          "answer": {
+            "kind": "numeric",
+            "value": 30
+          },
+          "hint": "Count each and subtract the overlap (multiples of 12).",
+          "explanation": "20 + 15 − 5 = 30.",
+          "estSeconds": 50,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.range(1,60).filter(n=> n%3===0 || n%4===0).length;"
+          }
+        },
+        {
+          "id": "MK2-A14",
+          "unit": "A6",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "bitwise"
+          ],
+          "prompt": "Compute 22 AND 13.",
+          "answer": {
+            "kind": "numeric",
+            "value": 4
+          },
+          "hint": "Write both in binary.",
+          "explanation": "10110 AND 01101 = 00100 = 4.",
+          "estSeconds": 40,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return 22 & 13;"
+          }
+        },
+        {
+          "id": "MK2-A15",
+          "unit": "A2",
+          "type": "short",
+          "difficulty": 2,
+          "tags": [
+            "recursion",
+            "digits"
+          ],
+          "prompt": "What value is printed?",
+          "code": "function r(n)\n  if n < 10 then return n\n  return r(n div 10 + n mod 10)\nprint r(9875)",
+          "answer": {
+            "kind": "numeric",
+            "value": 2
+          },
+          "hint": "Each call keeps the value mod 9 the same while making it smaller.",
+          "explanation": "9875 → 987 + 5 = 992 → 99 + 2 = 101 → 10 + 1 = 11 → 1 + 1 = 2. The result is the digital root, 9875 mod 9 = 2.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK2-A16",
+          "unit": "A2",
+          "type": "mc",
+          "difficulty": 3,
+          "tags": [
+            "arrays",
+            "prefix-sums"
+          ],
+          "prompt": "What does this code print?",
+          "code": "A ← [1, 2, 3, 4, 5]\nfor i from 1 to 4\n  A[i + 1] ← A[i + 1] + A[i]\nfor i from 5 down to 2\n  A[i] ← A[i] − A[i − 1]\nprint A",
+          "options": [
+            "[1, 2, 3, 4, 5]",
+            "[1, 3, 6, 10, 15]",
+            "[1, 1, 1, 1, 1]",
+            "[1, 2, 4, 7, 11]"
+          ],
+          "answer": 0,
+          "hint": "The first loop builds running totals; what does the second loop undo?",
+          "explanation": "Loop 1 turns A into [1, 3, 6, 10, 15]. Loop 2 runs from the back and replaces each element by its difference with the previous one, restoring [1, 2, 3, 4, 5]. (Running it forwards instead would give a different result.)",
+          "estSeconds": 150,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK2-A17",
+          "unit": "A3",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "colouring"
+          ],
+          "prompt": "Adjacent nodes must get different colours. What is the minimum number of colours needed for this graph?",
+          "code": "A — B\nB — C\nC — A\nD — A\nD — B\nE — C\nE — D",
+          "answer": {
+            "kind": "numeric",
+            "value": 3
+          },
+          "hint": "Look for a triangle first.",
+          "explanation": "A, B, C form a triangle, so at least 3 colours. Three suffice: A = 1, B = 2, C = 3, D = 3, E = 1.",
+          "estSeconds": 120,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const N=[\"A\",\"B\",\"C\",\"D\",\"E\"]; const E=[[\"A\",\"B\"],[\"B\",\"C\"],[\"C\",\"A\"],[\"D\",\"A\"],[\"D\",\"B\"],[\"E\",\"C\"],[\"E\",\"D\"]]; for(let k=1;k<=5;k++){ if(h.tuples(h.range(1,k),5).some(c=> E.every(([a,b])=> c[N.indexOf(a)]!==c[N.indexOf(b)]))) return k; }"
+          }
+        },
+        {
+          "id": "MK2-A18",
+          "unit": "A4",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "while",
+            "growth"
+          ],
+          "prompt": "What value is printed?",
+          "code": "i ← 1\nk ← 0\nwhile i < 1000\n  i ← i · 3 + 1\n  k ← k + 1\nprint k",
+          "answer": {
+            "kind": "numeric",
+            "value": 6
+          },
+          "hint": "List the values of i.",
+          "explanation": "i: 1 → 4 → 13 → 40 → 121 → 364 → 1093. Six iterations.",
+          "estSeconds": 90,
+          "source": "original",
+          "verifier": {
+            "kind": "pseudocode",
+            "result": "last-print"
+          }
+        },
+        {
+          "id": "MK2-A19",
+          "unit": "A5",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "tilings",
+            "recurrence"
+          ],
+          "prompt": "In how many ways can a 2 × 8 board be covered with 1 × 2 dominoes?",
+          "answer": {
+            "kind": "numeric",
+            "value": 34
+          },
+          "hint": "Look at the left edge: one vertical domino, or two horizontal ones stacked.",
+          "explanation": "ways(n) = ways(n − 1) + ways(n − 2) with ways(1) = 1, ways(2) = 2: 1, 2, 3, 5, 8, 13, 21, 34.",
+          "estSeconds": 150,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "const W=n=> n<=1 ? 1 : W(n-1)+W(n-2); let brute=0; const go=(col)=>{ if(col===8){ brute++; return; } if(col>8) return; go(col+1); go(col+2); }; go(0); if(brute!==W(8)) throw new Error(\"x\"); return brute;"
+          }
+        },
+        {
+          "id": "MK2-A20",
+          "unit": "A6",
+          "type": "short",
+          "difficulty": 3,
+          "tags": [
+            "state-machine",
+            "counting"
+          ],
+          "prompt": "A machine reads a 5-bit string from left to right with state r ∈ {0, 1, 2}, starting at 0; bit b changes r to (2r + b) mod 3. It accepts if it ends in 0. How many of the 32 strings of length 5 does it accept?",
+          "answer": {
+            "kind": "numeric",
+            "value": 11
+          },
+          "hint": "What does r represent?",
+          "explanation": "r is the value of the bits read so far, mod 3. Accepted strings are the binary representations (with leading zeros) of the multiples of 3 from 0 to 31: 0, 3, …, 30 — 11 numbers.",
+          "estSeconds": 150,
+          "source": "original",
+          "verifier": {
+            "kind": "js",
+            "code": "return h.tuples([0,1],5).filter(t=> t.reduce((r,b)=> (2*r+b)%3, 0)===0).length;"
+          }
+        }
+      ]
+    }
+  ]
+}

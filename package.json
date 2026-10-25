@@ -1,0 +1,49 @@
+{
+  "name": "tuprep",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Single-user prep site for the TU Delft CSE Cognitive Skills Test and TU/e CSE selection tests (September 2027 intake).",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e:install": "cross-env PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium",
+    "e2e": "cross-env PLAYWRIGHT_BROWSERS_PATH=0 playwright test",
+    "check": "npm run lint && npm run typecheck && npm run validate:content && npm run verify:content && npm run test && npm run build",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "verify:content": "tsx content-verify/run.ts",
+    "mocks:generate": "tsx scripts/generate-mock.ts",
+    "schedule:print": "tsx scripts/print-schedule.ts",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.3.0",
+    "katex": "0.19.1",
+    "next": "16.4.3",
+    "react": "19.2.9",
+    "react-dom": "19.2.9",
+    "server-only": "0.0.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@tailwindcss/postcss": "4.1.18",
+    "@types/katex": "0.16.8",
+    "@types/node": "20.19.43",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "cross-env": "10.1.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.3",
+    "tailwindcss": "4.1.18",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  }
+}

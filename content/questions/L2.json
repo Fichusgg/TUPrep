@@ -1,0 +1,800 @@
+[
+  {
+    "id": "L2-001",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "de-morgan"
+    ],
+    "prompt": "Which formula is equivalent to ¬(p ∧ q)?",
+    "options": [
+      "¬p ∨ ¬q",
+      "¬p ∧ ¬q",
+      "p ∨ q",
+      "¬p → ¬q"
+    ],
+    "answer": 0,
+    "hint": "De Morgan: the negation moves inside and the connective flips.",
+    "explanation": "De Morgan's law: ¬(p ∧ q) ≡ ¬p ∨ ¬q. \"Not both\" means at least one of them fails.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬(p ∧ q)",
+      "formulas": [
+        "¬p ∨ ¬q",
+        "¬p ∧ ¬q",
+        "p ∨ q",
+        "¬p → ¬q"
+      ]
+    }
+  },
+  {
+    "id": "L2-002",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "de-morgan"
+    ],
+    "prompt": "Which formula is equivalent to ¬(p ∨ q)?",
+    "options": [
+      "¬p ∧ ¬q",
+      "¬p ∨ ¬q",
+      "¬p ∨ q",
+      "p ∧ q"
+    ],
+    "answer": 0,
+    "hint": "\"Not (p or q)\" — can either of them be true?",
+    "explanation": "De Morgan: ¬(p ∨ q) ≡ ¬p ∧ ¬q. Neither p nor q may hold.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬(p ∨ q)",
+      "formulas": [
+        "¬p ∧ ¬q",
+        "¬p ∨ ¬q",
+        "¬p ∨ q",
+        "p ∧ q"
+      ]
+    }
+  },
+  {
+    "id": "L2-003",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "contrapositive"
+    ],
+    "prompt": "Which formula is the contrapositive of p → q (and therefore equivalent to it)?",
+    "options": [
+      "¬q → ¬p",
+      "q → p",
+      "¬p → ¬q",
+      "p → ¬q"
+    ],
+    "answer": 0,
+    "hint": "The contrapositive negates both parts and swaps them.",
+    "explanation": "The contrapositive of p → q is ¬q → ¬p, which is always equivalent. q → p is the converse and ¬p → ¬q the inverse; neither is equivalent.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "p → q",
+      "formulas": [
+        "¬q → ¬p",
+        "q → p",
+        "¬p → ¬q",
+        "p → ¬q"
+      ]
+    }
+  },
+  {
+    "id": "L2-004",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "implication"
+    ],
+    "prompt": "Which formula is equivalent to p → q?",
+    "options": [
+      "¬p ∨ q",
+      "p ∨ ¬q",
+      "¬p ∧ q",
+      "¬(p ∨ q)"
+    ],
+    "answer": 0,
+    "hint": "When is p → q true? Either p fails, or q holds.",
+    "explanation": "p → q is false only for p true and q false, so it is true exactly when ¬p ∨ q holds.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "p → q",
+      "formulas": [
+        "¬p ∨ q",
+        "p ∨ ¬q",
+        "¬p ∧ q",
+        "¬(p ∨ q)"
+      ]
+    }
+  },
+  {
+    "id": "L2-005",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "absorption"
+    ],
+    "prompt": "Simplify p ∨ (p ∧ q).",
+    "options": [
+      "p",
+      "q",
+      "p ∧ q",
+      "p ∨ q"
+    ],
+    "answer": 0,
+    "hint": "If p is true, the whole formula is true. If p is false, what is p ∧ q?",
+    "explanation": "Absorption law: p ∨ (p ∧ q) ≡ p. When p is false both parts are false; when p is true the formula is true.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "p ∨ (p ∧ q)",
+      "formulas": [
+        "p",
+        "q",
+        "p ∧ q",
+        "p ∨ q"
+      ]
+    }
+  },
+  {
+    "id": "L2-006",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "negation",
+      "implication"
+    ],
+    "prompt": "What is the negation of p → q?",
+    "options": [
+      "p ∧ ¬q",
+      "¬p → ¬q",
+      "¬p ∧ q",
+      "q → p"
+    ],
+    "answer": 0,
+    "hint": "When exactly is p → q false?",
+    "explanation": "p → q is false exactly when p is true and q is false, so ¬(p → q) ≡ p ∧ ¬q. A common mistake is ¬p → ¬q, which is the inverse.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬(p → q)",
+      "formulas": [
+        "p ∧ ¬q",
+        "¬p → ¬q",
+        "¬p ∧ q",
+        "q → p"
+      ]
+    }
+  },
+  {
+    "id": "L2-007",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "contrapositive",
+      "translation"
+    ],
+    "prompt": "s = \"it is a square\", r = \"it is a rectangle\". Which statement is logically equivalent to \"If it is a square, then it is a rectangle\"?",
+    "options": [
+      "If it is not a rectangle, then it is not a square.",
+      "If it is a rectangle, then it is a square.",
+      "If it is not a square, then it is not a rectangle.",
+      "It is a square and it is a rectangle."
+    ],
+    "answer": 0,
+    "hint": "Look for the contrapositive.",
+    "explanation": "s → r is equivalent to its contrapositive ¬r → ¬s: \"If it is not a rectangle, it is not a square.\" The converse (r → s) and the inverse (¬s → ¬r) are not equivalent to the original.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "s → r",
+      "formulas": [
+        "¬r → ¬s",
+        "r → s",
+        "¬s → ¬r",
+        "s ∧ r"
+      ]
+    }
+  },
+  {
+    "id": "L2-008",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "identity",
+      "domination"
+    ],
+    "prompt": "Simplify p ∨ (q ∨ ¬q).",
+    "options": [
+      "⊤ (always true)",
+      "p",
+      "q",
+      "p ∨ q"
+    ],
+    "answer": 0,
+    "hint": "What is the value of q ∨ ¬q?",
+    "explanation": "q ∨ ¬q is always true (⊤), and p ∨ ⊤ ≡ ⊤ (domination law). So the formula is a tautology.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "p ∨ (q ∨ ¬q)",
+      "formulas": [
+        "true",
+        "p",
+        "q",
+        "p ∨ q"
+      ]
+    }
+  },
+  {
+    "id": "L2-009",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "simplification",
+      "distribution"
+    ],
+    "prompt": "Simplify (p ∧ q) ∨ (p ∧ ¬q).",
+    "options": [
+      "p",
+      "q",
+      "p ∧ q",
+      "⊤ (always true)"
+    ],
+    "answer": 0,
+    "hint": "Factor out p using the distributive law.",
+    "explanation": "(p ∧ q) ∨ (p ∧ ¬q) ≡ p ∧ (q ∨ ¬q) ≡ p ∧ ⊤ ≡ p.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "(p ∧ q) ∨ (p ∧ ¬q)",
+      "formulas": [
+        "p",
+        "q",
+        "p ∧ q",
+        "true"
+      ]
+    }
+  },
+  {
+    "id": "L2-010",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "simplification",
+      "de-morgan"
+    ],
+    "prompt": "Simplify ¬(¬p ∨ q).",
+    "options": [
+      "p ∧ ¬q",
+      "¬p ∧ q",
+      "p ∨ ¬q",
+      "¬p ∨ ¬q"
+    ],
+    "answer": 0,
+    "hint": "Apply De Morgan, then double negation.",
+    "explanation": "¬(¬p ∨ q) ≡ ¬¬p ∧ ¬q ≡ p ∧ ¬q.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬(¬p ∨ q)",
+      "formulas": [
+        "p ∧ ¬q",
+        "¬p ∧ q",
+        "p ∨ ¬q",
+        "¬p ∨ ¬q"
+      ]
+    }
+  },
+  {
+    "id": "L2-011",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "implication",
+      "laws"
+    ],
+    "prompt": "Which formula is equivalent to (p → q) ∧ (p → r)?",
+    "options": [
+      "p → (q ∧ r)",
+      "p → (q ∨ r)",
+      "(p ∧ q) → r",
+      "(q ∧ r) → p"
+    ],
+    "answer": 0,
+    "hint": "Both implications share the premise p.",
+    "explanation": "If p holds, both q and r must hold; if p fails, both implications are true. So (p → q) ∧ (p → r) ≡ p → (q ∧ r).",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "(p → q) ∧ (p → r)",
+      "formulas": [
+        "p → (q ∧ r)",
+        "p → (q ∨ r)",
+        "(p ∧ q) → r",
+        "(q ∧ r) → p"
+      ]
+    }
+  },
+  {
+    "id": "L2-012",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "implication",
+      "laws"
+    ],
+    "prompt": "Which formula is equivalent to (p → r) ∧ (q → r)?",
+    "options": [
+      "(p ∨ q) → r",
+      "(p ∧ q) → r",
+      "p → (q ∧ r)",
+      "r → (p ∨ q)"
+    ],
+    "answer": 0,
+    "hint": "Both implications share the conclusion r.",
+    "explanation": "r must follow from p and also from q, so r follows whenever at least one of them holds: (p ∨ q) → r.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "(p → r) ∧ (q → r)",
+      "formulas": [
+        "(p ∨ q) → r",
+        "(p ∧ q) → r",
+        "p → (q ∧ r)",
+        "r → (p ∨ q)"
+      ]
+    }
+  },
+  {
+    "id": "L2-013",
+    "unit": "L2",
+    "type": "multi",
+    "difficulty": 2,
+    "tags": [
+      "implication",
+      "equivalence"
+    ],
+    "prompt": "Select **all** formulas that are equivalent to p → q.",
+    "options": [
+      "¬p ∨ q",
+      "¬q → ¬p",
+      "¬(p ∧ ¬q)",
+      "q → p",
+      "¬p → ¬q",
+      "(p ∧ q) ↔ p"
+    ],
+    "answer": [
+      0,
+      1,
+      2,
+      5
+    ],
+    "hint": "Rewrite each option as ¬p ∨ q, or test the row p = T, q = F.",
+    "explanation": "¬p ∨ q is the standard rewrite. ¬q → ¬p is the contrapositive. ¬(p ∧ ¬q) is De Morgan applied to ¬p ∨ q. (p ∧ q) ↔ p says \"whenever p, also q\" — equivalent. q → p (converse) and ¬p → ¬q (inverse) are not.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "p → q",
+      "formulas": [
+        "¬p ∨ q",
+        "¬q → ¬p",
+        "¬(p ∧ ¬q)",
+        "q → p",
+        "¬p → ¬q",
+        "(p ∧ q) ↔ p"
+      ]
+    }
+  },
+  {
+    "id": "L2-014",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "distribution"
+    ],
+    "prompt": "Which formula is equivalent to p ∨ (q ∧ r)?",
+    "options": [
+      "(p ∨ q) ∧ (p ∨ r)",
+      "(p ∨ q) ∨ (p ∨ r)",
+      "(p ∧ q) ∨ (p ∧ r)",
+      "(p ∨ q) ∧ r"
+    ],
+    "answer": 0,
+    "hint": "∨ distributes over ∧, just like ∧ over ∨.",
+    "explanation": "Distributive law: p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r).",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "p ∨ (q ∧ r)",
+      "formulas": [
+        "(p ∨ q) ∧ (p ∨ r)",
+        "(p ∨ q) ∨ (p ∨ r)",
+        "(p ∧ q) ∨ (p ∧ r)",
+        "(p ∨ q) ∧ r"
+      ]
+    }
+  },
+  {
+    "id": "L2-015",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "biconditional",
+      "negation"
+    ],
+    "prompt": "Which formula is equivalent to ¬(p ↔ q)?",
+    "options": [
+      "p ↔ ¬q",
+      "¬p ↔ ¬q",
+      "p ∧ ¬q",
+      "¬p ∨ ¬q"
+    ],
+    "answer": 0,
+    "hint": "¬(p ↔ q) is true exactly when p and q differ.",
+    "explanation": "p and q differ exactly when p equals the opposite of q: p ↔ ¬q. ¬p ↔ ¬q is just p ↔ q again.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬(p ↔ q)",
+      "formulas": [
+        "p ↔ ¬q",
+        "¬p ↔ ¬q",
+        "p ∧ ¬q",
+        "¬p ∨ ¬q"
+      ]
+    }
+  },
+  {
+    "id": "L2-016",
+    "unit": "L2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "simplification"
+    ],
+    "prompt": "Simplify (p ∨ q) ∧ (p ∨ ¬q) as far as possible. Type the simplest equivalent formula (use ¬, ∧, ∨ if needed).",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "p"
+      ]
+    },
+    "placeholder": "e.g. p ∧ q",
+    "hint": "Distribute: (p ∨ q) ∧ (p ∨ ¬q) ≡ p ∨ (q ∧ ¬q).",
+    "explanation": "(p ∨ q) ∧ (p ∨ ¬q) ≡ p ∨ (q ∧ ¬q) ≡ p ∨ ⊥ ≡ p.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const F=\"(p ∨ q) ∧ (p ∨ ¬q)\"; const c=[\"p\",\"q\",\"¬p\",\"¬q\",\"true\",\"false\",\"p ∧ q\",\"p ∨ q\"]; return c.find(x=>h.logic.equivalent(F,x)) ?? \"none\";"
+    }
+  },
+  {
+    "id": "L2-017",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "nand",
+      "circuits"
+    ],
+    "prompt": "NAND is defined as a NAND b = ¬(a ∧ b). Which expression is equivalent to ¬p?",
+    "options": [
+      "p NAND p",
+      "p NAND ¬p",
+      "(p NAND p) NAND (p NAND p)",
+      "p ∧ ¬p"
+    ],
+    "answer": 0,
+    "hint": "What is p ∧ p?",
+    "explanation": "p NAND p = ¬(p ∧ p) = ¬p. (p NAND p) NAND (p NAND p) = ¬(¬p ∧ ¬p) = p, and p NAND ¬p is always true.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬p",
+      "formulas": [
+        "¬(p ∧ p)",
+        "¬(p ∧ ¬p)",
+        "¬(¬(p ∧ p) ∧ ¬(p ∧ p))",
+        "p ∧ ¬p"
+      ]
+    }
+  },
+  {
+    "id": "L2-018",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "implication",
+      "laws"
+    ],
+    "prompt": "Three of these formulas are equivalent to each other. Which one is **not**?",
+    "options": [
+      "p → (q → r)",
+      "(p ∧ q) → r",
+      "q → (p → r)",
+      "(p → q) → r"
+    ],
+    "answer": 3,
+    "hint": "Rewrite each with ∨ and ¬, or look for a row where (p → q) → r differs.",
+    "explanation": "p → (q → r), (p ∧ q) → r and q → (p → r) all say \"if p and q, then r\". (p → q) → r is different: with p, q, r all false, (p → q) → r = T → F = F, while the others are true.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=[\"p → (q → r)\", \"(p ∧ q) → r\", \"q → (p → r)\", \"(p → q) → r\"]; return {indices: f.flatMap((x,i)=> f.filter(y=> h.logic.equivalent(x,y)).length === 1 ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L2-019",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "normal-forms"
+    ],
+    "prompt": "A formula in p and q is true exactly in the rows (p, q) = (T, F) and (F, T). Which formula in disjunctive normal form is it?",
+    "options": [
+      "(p ∧ ¬q) ∨ (¬p ∧ q)",
+      "(p ∧ q) ∨ (¬p ∧ ¬q)",
+      "(p ∨ ¬q) ∧ (¬p ∨ q)",
+      "(p ∧ ¬q) ∧ (¬p ∧ q)"
+    ],
+    "answer": 0,
+    "hint": "Write one ∧-clause per true row and join the clauses with ∨.",
+    "explanation": "Row (T, F) gives p ∧ ¬q, row (F, T) gives ¬p ∧ q. Joining them: (p ∧ ¬q) ∨ (¬p ∧ q) — this is p ⊕ q.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const opts=[\"(p ∧ ¬q) ∨ (¬p ∧ q)\", \"(p ∧ q) ∨ (¬p ∧ ¬q)\", \"(p ∨ ¬q) ∧ (¬p ∨ q)\", \"(p ∧ ¬q) ∧ (¬p ∧ q)\"]; const want=(e)=> (e.p&&!e.q)||(!e.p&&e.q); const envs=[...h.logic.assignments([\"p\",\"q\"])]; return {indices: opts.flatMap((o,i)=> envs.every(e=> h.logic.evalWith(o,e)===want(e)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L2-020",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "peirce",
+      "tautology"
+    ],
+    "prompt": "What is ((p → q) → p) → p equivalent to?",
+    "options": [
+      "⊤ (always true)",
+      "p",
+      "p → q",
+      "¬p"
+    ],
+    "answer": 0,
+    "hint": "Try to make the formula false: p must be false and (p → q) → p must be true.",
+    "explanation": "For the formula to be false, p must be false and (p → q) → p true. With p false, p → q is true, so (p → q) → p = T → F = F. Contradiction — the formula is never false. It is a tautology (Peirce's law).",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "((p → q) → p) → p",
+      "formulas": [
+        "true",
+        "p",
+        "p → q",
+        "¬p"
+      ]
+    }
+  },
+  {
+    "id": "L2-021",
+    "unit": "L2",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "simplification"
+    ],
+    "prompt": "Simplify ¬(p → ¬q) ∨ (p ∧ ¬q) as far as possible and type the result.",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "p"
+      ]
+    },
+    "placeholder": "e.g. p ∨ q",
+    "hint": "First rewrite ¬(p → ¬q).",
+    "explanation": "¬(p → ¬q) ≡ p ∧ ¬¬q ≡ p ∧ q. Then (p ∧ q) ∨ (p ∧ ¬q) ≡ p ∧ (q ∨ ¬q) ≡ p.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const F=\"¬(p → ¬q) ∨ (p ∧ ¬q)\"; const c=[\"p\",\"q\",\"¬p\",\"¬q\",\"true\",\"false\",\"p ∧ q\",\"p ∨ q\"]; return c.find(x=>h.logic.equivalent(F,x)) ?? \"none\";"
+    }
+  },
+  {
+    "id": "L2-022",
+    "unit": "L2",
+    "type": "multi",
+    "difficulty": 3,
+    "tags": [
+      "xor",
+      "equivalence"
+    ],
+    "prompt": "Select **all** formulas equivalent to p ⊕ q (exclusive or).",
+    "options": [
+      "(p ∨ q) ∧ ¬(p ∧ q)",
+      "¬(p ↔ q)",
+      "(p ∧ ¬q) ∨ (¬p ∧ q)",
+      "¬p ↔ q",
+      "(p → q) ∧ (q → p)",
+      "p ↔ q"
+    ],
+    "answer": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "hint": "p ⊕ q is true exactly when p and q have different values.",
+    "explanation": "(p ∨ q) ∧ ¬(p ∧ q): one but not both — yes. ¬(p ↔ q): different values — yes. (p ∧ ¬q) ∨ (¬p ∧ q): the two \"different\" rows — yes. ¬p ↔ q: q equals the opposite of p — yes. (p → q) ∧ (q → p) and p ↔ q both mean \"equal\" — no.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "p ⊕ q",
+      "formulas": [
+        "(p ∨ q) ∧ ¬(p ∧ q)",
+        "¬(p ↔ q)",
+        "(p ∧ ¬q) ∨ (¬p ∧ q)",
+        "¬p ↔ q",
+        "(p → q) ∧ (q → p)",
+        "p ↔ q"
+      ]
+    }
+  },
+  {
+    "id": "L2-023",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "negation",
+      "simplification"
+    ],
+    "prompt": "Which formula is equivalent to ¬(p → (q ∨ ¬r))?",
+    "options": [
+      "p ∧ ¬q ∧ r",
+      "¬p ∨ q ∨ ¬r",
+      "p ∧ ¬(q ∧ r)",
+      "¬p → (¬q ∧ r)"
+    ],
+    "answer": 0,
+    "hint": "Use ¬(A → B) ≡ A ∧ ¬B, then De Morgan.",
+    "explanation": "¬(p → (q ∨ ¬r)) ≡ p ∧ ¬(q ∨ ¬r) ≡ p ∧ ¬q ∧ r.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬(p → (q ∨ ¬r))",
+      "formulas": [
+        "p ∧ ¬q ∧ r",
+        "¬p ∨ q ∨ ¬r",
+        "p ∧ ¬(q ∧ r)",
+        "¬p → (¬q ∧ r)"
+      ]
+    }
+  },
+  {
+    "id": "L2-024",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "circuits",
+      "simplification"
+    ],
+    "prompt": "A circuit computes (a ∧ b) ∨ (a ∧ ¬b ∧ c) ∨ (a ∧ ¬c). What is the simplest equivalent expression?",
+    "options": [
+      "a",
+      "a ∧ b",
+      "a ∧ (b ∨ c)",
+      "b ∨ c"
+    ],
+    "answer": 0,
+    "hint": "Factor out a and look at what is left inside the brackets.",
+    "explanation": "Factor a: a ∧ (b ∨ (¬b ∧ c) ∨ ¬c). Since b ∨ (¬b ∧ c) ≡ b ∨ c, the bracket is b ∨ c ∨ ¬c ≡ ⊤. So the circuit is just a.",
+    "estSeconds": 160,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "(a ∧ b) ∨ (a ∧ ¬b ∧ c) ∨ (a ∧ ¬c)",
+      "formulas": [
+        "a",
+        "a ∧ b",
+        "a ∧ (b ∨ c)",
+        "b ∨ c"
+      ]
+    }
+  },
+  {
+    "id": "L2-025",
+    "unit": "L2",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "laws"
+    ],
+    "prompt": "Exactly one of these claimed laws is **false**. Which one?",
+    "options": [
+      "p → (q → r) ≡ (p → q) → r",
+      "p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)",
+      "¬(p ↔ q) ≡ ¬p ↔ q",
+      "p ∨ (p ∧ q) ≡ p"
+    ],
+    "answer": 0,
+    "hint": "Implication is not associative.",
+    "explanation": "Distribution, ¬(p ↔ q) ≡ ¬p ↔ q, and absorption are all valid. p → (q → r) and (p → q) → r differ, e.g. when p, q and r are all false (the first is true, the second false).",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const pairs=[[\"p → (q → r)\",\"(p → q) → r\"],[\"p ∧ (q ∨ r)\",\"(p ∧ q) ∨ (p ∧ r)\"],[\"¬(p ↔ q)\",\"¬p ↔ q\"],[\"p ∨ (p ∧ q)\",\"p\"]]; return {indices: pairs.flatMap(([a,b],i)=> h.logic.equivalent(a,b)?[]:[i])};"
+    }
+  }
+]

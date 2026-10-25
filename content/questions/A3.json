@@ -1,0 +1,641 @@
+[
+  {
+    "id": "A3-001",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "trees"
+    ],
+    "prompt": "A tree has 20 nodes. How many edges does it have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 19
+    },
+    "hint": "Build a tree by adding nodes one at a time.",
+    "explanation": "Every tree with n nodes has exactly n − 1 edges: 19. (Start with one node; each new node adds exactly one edge.)",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const n=20; const E=h.range(2,n).map(i=> i+\"-\"+Math.floor(i/2)); const g=h.graph(E); if(Object.keys(h.bfsDist(g,\"1\")).length!==n) throw new Error(\"not connected\"); return E.length;"
+    }
+  },
+  {
+    "id": "A3-002",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "complete-graph",
+      "handshakes"
+    ],
+    "prompt": "Six people each shake hands exactly once with every other person. How many handshakes are there?",
+    "answer": {
+      "kind": "numeric",
+      "value": 15
+    },
+    "hint": "Each handshake is a pair of people.",
+    "explanation": "Choose 2 of the 6 people: C(6, 2) = 15.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.combinations(h.range(1,6),2).length;"
+    }
+  },
+  {
+    "id": "A3-003",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "degree",
+      "handshake-lemma"
+    ],
+    "prompt": "A network has 8 computers, each connected by a cable to exactly 3 others. How many cables are there?",
+    "answer": {
+      "kind": "numeric",
+      "value": 12
+    },
+    "hint": "Every cable has two ends.",
+    "explanation": "The degrees add up to 8 · 3 = 24, and each cable is counted twice: 24 / 2 = 12 cables.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const n=8; const E=[]; for(let i=0;i<n;i++){ E.push(i+\"-\"+((i+1)%n)); if(i<n/2) E.push(i+\"-\"+(i+n/2)); } const deg={}; for(const e of E){ const [a,b]=e.split(\"-\"); deg[a]=(deg[a]||0)+1; deg[b]=(deg[b]||0)+1; } if(!Object.values(deg).every(d=>d===3)) throw new Error(\"not 3-regular\"); return E.length;"
+    }
+  },
+  {
+    "id": "A3-004",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "bfs",
+      "shortest-path"
+    ],
+    "prompt": "An unweighted graph has the edges listed. What is the smallest number of edges on a path from A to F?",
+    "code": "A — B\nA — C\nB — D\nC — D\nD — E\nE — F\nC — G\nG — F",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Explore outward from A level by level.",
+    "explanation": "Distance 1: B, C. Distance 2: D, G. Distance 3: E, F. Shortest path A–C–G–F has 3 edges.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[\"A-B\",\"A-C\",\"B-D\",\"C-D\",\"D-E\",\"E-F\",\"C-G\",\"G-F\"]; return h.bfsDist(h.graph(E),\"A\").F;"
+    }
+  },
+  {
+    "id": "A3-005",
+    "unit": "A3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "degree"
+    ],
+    "prompt": "Which node has the highest degree?",
+    "code": "A — B\nA — C\nA — D\nB — C\nC — D\nC — E\nD — E",
+    "options": [
+      "C",
+      "A",
+      "D",
+      "E"
+    ],
+    "answer": 0,
+    "hint": "Count the edges at each node.",
+    "explanation": "Degrees: A 3, B 2, C 4, D 3, E 2. C has the highest degree.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[\"A-B\",\"A-C\",\"A-D\",\"B-C\",\"C-D\",\"C-E\",\"D-E\"]; const deg={}; for(const e of E){ const [a,b]=e.split(\"-\"); deg[a]=(deg[a]||0)+1; deg[b]=(deg[b]||0)+1; } const max=Math.max(...Object.values(deg)); const top=Object.keys(deg).filter(k=>deg[k]===max); if(top.length!==1) throw new Error(\"tie\"); return top[0];"
+    }
+  },
+  {
+    "id": "A3-006",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "dijkstra",
+      "shortest-path"
+    ],
+    "prompt": "Roads with their lengths are listed (roads work in both directions). What is the length of the shortest route from A to D?",
+    "code": "A — B : 4\nA — C : 1\nC — B : 2\nB — D : 1\nC — D : 5",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "The direct-looking route is not always the shortest.",
+    "explanation": "A–C (1), C–B (2), B–D (1): total 4. Alternatives: A–B–D = 5, A–C–D = 6.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.dijkstra([\"A-B:4\",\"A-C:1\",\"C-B:2\",\"B-D:1\",\"C-D:5\"],\"A\").D;"
+    }
+  },
+  {
+    "id": "A3-007",
+    "unit": "A3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "trees"
+    ],
+    "prompt": "A graph has nodes A, B, C, D, E and the edges A — B, B — C, C — D and B — E. Is it a tree?",
+    "options": [
+      "Yes",
+      "No — it contains a cycle",
+      "No — it is not connected"
+    ],
+    "answer": 0,
+    "hint": "A tree is connected and has n − 1 edges.",
+    "explanation": "It is connected (everything hangs off B) and has 4 = 5 − 1 edges, so it has no cycle: it is a tree.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[\"A-B\",\"B-C\",\"C-D\",\"B-E\"]; const g=h.graph(E); const nodes=Object.keys(g); const connected=Object.keys(h.bfsDist(g,nodes[0])).length===nodes.length; return {index: connected && E.length===nodes.length-1 ? 0 : connected ? 1 : 2};"
+    }
+  },
+  {
+    "id": "A3-008",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "grid-paths",
+      "counting"
+    ],
+    "prompt": "A robot walks along the lines of a 3 × 3 grid of squares from the top-left corner to the bottom-right corner, moving only right or down along grid lines. How many different routes are there?",
+    "answer": {
+      "kind": "numeric",
+      "value": 20
+    },
+    "hint": "Count the ways to reach each grid point: add the counts from above and from the left.",
+    "explanation": "Every route is 3 right-steps and 3 down-steps in some order: C(6, 3) = 20.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const n=3; const W=Array.from({length:n+1},()=>Array(n+1).fill(0)); for(let i=0;i<=n;i++) for(let j=0;j<=n;j++) W[i][j]= (i===0||j===0) ? 1 : W[i-1][j]+W[i][j-1]; return W[n][n];"
+    }
+  },
+  {
+    "id": "A3-009",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "dijkstra"
+    ],
+    "prompt": "Roads and their lengths are listed. What is the length of the shortest route from A to E?",
+    "code": "A — B : 7\nA — C : 9\nA — F : 14\nB — C : 10\nB — D : 15\nC — D : 11\nC — F : 2\nD — E : 6\nE — F : 9",
+    "answer": {
+      "kind": "numeric",
+      "value": 20
+    },
+    "hint": "Use Dijkstra: repeatedly fix the closest town that is not yet fixed.",
+    "explanation": "Final distances from A: B 7, C 9, F 11 (via C), D 20 (via C), E 20 (via C and F: 9 + 2 + 9). The shortest route A–C–F–E has length 20.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.dijkstra([\"A-B:7\",\"A-C:9\",\"A-F:14\",\"B-C:10\",\"B-D:15\",\"C-D:11\",\"C-F:2\",\"D-E:6\",\"E-F:9\"],\"A\").E;"
+    }
+  },
+  {
+    "id": "A3-010",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "spanning-tree",
+      "kruskal"
+    ],
+    "prompt": "You must connect towns A–E with cables, using only the listed connections. What is the minimum total length of cable needed so that every town is connected?",
+    "code": "A — B : 4\nA — C : 3\nB — C : 1\nB — D : 2\nC — D : 4\nD — E : 2\nC — E : 5",
+    "answer": {
+      "kind": "numeric",
+      "value": 8
+    },
+    "hint": "Repeatedly add the cheapest connection that does not create a cycle.",
+    "explanation": "Kruskal: B–C (1), B–D (2), D–E (2), A–C (3). Total 8; every other cheap edge would close a cycle.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.mstWeight([\"A-B:4\",\"A-C:3\",\"B-C:1\",\"B-D:2\",\"C-D:4\",\"D-E:2\",\"C-E:5\"]);"
+    }
+  },
+  {
+    "id": "A3-011",
+    "unit": "A3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "euler-path"
+    ],
+    "prompt": "Can you trace every edge of this graph exactly once without lifting your pen? If so, where must you start?",
+    "code": "A — B\nB — C\nC — D\nD — A\nA — C",
+    "options": [
+      "Yes, starting at A or C",
+      "Yes, starting anywhere",
+      "No, it is impossible",
+      "Yes, starting at B or D"
+    ],
+    "answer": 0,
+    "hint": "Count the nodes with odd degree.",
+    "explanation": "Degrees: A 3, B 2, C 3, D 2. Exactly two nodes have odd degree, so an Euler path exists, and it must start at one of them (A or C) and end at the other.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[\"A-B\",\"B-C\",\"C-D\",\"D-A\",\"A-C\"]; const deg={}; for(const e of E){ const [a,b]=e.split(\"-\"); deg[a]=(deg[a]||0)+1; deg[b]=(deg[b]||0)+1; }const g=h.graph(E); const nodes=Object.keys(g); const connected=Object.keys(h.bfsDist(g,nodes[0])).length===nodes.length; const odd=Object.keys(deg).filter(k=>deg[k]%2===1).sort(); if(!connected) return {index:2}; if(odd.length===0) return {index:1}; if(odd.length!==2) return {index:2}; return {index: odd.join()===\"A,C\" ? 0 : 3};"
+    }
+  },
+  {
+    "id": "A3-012",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "dag",
+      "path-counting"
+    ],
+    "prompt": "The arrows show one-way streets. How many different routes lead from S to T?",
+    "code": "S → A\nS → B\nA → C\nB → C\nA → D\nC → T\nD → T\nB → T",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Count the number of ways to reach each node from S.",
+    "explanation": "Routes: S→A→C→T, S→A→D→T, S→B→C→T and S→B→T. That is 4.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.countPaths([\"S>A\",\"S>B\",\"A>C\",\"B>C\",\"A>D\",\"C>T\",\"D>T\",\"B>T\"],\"S\",\"T\");"
+    }
+  },
+  {
+    "id": "A3-013",
+    "unit": "A3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "topological-order",
+      "dependencies"
+    ],
+    "prompt": "Tasks have prerequisites: A before B, A before C, B before D, C before D, and D before E. Which order is valid?",
+    "options": [
+      "A, C, B, D, E",
+      "A, B, D, C, E",
+      "B, A, C, D, E",
+      "A, B, C, E, D"
+    ],
+    "answer": 0,
+    "hint": "Check each order against every prerequisite.",
+    "explanation": "A, C, B, D, E respects all five constraints. The others put D before C, B before A, or E before D.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const valid=h.topoOrders([\"A\",\"B\",\"C\",\"D\",\"E\"],[\"A>B\",\"A>C\",\"B>D\",\"C>D\",\"D>E\"]).map(o=>o.join(\", \")); return {indices: q.options.flatMap((o,i)=> valid.includes(o) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "A3-014",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "critical-path",
+      "scheduling"
+    ],
+    "prompt": "A project has tasks with durations (in days): A 3, B 2, C 4, D 1. B and C can only start when A is finished; D can only start when both B and C are finished. Tasks without a dependency between them may run in parallel. What is the minimum number of days to finish the project?",
+    "answer": {
+      "kind": "numeric",
+      "value": 8
+    },
+    "hint": "The project takes as long as the longest chain of dependent tasks.",
+    "explanation": "A (3) then the longer of B (2) and C (4), then D (1): 3 + 4 + 1 = 8 days.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const dur={A:3,B:2,C:4,D:1}; const pre={A:[],B:[\"A\"],C:[\"A\"],D:[\"B\",\"C\"]}; const fin={}; const f=t=> fin[t] ??= dur[t] + Math.max(0, ...pre[t].map(f)); return Math.max(...Object.keys(dur).map(f));"
+    }
+  },
+  {
+    "id": "A3-015",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "colouring"
+    ],
+    "prompt": "Five towns lie on a ring road: each town is adjacent to exactly two others, forming a cycle A–B–C–D–E–A. Adjacent towns must get different colours on a map. What is the minimum number of colours needed?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Try with 2 colours and go around the cycle.",
+    "explanation": "Two colours would have to alternate around the cycle, which is impossible for an odd cycle of length 5. Three colours suffice (e.g. 1, 2, 1, 2, 3).",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[[0,1],[1,2],[2,3],[3,4],[4,0]]; for(let k=1;k<=5;k++){ if(h.tuples(h.range(1,k),5).some(c=> E.every(([a,b])=> c[a]!==c[b]))) return k; }"
+    }
+  },
+  {
+    "id": "A3-016",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "complete-graph",
+      "spanning-tree"
+    ],
+    "prompt": "In the complete graph on 5 nodes (every pair of nodes connected), how many edges must you remove to be left with a spanning tree?",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "How many edges does the complete graph have, and how many does a spanning tree on 5 nodes have?",
+    "explanation": "The complete graph has C(5, 2) = 10 edges; a spanning tree on 5 nodes has 4. Remove 10 − 4 = 6.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.combinations(h.range(1,5),2).length - (5-1);"
+    }
+  },
+  {
+    "id": "A3-017",
+    "unit": "A3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "bfs",
+      "traversal"
+    ],
+    "prompt": "Breadth-first search starts at A. Neighbours are visited in alphabetical order. Which node is visited **fifth**?",
+    "code": "A — B\nA — C\nB — D\nC — D\nC — E\nD — F",
+    "options": [
+      "E",
+      "D",
+      "F",
+      "C"
+    ],
+    "answer": 0,
+    "hint": "BFS finishes all neighbours of a node before going deeper.",
+    "explanation": "Queue: A → visit B, C → from B: D → from C: E (D already seen) → from D: F. Order A, B, C, D, E, F; the fifth is E.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const g=h.graph([\"A-B\",\"A-C\",\"B-D\",\"C-D\",\"C-E\",\"D-F\"]); for(const k in g) g[k].sort(); const order=[\"A\"], queue=[\"A\"]; while(queue.length){ const u=queue.shift(); for(const v of g[u]) if(!order.includes(v)){ order.push(v); queue.push(v);} } return order[4];"
+    }
+  },
+  {
+    "id": "A3-018",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "grid-paths",
+      "shortest-paths"
+    ],
+    "prompt": "The nodes of a graph form a grid of 3 rows and 4 columns; each node is connected to its horizontal and vertical neighbours. How many different shortest paths lead from the top-left node to the bottom-right node?",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "A shortest path makes only right and down steps.",
+    "explanation": "A shortest path has 2 down-steps and 3 right-steps in some order: C(5, 2) = 10.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const R=3,C=4; const E=[]; for(let r=0;r<R;r++) for(let c=0;c<C;c++){ if(c+1<C) E.push(r+\"_\"+c+\"-\"+r+\"_\"+(c+1)); if(r+1<R) E.push(r+\"_\"+c+\"-\"+(r+1)+\"_\"+c); } const g=h.graph(E); const d=h.bfsDist(g,\"0_0\"); const ways={\"0_0\":1}; const nodes=Object.keys(d).sort((a,b)=>d[a]-d[b]); for(const u of nodes) for(const v of g[u]) if(d[v]===d[u]+1) ways[v]=(ways[v]||0)+ways[u]; return ways[(R-1)+\"_\"+(C-1)];"
+    }
+  },
+  {
+    "id": "A3-019",
+    "unit": "A3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "degree-sequence"
+    ],
+    "prompt": "Which list of degrees is **impossible** for a (simple) graph with 5 nodes?",
+    "options": [
+      "3, 3, 3, 3, 3",
+      "2, 2, 2, 2, 2",
+      "4, 4, 4, 4, 4",
+      "1, 1, 2, 2, 2"
+    ],
+    "answer": 0,
+    "hint": "Add up the degrees.",
+    "explanation": "The degrees always add up to twice the number of edges, so the sum must be even. 3+3+3+3+3 = 15 is odd: impossible. A 5-cycle gives all 2s, the complete graph all 4s, and a path gives 1, 2, 2, 2, 1.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const pairs=h.combinations(h.range(0,4),2); const seen=new Set(); for(let m=0;m<(1<<pairs.length);m++){ const d=[0,0,0,0,0]; pairs.forEach(([a,b],i)=>{ if((m>>i)&1){d[a]++;d[b]++;} }); seen.add(d.sort().join()); } const opts=[[3,3,3,3,3],[2,2,2,2,2],[4,4,4,4,4],[1,1,2,2,2]]; return {indices: opts.flatMap((o,i)=> seen.has([...o].sort().join()) ? [] : [i])};"
+    }
+  },
+  {
+    "id": "A3-020",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "tsp",
+      "brute-force"
+    ],
+    "prompt": "A courier starts in A, must visit B, C and D (in any order) and return to A. The distances are listed. What is the length of the shortest round trip?",
+    "code": "A — B : 2\nA — C : 9\nA — D : 10\nB — C : 6\nB — D : 4\nC — D : 3",
+    "answer": {
+      "kind": "numeric",
+      "value": 18
+    },
+    "hint": "There are only 3 · 2 · 1 = 6 orders (3 different round trips).",
+    "explanation": "A–B–D–C–A = 2 + 4 + 3 + 9 = 18. The other round trips are A–B–C–D–A = 21 and A–C–B–D–A = 29. Minimum: 18.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const w={AB:2,AC:9,AD:10,BC:6,BD:4,CD:3}; const d=(x,y)=> w[x+y] ?? w[y+x]; return Math.min(...h.permutations([\"B\",\"C\",\"D\"]).map(p=> d(\"A\",p[0])+d(p[0],p[1])+d(p[1],p[2])+d(p[2],\"A\")));"
+    }
+  },
+  {
+    "id": "A3-021",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "spanning-tree",
+      "counting"
+    ],
+    "prompt": "A graph has nodes A, B, C, D with edges A — B, B — C, C — D, D — A and the diagonal A — C. How many different spanning trees does it have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 8
+    },
+    "hint": "A spanning tree uses 3 of the 5 edges and must connect all four nodes.",
+    "explanation": "There are C(5, 3) = 10 ways to choose 3 edges. Two choices form a triangle (A–B–C or A–C–D) and leave a node out. So 10 − 2 = 8 spanning trees.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[\"A-B\",\"B-C\",\"C-D\",\"D-A\",\"A-C\"]; return h.combinations(E,3).filter(s=> Object.keys(h.bfsDist(h.graph(s),\"A\")).length===4).length;"
+    }
+  },
+  {
+    "id": "A3-022",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "colouring"
+    ],
+    "prompt": "A hub H is connected to five towns that form a ring (each town is adjacent to its two neighbours on the ring and to H). Adjacent places need different colours. What is the minimum number of colours?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "The ring alone already needs 3 colours. What about H?",
+    "explanation": "The 5-ring is an odd cycle and needs 3 colours. H is adjacent to all five towns, so it needs a fourth colour. 4 colours suffice.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[[0,1],[1,2],[2,3],[3,4],[4,0],[5,0],[5,1],[5,2],[5,3],[5,4]]; for(let k=1;k<=6;k++){ if(h.tuples(h.range(1,k),6).some(c=> E.every(([a,b])=> c[a]!==c[b]))) return k; }"
+    }
+  },
+  {
+    "id": "A3-023",
+    "unit": "A3",
+    "type": "multi",
+    "difficulty": 3,
+    "tags": [
+      "euler-path"
+    ],
+    "prompt": "Select **all** graphs that can be drawn by tracing every edge exactly once without lifting the pen.",
+    "code": "G1: A—B, B—C, C—D, D—A, A—C, B—D\nG2: A—B, B—C, C—D, D—A, A—C\nG3: A—B, B—C, C—A, C—D, D—E, E—C\nG4: A—B, A—C, A—D",
+    "options": [
+      "G1",
+      "G2",
+      "G3",
+      "G4"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "hint": "A connected graph has such a path exactly when 0 or 2 nodes have odd degree.",
+    "explanation": "G1 (a square with both diagonals): all four nodes have degree 3 — four odd nodes, impossible. G2 (a square with one diagonal): two odd nodes — possible. G3 (two triangles sharing a node): all degrees even — possible (even a closed tour). G4 (a star with 3 leaves): four odd nodes — impossible.",
+    "estSeconds": 220,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const Gs=[[\"A-B\",\"B-C\",\"C-D\",\"D-A\",\"A-C\",\"B-D\"],[\"A-B\",\"B-C\",\"C-D\",\"D-A\",\"A-C\"],[\"A-B\",\"B-C\",\"C-A\",\"C-D\",\"D-E\",\"E-C\"],[\"A-B\",\"A-C\",\"A-D\"]]; return Gs.map(E=>{ const deg={}; for(const e of E){ const [a,b]=e.split(\"-\"); deg[a]=(deg[a]||0)+1; deg[b]=(deg[b]||0)+1; }const g=h.graph(E); const nodes=Object.keys(g); const connected=Object.keys(h.bfsDist(g,nodes[0])).length===nodes.length; const odd=Object.values(deg).filter(d=>d%2===1).length; return connected && (odd===0||odd===2); });"
+    }
+  },
+  {
+    "id": "A3-024",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "cuts",
+      "connectivity"
+    ],
+    "prompt": "Roads connect the towns as listed. What is the minimum number of roads that must be closed so that you can no longer travel from A to F?",
+    "code": "A — B\nA — C\nB — D\nC — D\nB — C\nD — F\nC — E\nE — F",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Look for a small set of roads that every route from A to F must use.",
+    "explanation": "Every route leaves A via A–B or A–C, so closing those 2 roads disconnects A. One road is not enough: there are two routes, A–B–D–F and A–C–E–F, that share no road.",
+    "estSeconds": 200,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const E=[\"A-B\",\"A-C\",\"B-D\",\"C-D\",\"B-C\",\"D-F\",\"C-E\",\"E-F\"]; for(let k=0;k<=E.length;k++){ if(h.combinations(E,k).some(rem=>{ const g=h.graph(E.filter(e=>!rem.includes(e))); return !(\"F\" in h.bfsDist(g,\"A\")); })) return k; }"
+    }
+  },
+  {
+    "id": "A3-025",
+    "unit": "A3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "critical-path",
+      "scheduling"
+    ],
+    "prompt": "Tasks and durations (days): A 3; B 2 (after A); C 4 (after A); D 2 (after B); E 3 (after C and D); F 1 (after E); G 5 (after B). Independent tasks run in parallel. What is the minimum project length in days?",
+    "answer": {
+      "kind": "numeric",
+      "value": 11
+    },
+    "hint": "Compute the earliest finish time of every task.",
+    "explanation": "Finish times: A 3, B 5, C 7, D 7, E 7 + 3 = 10, F 11, G 5 + 5 = 10. The project ends when the last task does: 11 days.",
+    "estSeconds": 200,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const dur={A:3,B:2,C:4,D:2,E:3,F:1,G:5}; const pre={A:[],B:[\"A\"],C:[\"A\"],D:[\"B\"],E:[\"C\",\"D\"],F:[\"E\"],G:[\"B\"]}; const fin={}; const f=t=> fin[t] ??= dur[t] + Math.max(0, ...pre[t].map(f)); return Math.max(...Object.keys(dur).map(f));"
+    }
+  },
+  {
+    "id": "A3-026",
+    "unit": "A3",
+    "type": "order",
+    "difficulty": 2,
+    "tags": [
+      "topological-order",
+      "ordering"
+    ],
+    "prompt": "Getting dressed has rules: underwear before trousers and before socks; socks and trousers before shoes; trousers and shirt before belt; shirt before tie; belt, tie and shoes before jacket. Many orders are allowed. Build the order by always putting on the **alphabetically first** item whose prerequisites are all done. What order do you get?",
+    "options": [
+      "belt",
+      "jacket",
+      "shirt",
+      "shoes",
+      "socks",
+      "tie",
+      "trousers",
+      "underwear"
+    ],
+    "answer": [
+      2,
+      5,
+      7,
+      4,
+      6,
+      0,
+      3,
+      1
+    ],
+    "hint": "Repeatedly pick the alphabetically first item whose prerequisites are all done.",
+    "explanation": "Kahn's algorithm with alphabetical tie-breaking: shirt and underwear are free — shirt first. Then tie (needs shirt) vs underwear: tie. Then underwear, then socks and trousers become free: socks, trousers. Then belt and shoes: belt, shoes. Finally jacket.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=[\"belt\",\"jacket\",\"shirt\",\"shoes\",\"socks\",\"tie\",\"trousers\",\"underwear\"]; const E=[[\"socks\",\"shoes\"],[\"trousers\",\"shoes\"],[\"underwear\",\"trousers\"],[\"trousers\",\"belt\"],[\"belt\",\"jacket\"],[\"shirt\",\"belt\"],[\"shirt\",\"tie\"],[\"tie\",\"jacket\"],[\"shoes\",\"jacket\"],[\"underwear\",\"socks\"]]; const done=[]; while(done.length<N.length){ const free=N.filter(x=> !done.includes(x) && E.every(([a,b])=> b!==x || done.includes(a))).sort(); done.push(free[0]); } return {order: done.map(x=> N.indexOf(x))};"
+    }
+  }
+]

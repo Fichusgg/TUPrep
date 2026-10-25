@@ -1,0 +1,462 @@
+[
+  {
+    "id": "M3-001",
+    "unit": "M3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "power-rule"
+    ],
+    "prompt": "What is the derivative of $f(x)=4x^3$?",
+    "options": [
+      "$12x^2$",
+      "$4x^2$",
+      "$12x^3$",
+      "$x^4$"
+    ],
+    "answer": 0,
+    "hint": "$\\frac{d}{dx}x^n = nx^{n-1}$.",
+    "explanation": "$4 \\cdot 3x^2 = 12x^2$.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> 4*x**3; const o=[(x)=> 12*x**2,(x)=> 4*x**2,(x)=> 12*x**3,(x)=> x**4]; const xs=[0.3,0.9,1.7,2.4]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(g(x)-h.deriv(f,x))<1e-6*Math.max(1,Math.abs(g(x)))) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M3-002",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "power-rule"
+    ],
+    "prompt": "$f(x) = x^2 + 3x$. Compute $f'(2)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 7
+    },
+    "hint": "Differentiate term by term.",
+    "explanation": "$f'(x) = 2x + 3$, so $f'(2) = 7$.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*x+3*x; return h.deriv(f,2);"
+    }
+  },
+  {
+    "id": "M3-003",
+    "unit": "M3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "exponential"
+    ],
+    "prompt": "What is the derivative of $f(x) = 5e^x$?",
+    "options": [
+      "$5e^x$",
+      "$e^x$",
+      "$5xe^{x-1}$",
+      "$5$"
+    ],
+    "answer": 0,
+    "hint": "$e^x$ is its own derivative.",
+    "explanation": "Constants stay: $(5e^x)' = 5e^x$.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> 5*Math.exp(x); const o=[(x)=> 5*Math.exp(x),(x)=> Math.exp(x),(x)=> 5*x*Math.exp(x-1),(x)=> 5]; const xs=[0.3,0.9,1.7,2.4]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(g(x)-h.deriv(f,x))<1e-6*Math.max(1,Math.abs(g(x)))) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M3-004",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "logarithm"
+    ],
+    "prompt": "$f(x) = \\ln x$. Compute $f'(4)$ (as a fraction or decimal).",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.25
+    },
+    "hint": "$(\\ln x)' = \\frac1x$.",
+    "explanation": "$f'(4) = \\frac14$.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.log(x); return h.deriv(f,4);"
+    }
+  },
+  {
+    "id": "M3-005",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "power-rule",
+      "roots"
+    ],
+    "prompt": "$f(x) = \\sqrt{x}$. Compute $f'(9)$ exactly.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.16666666666666666,
+      "tolerance": 1e-06
+    },
+    "hint": "$\\sqrt x = x^{1/2}$.",
+    "explanation": "$f'(x) = \\frac{1}{2\\sqrt x}$, so $f'(9) = \\frac16$.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.sqrt(x); return h.deriv(f,9);"
+    }
+  },
+  {
+    "id": "M3-006",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "tangent-slope"
+    ],
+    "prompt": "What is the slope of the tangent line to $y = x^3$ at $x = -1$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "The slope of the tangent is the derivative.",
+    "explanation": "$y' = 3x^2$, so the slope at $x=-1$ is $3$.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**3; return h.deriv(f,-1);"
+    }
+  },
+  {
+    "id": "M3-007",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "product-rule"
+    ],
+    "prompt": "$f(x) = xe^x$. Compute $f'(0)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "Product rule.",
+    "explanation": "$f'(x) = e^x + xe^x$, so $f'(0) = 1$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*Math.exp(x); return h.deriv(f,0);"
+    }
+  },
+  {
+    "id": "M3-008",
+    "unit": "M3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "quotient-rule"
+    ],
+    "prompt": "What is the derivative of $f(x) = \\dfrac{x}{x+1}$?",
+    "options": [
+      "$\\dfrac{1}{(x+1)^2}$",
+      "$\\dfrac{-1}{(x+1)^2}$",
+      "$\\dfrac{2x+1}{(x+1)^2}$",
+      "$1$"
+    ],
+    "answer": 0,
+    "hint": "Quotient rule: $\\frac{f'g - fg'}{g^2}$.",
+    "explanation": "$\\frac{1\\cdot(x+1) - x\\cdot1}{(x+1)^2} = \\frac{1}{(x+1)^2}$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x/(x+1); const o=[(x)=> 1/(x+1)**2,(x)=> -1/(x+1)**2,(x)=> (2*x+1)/(x+1)**2,(x)=> 1]; const xs=[0.3,0.9,1.7,2.4]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(g(x)-h.deriv(f,x))<1e-6*Math.max(1,Math.abs(g(x)))) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M3-009",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "chain-rule"
+    ],
+    "prompt": "$f(x) = (2x+1)^5$. Compute $f'(0)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "Chain rule: outer derivative times inner derivative.",
+    "explanation": "$f'(x) = 5(2x+1)^4 \\cdot 2 = 10(2x+1)^4$, so $f'(0) = 10$.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (2*x+1)**5; return h.deriv(f,0);"
+    }
+  },
+  {
+    "id": "M3-010",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "chain-rule",
+      "trig"
+    ],
+    "prompt": "$f(x) = \\cos(3x)$. Compute $f'\\left(\\frac{\\pi}{6}\\right)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": -3
+    },
+    "hint": "$(\\cos u)' = -\\sin u \\cdot u'$.",
+    "explanation": "$f'(x) = -3\\sin(3x)$; at $x = \\frac\\pi6$: $-3\\sin\\frac\\pi2 = -3$.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.cos(3*x); return h.deriv(f,Math.PI/6);"
+    }
+  },
+  {
+    "id": "M3-011",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "implicit"
+    ],
+    "prompt": "The point $(3, 4)$ lies on the circle $x^2 + y^2 = 25$. Find $\\dfrac{dy}{dx}$ at this point.",
+    "answer": {
+      "kind": "numeric",
+      "value": -0.75
+    },
+    "hint": "Differentiate both sides with respect to $x$; remember $(y^2)' = 2yy'$.",
+    "explanation": "$2x + 2yy' = 0$, so $y' = -\\frac{x}{y} = -\\frac34$.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.sqrt(25-x*x); return h.deriv(f,3);"
+    }
+  },
+  {
+    "id": "M3-012",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "tangent-line"
+    ],
+    "prompt": "The tangent line to $y = x^2$ at $x = 3$ crosses the $y$-axis at $(0, c)$. What is $c$?",
+    "answer": {
+      "kind": "numeric",
+      "value": -9
+    },
+    "hint": "Tangent: $y = f(a) + f'(a)(x-a)$.",
+    "explanation": "$f(3) = 9$, $f'(3) = 6$: $y = 9 + 6(x-3) = 6x - 9$. So $c = -9$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> x*x; const a=3, m=h.deriv(f,a); return f(a) - m*a;"
+    }
+  },
+  {
+    "id": "M3-013",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "second-derivative"
+    ],
+    "prompt": "$f(x) = x^4 - 2x^3$. Compute $f''(1)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0
+    },
+    "hint": "Differentiate twice.",
+    "explanation": "$f'(x) = 4x^3 - 6x^2$, $f''(x) = 12x^2 - 12x$, so $f''(1) = 0$.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.deriv2(x=> x**4-2*x**3, 1);"
+    }
+  },
+  {
+    "id": "M3-014",
+    "unit": "M3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "chain-rule",
+      "logarithm"
+    ],
+    "prompt": "What is the derivative of $f(x) = \\ln(x^2+1)$?",
+    "options": [
+      "$\\dfrac{2x}{x^2+1}$",
+      "$\\dfrac{1}{x^2+1}$",
+      "$\\dfrac{2}{x^2+1}$",
+      "$2x\\ln(x^2+1)$"
+    ],
+    "answer": 0,
+    "hint": "$(\\ln u)' = \\frac{u'}{u}$.",
+    "explanation": "$\\frac{2x}{x^2+1}$.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.log(x*x+1); const o=[(x)=> 2*x/(x*x+1),(x)=> 1/(x*x+1),(x)=> 2/(x*x+1),(x)=> 2*x*Math.log(x*x+1)]; const xs=[0.3,0.9,1.7,2.4]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(g(x)-h.deriv(f,x))<1e-6*Math.max(1,Math.abs(g(x)))) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M3-015",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "normal-line"
+    ],
+    "prompt": "What is the slope of the **normal** line to $y = x^2$ at $x = 1$?",
+    "answer": {
+      "kind": "numeric",
+      "value": -0.5
+    },
+    "hint": "The normal is perpendicular to the tangent.",
+    "explanation": "The tangent slope is $2$; the normal slope is $-\\frac12$.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return -1/h.deriv(x=> x*x, 1);"
+    }
+  },
+  {
+    "id": "M3-016",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "implicit"
+    ],
+    "prompt": "The curve $x^3 + y^3 = 6xy$ passes through $(3, 3)$. Find $\\dfrac{dy}{dx}$ at this point.",
+    "answer": {
+      "kind": "numeric",
+      "value": -1
+    },
+    "hint": "Differentiate implicitly and solve for y′.",
+    "explanation": "$3x^2 + 3y^2y' = 6y + 6xy'$, so $y' = \\frac{2y - x^2}{y^2 - 2x}$. At $(3,3)$: $\\frac{6-9}{9-6} = -1$.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const F=(x,y)=> x**3+y**3-6*x*y; const Y=(x)=> h.root(y=> F(x,y), 2.6, 3.4); return h.deriv(Y, 3, 1e-3);"
+    }
+  },
+  {
+    "id": "M3-017",
+    "unit": "M3",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "logarithmic-differentiation"
+    ],
+    "prompt": "What is the derivative of $f(x) = x^x$ (for $x>0$)?",
+    "options": [
+      "$x^x(\\ln x + 1)$",
+      "$x \\cdot x^{x-1}$",
+      "$x^x\\ln x$",
+      "$x^x$"
+    ],
+    "answer": 0,
+    "hint": "Write $x^x = e^{x\\ln x}$.",
+    "explanation": "$x^x = e^{x\\ln x}$, so $f'(x) = e^{x\\ln x}(\\ln x + 1) = x^x(\\ln x + 1)$.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**x; const o=[(x)=> x**x*(Math.log(x)+1),(x)=> x*x**(x-1),(x)=> x**x*Math.log(x),(x)=> x**x]; const xs=[0.3,0.9,1.7,2.4]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(g(x)-h.deriv(f,x))<1e-6*Math.max(1,Math.abs(g(x)))) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M3-018",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "product-rule",
+      "chain-rule"
+    ],
+    "prompt": "$f(x) = e^{2x}\\sin x$. Compute $f'(0)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "Product rule, with the chain rule for the exponential.",
+    "explanation": "$f'(x) = 2e^{2x}\\sin x + e^{2x}\\cos x$, so $f'(0) = 0 + 1 = 1$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.exp(2*x)*Math.sin(x); return h.deriv(f,0);"
+    }
+  },
+  {
+    "id": "M3-019",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "trig"
+    ],
+    "prompt": "$f(x) = \\tan x$. Compute $f'\\left(\\frac{\\pi}{4}\\right)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "$(\\tan x)' = \\frac{1}{\\cos^2 x}$.",
+    "explanation": "$\\cos\\frac\\pi4 = \\frac{\\sqrt2}{2}$, so $\\cos^2\\frac\\pi4 = \\frac12$ and $f'(\\frac\\pi4) = 2$.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.tan(x); return h.deriv(f,Math.PI/4);"
+    }
+  },
+  {
+    "id": "M3-020",
+    "unit": "M3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "quotient-rule"
+    ],
+    "prompt": "$f(x) = \\dfrac{x^2+1}{x-1}$. Compute $f'(2)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": -1
+    },
+    "hint": "Quotient rule, then substitute.",
+    "explanation": "$f'(x) = \\frac{2x(x-1) - (x^2+1)}{(x-1)^2}$. At $x=2$: $\\frac{4 - 5}{1} = -1$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (x*x+1)/(x-1); return h.deriv(f,2);"
+    }
+  }
+]

@@ -1,0 +1,717 @@
+[
+  {
+    "id": "L5-001",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "only-if"
+    ],
+    "prompt": "Which formula expresses \"p only if q\"?",
+    "options": [
+      "p → q",
+      "q → p",
+      "p ↔ q",
+      "p ∧ q"
+    ],
+    "answer": 0,
+    "hint": "\"Only if\" introduces a necessary condition.",
+    "explanation": "\"p only if q\" means p cannot happen without q: p → q. (It is the opposite direction from \"p if q\".)",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬p ∨ q",
+      "formulas": [
+        "p → q",
+        "q → p",
+        "p ↔ q",
+        "p ∧ q"
+      ]
+    }
+  },
+  {
+    "id": "L5-002",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "necessary-sufficient"
+    ],
+    "prompt": "\"Passing the final exam (p) is necessary for graduating (g).\" Which formula expresses this?",
+    "options": [
+      "g → p",
+      "p → g",
+      "p ∧ g",
+      "p ↔ g"
+    ],
+    "answer": 0,
+    "hint": "If p is necessary for g, can g happen without p?",
+    "explanation": "A necessary condition must hold whenever the other thing happens: g → p. Passing alone does not guarantee graduating.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬g ∨ p",
+      "formulas": [
+        "g → p",
+        "p → g",
+        "p ∧ g",
+        "p ↔ g"
+      ]
+    }
+  },
+  {
+    "id": "L5-003",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "necessary-sufficient"
+    ],
+    "prompt": "\"Scoring above 90 (s) is sufficient for an A grade (a).\" Which formula expresses this?",
+    "options": [
+      "s → a",
+      "a → s",
+      "s ↔ a",
+      "¬s → ¬a"
+    ],
+    "answer": 0,
+    "hint": "A sufficient condition guarantees the result.",
+    "explanation": "Sufficient means: if s, then a. So s → a. It does not say that you need above 90 for an A.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬s ∨ a",
+      "formulas": [
+        "s → a",
+        "a → s",
+        "s ↔ a",
+        "¬s → ¬a"
+      ]
+    }
+  },
+  {
+    "id": "L5-004",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "knights-knaves"
+    ],
+    "prompt": "Knights always tell the truth; knaves always lie. A says: \"I am a knight.\" What can you conclude?",
+    "options": [
+      "A could be either",
+      "A is a knight",
+      "A is a knave",
+      "The situation is impossible"
+    ],
+    "answer": 0,
+    "hint": "Check whether a knight could say it, and whether a knave could.",
+    "explanation": "A knight saying \"I am a knight\" tells the truth; a knave saying it lies. Both are consistent, so A's type cannot be determined.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const said=(aIsKnight)=> aIsKnight; const sols=[true,false].filter(k=> said(k)===k); return {index: sols.length===2 ? 0 : sols.length===0 ? 3 : sols[0] ? 1 : 2};"
+    }
+  },
+  {
+    "id": "L5-005",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "knights-knaves"
+    ],
+    "prompt": "Knights always tell the truth; knaves always lie. A says: \"We are both knaves.\" What are A and B?",
+    "options": [
+      "A is a knave, B is a knight",
+      "Both are knaves",
+      "Both are knights",
+      "A is a knight, B is a knave"
+    ],
+    "answer": 0,
+    "hint": "Can a knight say \"I am a knave\"?",
+    "explanation": "A cannot be a knight (then A would be a knave). So A is a knave and the statement is false: not both are knaves, so B is a knight.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.tuples([true,false],2).filter(k=> [k=> !k[0]&&!k[1],k=> k[1]].every((s,i)=> s(k)===k[i])); const desc=(k)=> k[0]&&k[1]?\"Both are knights\":k[0]?\"A is a knight, B is a knave\":k[1]?\"A is a knave, B is a knight\":\"Both are knaves\"; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+    }
+  },
+  {
+    "id": "L5-006",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "ordering"
+    ],
+    "prompt": "Ann is taller than Ben. Cas is shorter than Ben. Who is the tallest?",
+    "options": [
+      "Ann",
+      "Ben",
+      "Cas",
+      "It cannot be determined"
+    ],
+    "answer": 0,
+    "hint": "Write the clues as a chain.",
+    "explanation": "Ann > Ben and Ben > Cas, so Ann > Ben > Cas. Ann is the tallest.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.permutations([\"Ann\",\"Ben\",\"Cas\"]).filter(o=> o.indexOf(\"Ann\")<o.indexOf(\"Ben\") && o.indexOf(\"Ben\")<o.indexOf(\"Cas\")); const firsts=[...new Set(sols.map(o=>o[0]))]; return firsts.length===1 ? firsts[0] : \"It cannot be determined\";"
+    }
+  },
+  {
+    "id": "L5-007",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "unless"
+    ],
+    "prompt": "e = \"you may enter\", t = \"you have a ticket\". Which formula expresses \"You may not enter unless you have a ticket\"?",
+    "options": [
+      "e → t",
+      "t → e",
+      "e ∧ ¬t",
+      "e ∨ t"
+    ],
+    "answer": 0,
+    "hint": "\"X unless Y\" means \"if not Y, then X\".",
+    "explanation": "\"¬e unless t\" means ¬t → ¬e, which is equivalent to e → t: entering requires a ticket.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬t → ¬e",
+      "formulas": [
+        "e → t",
+        "t → e",
+        "e ∧ ¬t",
+        "e ∨ t"
+      ]
+    }
+  },
+  {
+    "id": "L5-008",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "arrangement"
+    ],
+    "prompt": "Four friends A, B, C and D sit in seats 1–4 in a row. A sits in seat 1. B sits next to A. C does not sit next to B. Who sits in seat 3?",
+    "options": [
+      "D",
+      "C",
+      "B",
+      "A"
+    ],
+    "answer": 0,
+    "hint": "Place A and B first.",
+    "explanation": "A is in seat 1, so B is in seat 2. C may not be next to B, so C cannot take seat 3 — C takes seat 4 and D seat 3.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.permutations([\"A\",\"B\",\"C\",\"D\"]).filter(o=> o[0]===\"A\" && Math.abs(o.indexOf(\"B\")-o.indexOf(\"A\"))===1 && Math.abs(o.indexOf(\"C\")-o.indexOf(\"B\"))!==1); const s=[...new Set(sols.map(o=>o[2]))]; if(s.length!==1) throw new Error(\"not unique\"); return s[0];"
+    }
+  },
+  {
+    "id": "L5-009",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "knights-knaves"
+    ],
+    "prompt": "Knights always tell the truth; knaves always lie. A says: \"At least one of us is a knave.\" (Only A and B are present.) What are A and B?",
+    "options": [
+      "A is a knight, B is a knave",
+      "Both are knaves",
+      "Both are knights",
+      "A is a knave, B is a knight"
+    ],
+    "answer": 0,
+    "hint": "Suppose A is a knave and see what happens.",
+    "explanation": "If A were a knave, the statement would be true (A is a knave) — impossible for a knave. So A is a knight, the statement is true, and since A is not the knave, B is.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.tuples([true,false],2).filter(k=> [k=> !k[0]||!k[1],k=> k[1]].every((s,i)=> s(k)===k[i])); const desc=(k)=> k[0]&&k[1]?\"Both are knights\":k[0]?\"A is a knight, B is a knave\":k[1]?\"A is a knave, B is a knight\":\"Both are knaves\"; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+    }
+  },
+  {
+    "id": "L5-010",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "knights-knaves"
+    ],
+    "prompt": "Knights always tell the truth; knaves always lie. A says: \"B is a knight.\" B says: \"A and I are of different types.\" What are A and B?",
+    "options": [
+      "Both are knaves",
+      "Both are knights",
+      "A is a knight, B is a knave",
+      "A is a knave, B is a knight"
+    ],
+    "answer": 0,
+    "hint": "Case split on A.",
+    "explanation": "If A were a knight, B would be a knight too, but then B's claim \"different types\" would be a lie — contradiction. So A is a knave and B is a knave (A lied). B's claim is then false, as it should be.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.tuples([true,false],2).filter(k=> [k=> k[1],k=> k[0]!==k[1]].every((s,i)=> s(k)===k[i])); const desc=(k)=> k[0]&&k[1]?\"Both are knights\":k[0]?\"A is a knight, B is a knave\":k[1]?\"A is a knave, B is a knight\":\"Both are knaves\"; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+    }
+  },
+  {
+    "id": "L5-011",
+    "unit": "L5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "arrangement",
+      "counting"
+    ],
+    "prompt": "Five people A, B, C, D and E sit in a row. A may not sit at either end, and B must sit immediately to the right of C. How many seatings are possible?",
+    "answer": {
+      "kind": "numeric",
+      "value": 12
+    },
+    "hint": "Glue C and B into one block, then handle A.",
+    "explanation": "Treat \"CB\" as one block: 4 units can be arranged in 4! = 24 ways. A is at an end in 2 · 3! = 12 of those. 24 − 12 = 12.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.permutations([\"A\",\"B\",\"C\",\"D\",\"E\"]).filter(o=> o.indexOf(\"A\")!==0 && o.indexOf(\"A\")!==4 && o.indexOf(\"B\")===o.indexOf(\"C\")+1).length;"
+    }
+  },
+  {
+    "id": "L5-012",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "scheduling",
+      "constraints"
+    ],
+    "prompt": "Five exams — History, Maths, Physics, Biology and Chemistry — take place Monday to Friday, one per day. History is before Maths. Physics is on Wednesday. Biology is the day after Chemistry. Maths is not on Friday. On which day is History?",
+    "options": [
+      "Monday",
+      "Tuesday",
+      "Thursday",
+      "Friday"
+    ],
+    "answer": 0,
+    "hint": "Where can the Chemistry–Biology pair go?",
+    "explanation": "Chemistry–Biology needs two consecutive days avoiding Wednesday: Mon–Tue or Thu–Fri. If Mon–Tue, History and Maths take Thu–Fri with Maths on Friday — not allowed. So Chemistry–Biology is Thu–Fri, and History (Mon) comes before Maths (Tue).",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const days=[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\"]; const sols=h.permutations([\"H\",\"M\",\"P\",\"B\",\"C\"]).filter(o=>{const d=x=>o.indexOf(x); return d(\"H\")<d(\"M\") && d(\"P\")===2 && d(\"B\")===d(\"C\")+1 && d(\"M\")!==4;}); const s=[...new Set(sols.map(o=>days[o.indexOf(\"H\")]))]; if(s.length!==1) throw new Error(\"not unique\"); return s[0];"
+    }
+  },
+  {
+    "id": "L5-013",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "necessary-sufficient"
+    ],
+    "prompt": "For an integer x, the condition \"x > 3\" is … for \"x > 5\".",
+    "options": [
+      "necessary but not sufficient",
+      "sufficient but not necessary",
+      "necessary and sufficient",
+      "neither necessary nor sufficient"
+    ],
+    "answer": 0,
+    "hint": "Does x > 3 guarantee x > 5? Does x > 5 guarantee x > 3?",
+    "explanation": "x > 5 always implies x > 3, so x > 3 is necessary. x = 4 satisfies x > 3 but not x > 5, so it is not sufficient.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=h.range(-20,20); const suff=D.every(x=> !(x>3) || x>5), nec=D.every(x=> !(x>5) || x>3); return {index: nec&&!suff?0: suff&&!nec?1: nec&&suff?2:3};"
+    }
+  },
+  {
+    "id": "L5-014",
+    "unit": "L5",
+    "type": "multi",
+    "difficulty": 2,
+    "tags": [
+      "only-if",
+      "necessary-sufficient"
+    ],
+    "prompt": "Select **all** statements that mean the same as \"You may drive only if you have a licence.\"",
+    "options": [
+      "If you may drive, then you have a licence.",
+      "If you have no licence, you may not drive.",
+      "If you have a licence, you may drive.",
+      "Having a licence is necessary for being allowed to drive.",
+      "Having a licence is sufficient for being allowed to drive."
+    ],
+    "answer": [
+      0,
+      1,
+      3
+    ],
+    "hint": "Write each as an implication between d (may drive) and l (licence).",
+    "explanation": "The original is d → l. \"If you may drive, you have a licence\" (d → l), its contrapositive \"if you have no licence, you may not drive\", and \"a licence is necessary for driving\" (d → l) all match. \"If you have a licence, you may drive\" and \"a licence is sufficient\" are the converse l → d.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "¬d ∨ l",
+      "formulas": [
+        "d → l",
+        "¬l → ¬d",
+        "l → d",
+        "d → l",
+        "l → d"
+      ]
+    }
+  },
+  {
+    "id": "L5-015",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "knights-knaves"
+    ],
+    "prompt": "Knights always tell the truth; knaves always lie. A says: \"B is a knave.\" B says: \"C is a knave.\" C says: \"A and B are both knaves.\" Who is a knight?",
+    "options": [
+      "Only B is a knight",
+      "Only A is a knight",
+      "A and C are knights",
+      "Nobody is a knight"
+    ],
+    "answer": 0,
+    "hint": "Case split on A, then follow the chain.",
+    "explanation": "If A is a knight: B is a knave, so C is a knight, but C's claim that A is a knave is false — contradiction. So A is a knave: B is a knight, C is a knave, and C's claim is false (B is a knight), as required. Only B is a knight.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.tuples([true,false],3).filter(k=> [k=> !k[1],k=> !k[2],k=> !k[0]&&!k[1]].every((s,i)=> s(k)===k[i])); const desc=(k)=> {const n=[\"A\",\"B\",\"C\"].filter((_,i)=>k[i]); return n.length===0?\"Nobody is a knight\":n.length===3?\"All three are knights\":n.length===1?\"Only \"+n[0]+\" is a knight\":n.join(\" and \")+\" are knights\";}; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+    }
+  },
+  {
+    "id": "L5-016",
+    "unit": "L5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "arrangement",
+      "counting"
+    ],
+    "prompt": "Five books P, Q, R, S and T stand on a shelf. P is somewhere to the left of Q, R is not at either end, and S and T stand next to each other. How many orders are possible?",
+    "answer": {
+      "kind": "numeric",
+      "value": 12
+    },
+    "hint": "Glue S and T together (in either order) and then count.",
+    "explanation": "Place the S–T pair first (2 internal orders). Pair in seats 1–2: R in 3 or 4, then P and Q fill the rest in one way — 2 options. Seats 2–3: R must be 4 — 1. Seats 3–4: R must be 2 — 1. Seats 4–5: R in 2 or 3 — 2. That is 6 placements, times 2 orders of S and T = 12.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.permutations([\"P\",\"Q\",\"R\",\"S\",\"T\"]).filter(o=> o.indexOf(\"P\")<o.indexOf(\"Q\") && o.indexOf(\"R\")!==0 && o.indexOf(\"R\")!==4 && Math.abs(o.indexOf(\"S\")-o.indexOf(\"T\"))===1).length;"
+    }
+  },
+  {
+    "id": "L5-017",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "unless",
+      "only-if"
+    ],
+    "prompt": "The alarm sounds unless the code is entered. The door locks only if the alarm sounds. The door locked. What follows for certain?",
+    "options": [
+      "The alarm sounded.",
+      "The code was not entered.",
+      "The code was entered.",
+      "The alarm did not sound."
+    ],
+    "answer": 0,
+    "hint": "Translate each sentence; \"unless\" and \"only if\" are one-directional.",
+    "explanation": "\"Door locks only if alarm sounds\" is l → s; with l we get s: the alarm sounded. \"Alarm unless code\" is ¬c → s, which says nothing about c once s is known.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "¬c → s",
+        "l → s",
+        "l"
+      ],
+      "formulas": [
+        "s",
+        "¬c",
+        "c",
+        "¬s"
+      ]
+    }
+  },
+  {
+    "id": "L5-018",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "knights-knaves"
+    ],
+    "prompt": "Knights always tell the truth; knaves always lie. A says: \"If I am a knight, then B is a knight.\" What are A and B?",
+    "options": [
+      "Both are knights",
+      "A is a knight, B is a knave",
+      "A is a knave, B is a knight",
+      "Both are knaves"
+    ],
+    "answer": 0,
+    "hint": "Assume A is a knave: when is an implication false?",
+    "explanation": "If A were a knave, the statement would be false, which needs \"A is a knight\" true — contradiction. So A is a knight and the statement is true; its premise holds, so B is a knight.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.tuples([true,false],2).filter(k=> [k=> !k[0] || k[1],k=> k[1]].every((s,i)=> s(k)===k[i])); const desc=(k)=> k[0]&&k[1]?\"Both are knights\":k[0]?\"A is a knight, B is a knave\":k[1]?\"A is a knave, B is a knight\":\"Both are knaves\"; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+    }
+  },
+  {
+    "id": "L5-019",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "arrangement"
+    ],
+    "prompt": "Four houses in a row (positions 1–4) are painted red, blue, green and white, one colour each. The red house is directly left of the blue house. The green house is not at either end. The white house is somewhere left of the green house. Which colour is house 3?",
+    "options": [
+      "red",
+      "blue",
+      "green",
+      "white"
+    ],
+    "answer": 0,
+    "hint": "Green is in position 2 or 3 — try both.",
+    "explanation": "If green were 3, white would be 1 or 2 and red–blue would need two adjacent free positions among the rest — impossible. So green is 2, white is 1 and red–blue take 3–4. House 3 is red.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.permutations([\"red\",\"blue\",\"green\",\"white\"]).filter(o=> o.indexOf(\"blue\")===o.indexOf(\"red\")+1 && ![0,3].includes(o.indexOf(\"green\")) && o.indexOf(\"white\")<o.indexOf(\"green\")); const s=[...new Set(sols.map(o=>o[2]))]; if(s.length!==1) throw new Error(\"not unique\"); return s[0];"
+    }
+  },
+  {
+    "id": "L5-020",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "knights-knaves"
+    ],
+    "prompt": "Knights always tell the truth; knaves always lie. A says: \"Exactly one of us three is a knave.\" B says: \"A is a knight.\" C says: \"Exactly two of us are knights.\" Who is a knight?",
+    "options": [
+      "Nobody is a knight",
+      "Only C is a knight",
+      "A and B are knights",
+      "All three are knights"
+    ],
+    "answer": 0,
+    "hint": "If A and B are knights, what must C be — and is C's statement then consistent?",
+    "explanation": "If A is a knight, B is a knight too and C must be the only knave; but then C's claim \"exactly two knights\" is true — impossible for a knave. So A is a knave, and B (who backs A) is a knave. If C were a knight there would be one knight, making C's claim false — so C is a knave as well. All three are knaves; A's claim (3 knaves, not 1) and C's claim (0 knights, not 2) are indeed false.",
+    "estSeconds": 200,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.tuples([true,false],3).filter(k=> [k=> k.filter(x=>!x).length===1,k=> k[0],k=> k.filter(Boolean).length===2].every((s,i)=> s(k)===k[i])); const desc=(k)=> {const n=[\"A\",\"B\",\"C\"].filter((_,i)=>k[i]); return n.length===0?\"Nobody is a knight\":n.length===3?\"All three are knights\":n.length===1?\"Only \"+n[0]+\" is a knight\":n.join(\" and \")+\" are knights\";}; const got=[...new Set(sols.map(desc))]; if(got.length!==1) throw new Error(\"puzzle has \"+sols.length+\" solutions\"); return got[0];"
+    }
+  },
+  {
+    "id": "L5-021",
+    "unit": "L5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "arrangement",
+      "counting"
+    ],
+    "prompt": "Four couples sit in a row of 8 chairs. Every couple must sit next to each other. How many seatings are possible?",
+    "answer": {
+      "kind": "numeric",
+      "value": 384
+    },
+    "hint": "Treat each couple as a block; then account for the order within each block.",
+    "explanation": "The 4 couple-blocks can be ordered in 4! = 24 ways, and each couple can sit in 2 orders: 24 · 2⁴ = 384.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const P=[\"a1\",\"a2\",\"b1\",\"b2\",\"c1\",\"c2\",\"d1\",\"d2\"]; return h.permutations(P).filter(o=> [\"a\",\"b\",\"c\",\"d\"].every(c=> Math.abs(o.indexOf(c+\"1\")-o.indexOf(c+\"2\"))===1)).length;"
+    }
+  },
+  {
+    "id": "L5-022",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "arrangement",
+      "must-be-true"
+    ],
+    "prompt": "Five runners P, Q, R, S and T finish a race without ties. P finishes before Q. R finishes immediately after S. T is neither first nor last. Q is not last. Which statement **must** be true?",
+    "options": [
+      "P finishes first.",
+      "T finishes third.",
+      "S finishes before Q.",
+      "Q finishes second."
+    ],
+    "answer": 0,
+    "hint": "List every order that satisfies all four clues before judging the options.",
+    "explanation": "Only two orders work: P, Q, T, S, R and P, T, Q, S, R. In both, P is first. T is third in only one of them, Q second in only one, and S never finishes before Q.",
+    "estSeconds": 220,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const sols=h.permutations([\"P\",\"Q\",\"R\",\"S\",\"T\"]).filter(o=>{const i=x=>o.indexOf(x); return i(\"P\")<i(\"Q\") && i(\"R\")===i(\"S\")+1 && i(\"T\")!==0 && i(\"T\")!==4 && i(\"Q\")!==4;}); const opts=[o=>o[0]===\"P\", o=>o[2]===\"T\", o=>o.indexOf(\"S\")<o.indexOf(\"Q\"), o=>o[1]===\"Q\"]; return {indices: opts.flatMap((f,i)=> sols.every(f)?[i]:[])};"
+    }
+  },
+  {
+    "id": "L5-023",
+    "unit": "L5",
+    "type": "multi",
+    "difficulty": 3,
+    "tags": [
+      "dense-statements",
+      "biconditional"
+    ],
+    "prompt": "\"It is not the case that the system is secure if and only if the password is long and the firewall is on.\" Read this as ¬(s ↔ (l ∧ f)). Select **all** situations in which the statement is true.",
+    "options": [
+      "secure; long password; firewall on",
+      "secure; short password; firewall on",
+      "not secure; long password; firewall on",
+      "not secure; short password; firewall off",
+      "not secure; long password; firewall off"
+    ],
+    "answer": [
+      1,
+      2
+    ],
+    "hint": "The statement says that s and (l ∧ f) have different truth values.",
+    "explanation": "¬(s ↔ (l ∧ f)) is true exactly when s differs from l ∧ f. Secure with a short password (s = T, l ∧ f = F): true. Not secure with long password and firewall (s = F, l ∧ f = T): true. In the other three situations s equals l ∧ f.",
+    "estSeconds": 200,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const rows=[[1,1,1],[1,0,1],[0,1,1],[0,0,0],[0,1,0]]; return {indices: rows.flatMap(([s,l,f],i)=> h.logic.evalWith(\"¬(s ↔ (l ∧ f))\",{s:!!s,l:!!l,f:!!f}) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L5-024",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "self-reference",
+      "puzzle"
+    ],
+    "prompt": "A prize is in exactly one of three boxes. Exactly one of these statements is true: (1) \"The prize is in box 1.\" (2) \"The prize is not in box 2.\" (3) \"The prize is not in box 1.\" Where is the prize?",
+    "options": [
+      "Box 2",
+      "Box 1",
+      "Box 3",
+      "It cannot be determined"
+    ],
+    "answer": 0,
+    "hint": "Test each box and count how many statements become true.",
+    "explanation": "Box 1: statements 1 and 2 are true (two). Box 2: only statement 3 is true (one). Box 3: statements 2 and 3 are true (two). So the prize is in box 2.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const ok=[1,2,3].filter(b=> [b===1, b!==2, b!==1].filter(Boolean).length===1); if(ok.length!==1) return \"It cannot be determined\"; return \"Box \"+ok[0];"
+    }
+  },
+  {
+    "id": "L5-025",
+    "unit": "L5",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "necessary-sufficient",
+      "number-theory"
+    ],
+    "prompt": "Complete the statement so that it is true: \"A positive integer n is divisible by 6 if and only if …\"",
+    "options": [
+      "n is divisible by 2 and by 3",
+      "n is divisible by 2 or by 3",
+      "n is even",
+      "the sum of the digits of n is divisible by 6"
+    ],
+    "answer": 0,
+    "hint": "\"If and only if\" needs both necessary and sufficient.",
+    "explanation": "6 = 2 · 3 with 2 and 3 coprime, so n is divisible by 6 exactly when it is divisible by both 2 and 3. \"Even\" or \"2 or 3\" are necessary-ish but not sufficient (4, 9); the digit-sum test is for 3 and 9, not 6 (e.g. 15 has digit sum 6).",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=h.range(1,2000); const ds=n=> String(n).split(\"\").reduce((s,d)=>s+Number(d),0); const conds=[n=> n%2===0&&n%3===0, n=> n%2===0||n%3===0, n=> n%2===0, n=> ds(n)%6===0]; return {indices: conds.flatMap((c,i)=> N.every(n=> (n%6===0)===c(n)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L5-026",
+    "unit": "L5",
+    "type": "order",
+    "difficulty": 2,
+    "tags": [
+      "ordering",
+      "arrangement"
+    ],
+    "prompt": "Five students finished a quiz with different scores. Bo scored higher than Cy. Ed scored lower than Di but higher than Bo. Al scored lower than Cy. Put them in order from **highest** to **lowest** score.",
+    "options": [
+      "Al",
+      "Bo",
+      "Cy",
+      "Di",
+      "Ed"
+    ],
+    "answer": [
+      3,
+      4,
+      1,
+      2,
+      0
+    ],
+    "hint": "Chain the comparisons.",
+    "explanation": "Di > Ed > Bo > Cy > Al: Ed is between Di and Bo, Bo is above Cy, and Al is below Cy.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const P=[\"Al\",\"Bo\",\"Cy\",\"Di\",\"Ed\"]; const sols=h.permutations(P).filter(o=>{const i=x=>o.indexOf(x); return i(\"Bo\")<i(\"Cy\") && i(\"Di\")<i(\"Ed\") && i(\"Ed\")<i(\"Bo\") && i(\"Cy\")<i(\"Al\");}); if(sols.length!==1) throw new Error(\"not unique\"); return {order: sols[0].map(x=> P.indexOf(x))};"
+    }
+  }
+]

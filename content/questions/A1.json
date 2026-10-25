@@ -1,0 +1,575 @@
+[
+  {
+    "id": "A1-001",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "arithmetic"
+    ],
+    "prompt": "What number comes next? 3, 7, 11, 15, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 19
+    },
+    "hint": "Look at the differences.",
+    "explanation": "Each term is 4 more than the previous one, so the next term is 15 + 4 = 19.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[3,7,11,15]; const d=s[1]-s[0]; if(!s.every((x,i)=> i===0 || x-s[i-1]===d)) throw new Error(\"not arithmetic\"); return s[s.length-1]+d;"
+    }
+  },
+  {
+    "id": "A1-002",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "geometric"
+    ],
+    "prompt": "What number comes next? 2, 6, 18, 54, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 162
+    },
+    "hint": "Divide consecutive terms.",
+    "explanation": "Each term is 3 times the previous one: 54 · 3 = 162.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[2,6,18,54]; const r=s[1]/s[0]; if(!s.every((x,i)=> i===0 || x/s[i-1]===r)) throw new Error(\"not geometric\"); return s[s.length-1]*r;"
+    }
+  },
+  {
+    "id": "A1-003",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "squares"
+    ],
+    "prompt": "What number comes next? 1, 4, 9, 16, 25, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 36
+    },
+    "hint": "Which numbers are these?",
+    "explanation": "These are the squares 1², 2², …, 5². Next: 6² = 36.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[1,4,9,16,25]; if(!s.every((x,i)=> x===(i+1)**2)) throw new Error(\"not squares\"); return (s.length+1)**2;"
+    }
+  },
+  {
+    "id": "A1-004",
+    "unit": "A1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "letters"
+    ],
+    "prompt": "Which letter comes next? A, C, E, G, …",
+    "options": [
+      "I",
+      "H",
+      "J",
+      "K"
+    ],
+    "answer": 0,
+    "hint": "Convert letters to alphabet positions.",
+    "explanation": "Positions 1, 3, 5, 7: steps of 2. Next is position 9, the letter I.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[\"A\",\"C\",\"E\",\"G\"].map(c=>c.charCodeAt(0)-64); const d=s[1]-s[0]; if(!s.every((x,i)=> i===0 || x-s[i-1]===d)) throw new Error(\"not arithmetic\"); return String.fromCharCode(64 + s[s.length-1]+d);"
+    }
+  },
+  {
+    "id": "A1-005",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "fibonacci"
+    ],
+    "prompt": "What number comes next? 1, 1, 2, 3, 5, 8, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 13
+    },
+    "hint": "How does each term relate to the two before it?",
+    "explanation": "Each term is the sum of the previous two: 5 + 8 = 13.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[1,1,2,3,5,8]; if(!s.every((x,i)=> i<2 || x===s[i-1]+s[i-2])) throw new Error(\"rule fails\"); return s[s.length-1]+s[s.length-2];"
+    }
+  },
+  {
+    "id": "A1-006",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "arithmetic"
+    ],
+    "prompt": "What number comes next? 100, 93, 86, 79, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 72
+    },
+    "hint": "Look at the differences.",
+    "explanation": "The sequence decreases by 7 each time: 79 − 7 = 72.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[100,93,86,79]; const d=s[1]-s[0]; if(!s.every((x,i)=> i===0 || x-s[i-1]===d)) throw new Error(\"not arithmetic\"); return s[s.length-1]+d;"
+    }
+  },
+  {
+    "id": "A1-007",
+    "unit": "A1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "odd-one-out",
+      "primes"
+    ],
+    "prompt": "Which number does not belong? 2, 3, 5, 9, 11",
+    "options": [
+      "9",
+      "2",
+      "5",
+      "11"
+    ],
+    "answer": 0,
+    "hint": "What do most of them have in common?",
+    "explanation": "2, 3, 5 and 11 are prime; 9 = 3 · 3 is not.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const xs=[9,2,5,11,3]; const odd=xs.filter(x=>!h.isPrime(x)); if(odd.length!==1) throw new Error(\"ambiguous\"); return odd[0];"
+    }
+  },
+  {
+    "id": "A1-008",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "figures"
+    ],
+    "prompt": "Figure 1 has 2 dots, figure 2 has 5 dots, figure 3 has 10 dots and figure 4 has 17 dots. If the pattern n² + 1 continues, how many dots does figure 6 have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 37
+    },
+    "hint": "Check the rule on the given figures first.",
+    "explanation": "The given counts fit n² + 1. Figure 6: 36 + 1 = 37.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[2,5,10,17]; if(!s.every((x,i)=> x===(i+1)**2+1)) throw new Error(\"rule fails\"); return 6**2+1;"
+    }
+  },
+  {
+    "id": "A1-009",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "second-differences"
+    ],
+    "prompt": "What number comes next? 2, 5, 10, 17, 26, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 37
+    },
+    "hint": "The first differences are not constant. Look at them again.",
+    "explanation": "Differences: 3, 5, 7, 9 — they grow by 2. The next difference is 11, giving 26 + 11 = 37.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[2,5,10,17,26]; const d=s.slice(1).map((x,i)=>x-s[i]); const dd=d.slice(1).map((x,i)=>x-d[i]); if(new Set(dd).size!==1) throw new Error(\"no constant 2nd diff\"); return s[s.length-1]+d[d.length-1]+dd[0];"
+    }
+  },
+  {
+    "id": "A1-010",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "factorial"
+    ],
+    "prompt": "What number comes next? 1, 2, 6, 24, 120, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 720
+    },
+    "hint": "Divide each term by the one before.",
+    "explanation": "The ratios are 2, 3, 4, 5 — these are factorials. Next: 120 · 6 = 720.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[1,2,6,24,120]; if(!s.every((x,i)=> x===h.factorial(i+1))) throw new Error(\"not factorials\"); return h.factorial(s.length+1);"
+    }
+  },
+  {
+    "id": "A1-011",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "interleaved"
+    ],
+    "prompt": "What number comes next? 1, 10, 2, 20, 3, 30, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Look at the odd and even positions separately.",
+    "explanation": "Odd positions: 1, 2, 3, … Even positions: 10, 20, 30, … The 7th term is at an odd position: 4.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[1,10,2,20,3,30]; const odd=s.filter((_,i)=>i%2===0); const d=odd[1]-odd[0]; return odd[odd.length-1]+d;"
+    }
+  },
+  {
+    "id": "A1-012",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "recurrence",
+      "differences"
+    ],
+    "prompt": "What number comes next? 3, 5, 9, 17, 33, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 65
+    },
+    "hint": "Look at the differences, or at 2 × term.",
+    "explanation": "Differences 2, 4, 8, 16 double each time, so the next difference is 32: 33 + 32 = 65. (Equivalently, each term is 2 × previous − 1.)",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[3,5,9,17,33]; if(!s.every((x,i)=> i===0 || x===2*s[i-1]-1)) throw new Error(\"rule fails\"); return 2*s[s.length-1]-1;"
+    }
+  },
+  {
+    "id": "A1-013",
+    "unit": "A1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "letters",
+      "growing-step"
+    ],
+    "prompt": "Which letter comes next? B, E, I, N, …",
+    "options": [
+      "T",
+      "S",
+      "U",
+      "R"
+    ],
+    "answer": 0,
+    "hint": "Positions in the alphabet, then differences.",
+    "explanation": "Positions 2, 5, 9, 14: steps 3, 4, 5. The next step is 6, giving position 20: T.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[\"B\",\"E\",\"I\",\"N\"].map(c=>c.charCodeAt(0)-64); const d=s.slice(1).map((x,i)=>x-s[i]); if(!d.every((x,i)=> i===0 || x===d[i-1]+1)) throw new Error(\"rule fails\"); return String.fromCharCode(64 + s[s.length-1] + d[d.length-1] + 1);"
+    }
+  },
+  {
+    "id": "A1-014",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "recurrence"
+    ],
+    "prompt": "A sequence starts with $u_1 = 2$ and follows $u_{n+1} = 3u_n - 2$. What is $u_6$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 244
+    },
+    "hint": "Just iterate carefully.",
+    "explanation": "$u_2 = 4$, $u_3 = 10$, $u_4 = 28$, $u_5 = 82$, $u_6 = 244$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let u=2; for(let n=1;n<6;n++) u=3*u-2; return u;"
+    }
+  },
+  {
+    "id": "A1-015",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "rewriting"
+    ],
+    "prompt": "Start with the word A. In every step, every A is replaced by AB and every B by A — all at the same time. After 6 steps, how many letters does the word have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 21
+    },
+    "hint": "Track the length after each step; you do not need the words themselves.",
+    "explanation": "Lengths: A (1), AB (2), ABA (3), ABAAB (5), 8, 13, 21. Each new length is the sum of the two previous ones. After 6 steps: 21.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const R={A:\"AB\",B:\"A\"}; const step=(w)=> w.split(\"\").map(c=> R[c] ?? c).join(\"\"); let w=\"A\"; for(let i=0;i<6;i++) w=step(w); return w.length;"
+    }
+  },
+  {
+    "id": "A1-016",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "rewriting"
+    ],
+    "prompt": "Same rules as before (A → AB and B → A, applied simultaneously), starting from A. How many B's does the word contain after 5 steps?",
+    "answer": {
+      "kind": "numeric",
+      "value": 5
+    },
+    "hint": "Every B in step n+1 comes from an A in step n.",
+    "explanation": "The number of B's in step n+1 equals the number of A's in step n. The A-counts are 1, 1, 2, 3, 5, 8, …, so the B-counts are 0, 1, 1, 2, 3, 5. After 5 steps: 5.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const R={A:\"AB\",B:\"A\"}; const step=(w)=> w.split(\"\").map(c=> R[c] ?? c).join(\"\"); let w=\"A\"; for(let i=0;i<5;i++) w=step(w); return w.split(\"\").filter(c=>c===\"B\").length;"
+    }
+  },
+  {
+    "id": "A1-017",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "figures",
+      "triangular"
+    ],
+    "prompt": "Dots are arranged in a triangle with 1 dot in the first row, 2 in the second, and so on. How many dots are there in a triangle with 10 rows?",
+    "answer": {
+      "kind": "numeric",
+      "value": 55
+    },
+    "hint": "Add 1 + 2 + … + 10.",
+    "explanation": "1 + 2 + … + 10 = 10 · 11 / 2 = 55.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.sum(h.range(1,10));"
+    }
+  },
+  {
+    "id": "A1-018",
+    "unit": "A1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "rule-identification"
+    ],
+    "prompt": "Which rule generates the sequence 1, 3, 7, 15, 31?",
+    "options": [
+      "$u_n = 2^n - 1$",
+      "$u_n = 2n - 1$",
+      "$u_1 = 1$ and $u_{n+1} = u_n + 2$",
+      "$u_n = n^2 - n + 1$"
+    ],
+    "answer": 0,
+    "hint": "Test each rule on the first five terms.",
+    "explanation": "$2^n - 1$ gives 1, 3, 7, 15, 31. $2n - 1$ gives 1, 3, 5, …; adding 2 each step gives 1, 3, 5, …; $n^2 - n + 1$ gives 1, 3, 7, 13, ….",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const want=[1,3,7,15,31]; const gens=[n=>2**n-1, n=>2*n-1, n=> 1+2*(n-1), n=> n*n-n+1]; return {indices: gens.flatMap((g,i)=> want.every((x,k)=> g(k+1)===x) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "A1-019",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "figures"
+    ],
+    "prompt": "A staircase of height 1 uses 1 block, height 2 uses 3 blocks (1 + 2), height 3 uses 6 blocks. How many blocks does a staircase of height 12 use?",
+    "answer": {
+      "kind": "numeric",
+      "value": 78
+    },
+    "hint": "Height n uses 1 + 2 + … + n blocks.",
+    "explanation": "1 + 2 + … + 12 = 12 · 13 / 2 = 78.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.sum(h.range(1,12));"
+    }
+  },
+  {
+    "id": "A1-020",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "differences",
+      "primes"
+    ],
+    "prompt": "What number comes next? 1, 3, 6, 11, 18, 29, …",
+    "answer": {
+      "kind": "numeric",
+      "value": 42
+    },
+    "hint": "The differences form a famous sequence.",
+    "explanation": "Differences: 2, 3, 5, 7, 11 — the primes. The next prime is 13, so 29 + 13 = 42.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[1,3,6,11,18,29]; const d=s.slice(1).map((x,i)=>x-s[i]); if(!d.every(h.isPrime)) throw new Error(\"not primes\"); let p=d[d.length-1]+1; while(!h.isPrime(p)) p++; return s[s.length-1]+p;"
+    }
+  },
+  {
+    "id": "A1-021",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "look-and-say"
+    ],
+    "prompt": "What comes next? 1, 11, 21, 1211, 111221, … (Hint: read each term aloud.)",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "312211"
+      ],
+      "ignoreSpaces": true
+    },
+    "hint": "\"1\" is read as \"one 1\", giving 11.",
+    "explanation": "Each term describes the previous one: 111221 is \"three 1s, two 2s, one 1\" → 312211.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const say=(s)=> s.replace(/(.)\\1*/g, m=> m.length + m[0]); let t=\"1\"; const seen=[\"1\"]; for(let i=0;i<4;i++){ t=say(t); seen.push(t);} if(seen.join(\",\")!==\"1,11,21,1211,111221\") throw new Error(\"mismatch\"); return say(t);"
+    }
+  },
+  {
+    "id": "A1-022",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "recurrence"
+    ],
+    "prompt": "$u_1 = u_2 = 1$ and $u_n = u_{n-1} + 2u_{n-2}$ for $n \\ge 3$. What is $u_8$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 85
+    },
+    "hint": "Write the terms out one by one.",
+    "explanation": "1, 1, 3, 5, 11, 21, 43, 85. So $u_8 = 85$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const u=[0,1,1]; for(let n=3;n<=8;n++) u[n]=u[n-1]+2*u[n-2]; return u[8];"
+    }
+  },
+  {
+    "id": "A1-023",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "parity",
+      "sequences"
+    ],
+    "prompt": "The sequence 1, 2, 4, 7, 11, 16, … has differences 1, 2, 3, 4, 5, … How many of its first 100 terms are even?",
+    "answer": {
+      "kind": "numeric",
+      "value": 50
+    },
+    "hint": "Write the parities of the first eight terms and look for a cycle.",
+    "explanation": "$u_n = 1 + \\tfrac{n(n-1)}{2}$. The parities repeat with period 4: odd, even, even, odd. So exactly half of every block of four is even: 50 of the first 100 terms.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let u=1, c=0; for(let n=1;n<=100;n++){ if(n>1) u+=n-1; if(u%2===0) c++; } return c;"
+    }
+  },
+  {
+    "id": "A1-024",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "rewriting",
+      "invariants"
+    ],
+    "prompt": "Start with the word ABABAB. In each step, replace one occurrence of AB by BA. You stop when no AB is left. How many steps does this take (it is the same however you choose)?",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "Each step moves one B one place left past one A.",
+    "explanation": "Every step removes exactly one pair (A before B). Count those pairs in ABABAB: the first A precedes 3 B's, the second 2, the third 1 — 6 pairs, so 6 steps.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let w=\"ABABAB\", steps=0; while(w.includes(\"AB\")){ w=w.replace(\"AB\",\"BA\"); steps++; } let w2=\"ABABAB\", s2=0; while(w2.includes(\"AB\")){ const i=w2.lastIndexOf(\"AB\"); w2=w2.slice(0,i)+\"BA\"+w2.slice(i+2); s2++; } if(steps!==s2) throw new Error(\"order dependent\"); return steps;"
+    }
+  },
+  {
+    "id": "A1-025",
+    "unit": "A1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "figures",
+      "grids"
+    ],
+    "prompt": "Figure n is an n × n grid of tiles. All border tiles and all tiles on both diagonals are black; the rest are white. How many white tiles does figure 10 have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 48
+    },
+    "hint": "Count the interior first, then subtract the diagonal tiles that lie inside it.",
+    "explanation": "The interior is 8 × 8 = 64 tiles. Each diagonal has 10 tiles, 2 of them on the border, so 8 inside; for even n the diagonals do not share a tile. 64 − 16 = 48.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const n=10; let c=0; for(let i=0;i<n;i++) for(let j=0;j<n;j++) if(!(i===0||j===0||i===n-1||j===n-1||i===j||i+j===n-1)) c++; return c;"
+    }
+  }
+]

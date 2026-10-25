@@ -1,0 +1,644 @@
+[
+  {
+    "id": "L3-001",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "negation",
+      "quantifiers"
+    ],
+    "prompt": "Which statement is equivalent to ¬∀x P(x)?",
+    "options": [
+      "∃x ¬P(x)",
+      "∀x ¬P(x)",
+      "¬∃x P(x)",
+      "∃x P(x)"
+    ],
+    "answer": 0,
+    "hint": "\"Not everything has property P\" — what does that guarantee?",
+    "explanation": "If not every x has property P, at least one x lacks it: ¬∀x P(x) ≡ ∃x ¬P(x).",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=unary; const target=P=> !all(x=>P(x)); const opts=[P=> ex(x=>!P(x)),P=> all(x=>!P(x)),P=> !ex(x=>P(x)),P=> ex(x=>P(x))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-002",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "translation",
+      "universal"
+    ],
+    "prompt": "S(x): \"x is a student\", P(x): \"x passed\". Translate \"All students passed.\"",
+    "options": [
+      "∀x (S(x) → P(x))",
+      "∀x (S(x) ∧ P(x))",
+      "∃x (S(x) ∧ P(x))",
+      "∃x (S(x) → P(x))"
+    ],
+    "answer": 0,
+    "hint": "\"All A are B\" uses an implication inside the ∀.",
+    "explanation": "For every x: if x is a student, then x passed — ∀x (S(x) → P(x)). ∀x (S(x) ∧ P(x)) would claim that everything is a student.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=M2; const target=m=> !ex(x=> m.P(x) && !m.Q(x)); const opts=[m=> all(x=> !m.P(x) || m.Q(x)),m=> all(x=> m.P(x) && m.Q(x)),m=> ex(x=> m.P(x) && m.Q(x)),m=> ex(x=> !m.P(x) || m.Q(x))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-003",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "translation",
+      "existential"
+    ],
+    "prompt": "S(x): \"x is a student\", P(x): \"x passed\". Translate \"Some students passed.\"",
+    "options": [
+      "∃x (S(x) ∧ P(x))",
+      "∃x (S(x) → P(x))",
+      "∀x (S(x) → P(x))",
+      "∀x (S(x) ∧ P(x))"
+    ],
+    "answer": 0,
+    "hint": "\"Some A are B\" uses a conjunction inside the ∃.",
+    "explanation": "There is an x that is a student and passed: ∃x (S(x) ∧ P(x)). With → instead, the statement would already be true if some x is not a student.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=M2; const target=m=> D.some(x=> m.P(x) && m.Q(x)); const opts=[m=> ex(x=> m.P(x) && m.Q(x)),m=> ex(x=> !m.P(x) || m.Q(x)),m=> all(x=> !m.P(x) || m.Q(x)),m=> all(x=> m.P(x) && m.Q(x))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-004",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "finite-domain"
+    ],
+    "prompt": "The domain is {1, 2, 3, 4}. Is ∀x (x² ≥ x) true?",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "hint": "Check each element of the domain.",
+    "explanation": "1 ≥ 1, 4 ≥ 2, 9 ≥ 3, 16 ≥ 4: the property holds for every element, so the statement is true.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return {index: [1,2,3,4].every(x=> x*x >= x) ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L3-005",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "finite-domain"
+    ],
+    "prompt": "The domain is {1, 2, 3, 4}. Is ∃x (x + x = x · x) true?",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "hint": "One witness is enough for ∃.",
+    "explanation": "x = 2 gives 2 + 2 = 4 = 2 · 2, so a witness exists and the statement is true.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return {index: [1,2,3,4].some(x=> x+x === x*x) ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L3-006",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "negation",
+      "quantifiers"
+    ],
+    "prompt": "Which statement is equivalent to ¬∃x P(x)?",
+    "options": [
+      "∀x ¬P(x)",
+      "∃x ¬P(x)",
+      "¬∀x P(x)",
+      "∀x P(x)"
+    ],
+    "answer": 0,
+    "hint": "\"There is no x with P\" means what about every x?",
+    "explanation": "If no x has property P, then every x fails it: ¬∃x P(x) ≡ ∀x ¬P(x).",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=unary; const target=P=> !ex(x=>P(x)); const opts=[P=> all(x=>!P(x)),P=> ex(x=>!P(x)),P=> !all(x=>P(x)),P=> all(x=>P(x))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-007",
+    "unit": "L3",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "finite-domain"
+    ],
+    "prompt": "The domain is {1, 2, …, 10}. For how many x is \"x is prime ∧ x is odd\" true?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "List the primes up to 10 first.",
+    "explanation": "The primes up to 10 are 2, 3, 5, 7. Of these, 3, 5 and 7 are odd: 3 values.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.range(1,10).filter(x=> h.isPrime(x) && x%2===1).length;"
+    }
+  },
+  {
+    "id": "L3-008",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "translation",
+      "universal"
+    ],
+    "prompt": "C(x): \"x is a cat\", F(x): \"x can fly\". Translate \"No cat can fly.\"",
+    "options": [
+      "∀x (C(x) → ¬F(x))",
+      "¬∀x (C(x) → F(x))",
+      "∀x (¬C(x) → ¬F(x))",
+      "∃x (C(x) ∧ ¬F(x))"
+    ],
+    "answer": 0,
+    "hint": "\"No A is B\" = \"every A is not B\".",
+    "explanation": "For every x: if x is a cat, then x cannot fly — ∀x (C(x) → ¬F(x)). ¬∀x (C(x) → F(x)) only says that some cat cannot fly.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=M2; const target=m=> !ex(x=> m.P(x) && m.Q(x)); const opts=[m=> all(x=> !m.P(x) || !m.Q(x)),m=> !all(x=> !m.P(x) || m.Q(x)),m=> all(x=> m.P(x) || !m.Q(x)),m=> ex(x=> m.P(x) && !m.Q(x))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-009",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "negation",
+      "nested"
+    ],
+    "prompt": "What is the negation of \"Every student passed some exam\"?",
+    "options": [
+      "Some student passed no exam.",
+      "No student passed any exam.",
+      "Every student failed some exam.",
+      "Some student failed some exam."
+    ],
+    "answer": 0,
+    "hint": "Push the negation through both quantifiers, flipping each one.",
+    "explanation": "The statement is ∀s ∃e Passed(s, e). Its negation is ∃s ∀e ¬Passed(s, e): some student passed no exam.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const rels=[]; for(let m=0;m<512;m++) rels.push((x,y)=>((m>>(3*x+y))&1)===1); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=rels; const target=R=> !all(s=> ex(e=> R(s,e))); const opts=[R=> ex(s=> all(e=> !R(s,e))),R=> all(s=> all(e=> !R(s,e))),R=> all(s=> ex(e=> !R(s,e))),R=> ex(s=> ex(e=> !R(s,e)))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-010",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "nested",
+      "order"
+    ],
+    "prompt": "L(x, y) means \"x likes y\". What does ∃y ∀x L(x, y) say?",
+    "options": [
+      "There is someone whom everybody likes.",
+      "Everybody likes somebody.",
+      "Somebody likes everybody.",
+      "Everybody likes everybody."
+    ],
+    "answer": 0,
+    "hint": "Read left to right: the ∃y comes first, so y is fixed before x varies.",
+    "explanation": "There is one particular y such that every x likes that y: \"There is someone whom everybody likes.\" \"Everybody likes somebody\" is ∀x ∃y L(x, y) — a weaker statement.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const rels=[]; for(let m=0;m<512;m++) rels.push((x,y)=>((m>>(3*x+y))&1)===1); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=rels; const target=R=> D.some(y=> D.every(x=> R(x,y))); const opts=[R=> ex(y=> all(x=> R(x,y))),R=> all(x=> ex(y=> R(x,y))),R=> ex(x=> all(y=> R(x,y))),R=> all(x=> all(y=> R(x,y)))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-011",
+    "unit": "L3",
+    "type": "multi",
+    "difficulty": 2,
+    "tags": [
+      "finite-domain",
+      "nested"
+    ],
+    "prompt": "The domain is {1, 2, 3} and L holds exactly for the pairs (1, 2), (2, 3) and (3, 1). Select **all** true statements.",
+    "options": [
+      "∀x ∃y L(x, y)",
+      "∃y ∀x L(x, y)",
+      "∃x L(x, x)",
+      "∀x ∀y (L(x, y) → ¬L(y, x))",
+      "∃x ∃y (L(x, y) ∧ L(y, x))"
+    ],
+    "answer": [
+      0,
+      3
+    ],
+    "hint": "Draw the three arrows 1 → 2 → 3 → 1 and check each statement against the picture.",
+    "explanation": "Every element has an outgoing arrow, so ∀x ∃y L(x, y) is true. No element receives arrows from all three, so ∃y ∀x L(x, y) is false. There are no loops, so ∃x L(x, x) is false. No pair goes both ways, so ∀x ∀y (L(x, y) → ¬L(y, x)) is true and ∃x ∃y (L(x, y) ∧ L(y, x)) is false.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[1,2,3]; const E=[[1,2],[2,3],[3,1]]; const L=(x,y)=> E.some(([a,b])=>a===x&&b===y); const all=f=>D.every(f), ex=f=>D.some(f); return [all(x=>ex(y=>L(x,y))), ex(y=>all(x=>L(x,y))), ex(x=>L(x,x)), all(x=>all(y=> !L(x,y) || !L(y,x))), ex(x=>ex(y=> L(x,y)&&L(y,x)))];"
+    }
+  },
+  {
+    "id": "L3-012",
+    "unit": "L3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "finite-domain"
+    ],
+    "prompt": "The domain is {1, 2, …, 20}. For how many x is ∃y (y · y = x) true (with y also from the domain)?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Which numbers up to 20 are perfect squares?",
+    "explanation": "x must be a perfect square of a number in the domain: 1, 4, 9 and 16. That is 4 values.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=h.range(1,20); return D.filter(x=> D.some(y=> y*y===x)).length;"
+    }
+  },
+  {
+    "id": "L3-013",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "distribution",
+      "quantifiers"
+    ],
+    "prompt": "How are ∀x (P(x) ∨ Q(x)) and ∀x P(x) ∨ ∀x Q(x) related?",
+    "options": [
+      "∀x P(x) ∨ ∀x Q(x) implies ∀x (P(x) ∨ Q(x)), but not conversely",
+      "They are equivalent",
+      "∀x (P(x) ∨ Q(x)) implies ∀x P(x) ∨ ∀x Q(x), but not conversely",
+      "Neither implies the other"
+    ],
+    "answer": 0,
+    "hint": "Try a domain where half the elements are P and the other half are Q.",
+    "explanation": "If ∀x P(x) or ∀x Q(x) holds, then certainly every x is P or Q. The converse fails: with two elements, one only P and the other only Q, every element is P or Q, yet neither ∀x P(x) nor ∀x Q(x) holds.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const A=m=> all(x=> m.P(x)||m.Q(x)), B=m=> all(x=>m.P(x)) || all(x=>m.Q(x)); const BtoA=M2.every(m=> !B(m)||A(m)), AtoB=M2.every(m=> !A(m)||B(m)); return {index: BtoA&&!AtoB ? 0 : BtoA&&AtoB ? 1 : AtoB ? 2 : 3};"
+    }
+  },
+  {
+    "id": "L3-014",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "distribution",
+      "quantifiers"
+    ],
+    "prompt": "How are ∃x (P(x) ∧ Q(x)) and ∃x P(x) ∧ ∃x Q(x) related?",
+    "options": [
+      "∃x (P(x) ∧ Q(x)) implies ∃x P(x) ∧ ∃x Q(x), but not conversely",
+      "They are equivalent",
+      "∃x P(x) ∧ ∃x Q(x) implies ∃x (P(x) ∧ Q(x)), but not conversely",
+      "Neither implies the other"
+    ],
+    "answer": 0,
+    "hint": "Can the P-witness and the Q-witness be different elements?",
+    "explanation": "A common witness for P and Q is in particular a witness for each, so the first implies the second. The converse fails: one element may be P and another Q, with no element being both.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const A=m=> ex(x=> m.P(x)&&m.Q(x)), B=m=> ex(x=>m.P(x)) && ex(x=>m.Q(x)); const AtoB=M2.every(m=> !A(m)||B(m)), BtoA=M2.every(m=> !B(m)||A(m)); return {index: AtoB&&!BtoA ? 0 : AtoB&&BtoA ? 1 : BtoA ? 2 : 3};"
+    }
+  },
+  {
+    "id": "L3-015",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "negation",
+      "nested"
+    ],
+    "prompt": "R is a relation. Which formula is equivalent to ¬∀x ∃y R(x, y)?",
+    "options": [
+      "∃x ∀y ¬R(x, y)",
+      "∀x ∃y ¬R(x, y)",
+      "∃x ∃y ¬R(x, y)",
+      "∀y ∃x ¬R(x, y)"
+    ],
+    "answer": 0,
+    "hint": "Flip each quantifier as the negation moves inward.",
+    "explanation": "¬∀x ∃y R(x, y) ≡ ∃x ¬∃y R(x, y) ≡ ∃x ∀y ¬R(x, y).",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const rels=[]; for(let m=0;m<512;m++) rels.push((x,y)=>((m>>(3*x+y))&1)===1); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=rels; const target=R=> !all(x=> ex(y=> R(x,y))); const opts=[R=> ex(x=> all(y=> !R(x,y))),R=> all(x=> ex(y=> !R(x,y))),R=> ex(x=> ex(y=> !R(x,y))),R=> all(y=> ex(x=> !R(x,y)))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-016",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "finite-domain",
+      "nested"
+    ],
+    "prompt": "The domain is {1, 2, …, 12}. Is the following true? ∀x (x > 1 → ∃y (y is prime ∧ y divides x))",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 0,
+    "hint": "Every integer greater than 1 has a prime factor — but check it within this domain.",
+    "explanation": "Each x from 2 to 12 has a prime divisor that is itself in the domain (the smallest divisor larger than 1 is always prime). So the statement is true.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=h.range(1,12); return {index: D.every(x=> x<=1 || D.some(y=> h.isPrime(y) && x%y===0)) ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L3-017",
+    "unit": "L3",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "finite-domain",
+      "nested"
+    ],
+    "prompt": "The domain is {1, 2, 3, 4, 5, 6}. For how many x is ∀y (y divides x → y ≤ 3) true?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "List the divisors of each x.",
+    "explanation": "x = 1 (divisor 1), x = 2 (1, 2) and x = 3 (1, 3) qualify. x = 4 has divisor 4, x = 5 has 5 and x = 6 has 6, all larger than 3. So 3 values.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=h.range(1,6); return D.filter(x=> D.every(y=> x%y!==0 || y<=3)).length;"
+    }
+  },
+  {
+    "id": "L3-018",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "translation",
+      "negation"
+    ],
+    "prompt": "B(x): \"x is a bird\", F(x): \"x can fly\". Translate \"Not every bird can fly.\"",
+    "options": [
+      "∃x (B(x) ∧ ¬F(x))",
+      "∀x (B(x) → ¬F(x))",
+      "∃x (B(x) → ¬F(x))",
+      "¬∃x (B(x) ∧ F(x))"
+    ],
+    "answer": 0,
+    "hint": "Negate \"every bird can fly\" and push the negation inside.",
+    "explanation": "¬∀x (B(x) → F(x)) ≡ ∃x ¬(B(x) → F(x)) ≡ ∃x (B(x) ∧ ¬F(x)): some bird cannot fly.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=M2; const target=m=> !all(x=> !m.P(x) || m.Q(x)); const opts=[m=> ex(x=> m.P(x) && !m.Q(x)),m=> all(x=> !m.P(x) || !m.Q(x)),m=> ex(x=> !m.P(x) || !m.Q(x)),m=> !ex(x=> m.P(x) && m.Q(x))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-019",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "translation",
+      "only"
+    ],
+    "prompt": "E(x): \"x may enter\", S(x): \"x is a student\". Translate \"Only students may enter.\"",
+    "options": [
+      "∀x (E(x) → S(x))",
+      "∀x (S(x) → E(x))",
+      "∃x (E(x) ∧ S(x))",
+      "∀x (E(x) ∧ S(x))"
+    ],
+    "answer": 0,
+    "hint": "\"Only A are B\" means \"every B is an A\".",
+    "explanation": "Whoever may enter is a student: ∀x (E(x) → S(x)). ∀x (S(x) → E(x)) would say that every student may enter.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const models=M2; const target=m=> !ex(x=> m.P(x) && !m.Q(x)); const opts=[m=> all(x=> !m.P(x) || m.Q(x)),m=> all(x=> !m.Q(x) || m.P(x)),m=> ex(x=> m.P(x) && m.Q(x)),m=> all(x=> m.P(x) && m.Q(x))]; return {indices: opts.flatMap((o,i)=> models.every(m=> !!o(m) === !!target(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-020",
+    "unit": "L3",
+    "type": "multi",
+    "difficulty": 3,
+    "tags": [
+      "finite-domain",
+      "nested"
+    ],
+    "prompt": "The domain is {−2, −1, 0, 1, 2}. Select **all** true statements.",
+    "options": [
+      "∀x ∃y (x + y = 0)",
+      "∃y ∀x (x + y = x)",
+      "∀x ∃y (x · y = 1)",
+      "∃x ∀y (x · y = 0)",
+      "∀x ∀y (x · y = y · x)",
+      "∀x ∃y (y < x)"
+    ],
+    "answer": [
+      0,
+      1,
+      3,
+      4
+    ],
+    "hint": "For each ∀x ∃y statement, find a y for every x. For ∃x ∀y, find one x that works for every y.",
+    "explanation": "∀x ∃y (x + y = 0): take y = −x — true. ∃y ∀x (x + y = x): y = 0 — true. ∀x ∃y (x · y = 1): fails for x = 0 (and x = 2) — false. ∃x ∀y (x · y = 0): x = 0 — true. ∀x ∀y (x · y = y · x): multiplication is commutative — true. ∀x ∃y (y < x): fails for x = −2 — false.",
+    "estSeconds": 200,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[-2,-1,0,1,2]; const all=f=>D.every(f), ex=f=>D.some(f); return [all(x=>ex(y=>x+y===0)), ex(y=>all(x=>x+y===x)), all(x=>ex(y=>x*y===1)), ex(x=>all(y=>x*y===0)), all(x=>all(y=>x*y===y*x)), all(x=>ex(y=>y<x))];"
+    }
+  },
+  {
+    "id": "L3-021",
+    "unit": "L3",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "counting",
+      "relations"
+    ],
+    "prompt": "A relation R on the set {a, b} is any set of ordered pairs from {a, b} × {a, b}; there are 16 of them. For how many of them is ∀x ∃y R(x, y) true?",
+    "answer": {
+      "kind": "numeric",
+      "value": 9
+    },
+    "hint": "Each element needs at least one outgoing pair. Count the choices for a and for b separately.",
+    "explanation": "Element a has 2 possible pairs, (a, a) and (a, b); at least one must be in R: 2² − 1 = 3 options. The same holds for b. The choices are independent: 3 · 3 = 9.",
+    "estSeconds": 160,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let n=0; for(let m=0;m<16;m++){ const R=(x,y)=>((m>>(2*x+y))&1)===1; if([0,1].every(x=>[0,1].some(y=>R(x,y)))) n++; } return n;"
+    }
+  },
+  {
+    "id": "L3-022",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "negation",
+      "nested"
+    ],
+    "prompt": "What is the negation of: \"For every ε > 0 there is a δ > 0 such that for all x, if |x| < δ then |f(x)| < ε\"?",
+    "options": [
+      "There is an ε > 0 such that for every δ > 0 there is an x with |x| < δ and |f(x)| ≥ ε.",
+      "For every ε > 0 there is no δ > 0 such that for all x, |x| < δ and |f(x)| ≥ ε.",
+      "There is an ε > 0 and a δ > 0 such that for all x, if |x| ≥ δ then |f(x)| ≥ ε.",
+      "For every ε > 0 and every δ > 0 there is an x with |x| ≥ δ and |f(x)| < ε."
+    ],
+    "answer": 0,
+    "hint": "Flip every quantifier and negate the innermost implication: ¬(A → B) ≡ A ∧ ¬B.",
+    "explanation": "∀ε ∃δ ∀x (|x| < δ → |f(x)| < ε) negates to ∃ε ∀δ ∃x (|x| < δ ∧ |f(x)| ≥ ε): some ε > 0 is such that every δ > 0 admits an x with |x| < δ but |f(x)| ≥ ε.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1]; const all=f=>D.every(f), ex=f=>D.some(f); let ok=[true,true,true,true]; for(let a=0;a<256;a++) for(let b=0;b<256;b++){ const A=(e,d,x)=>((a>>(4*e+2*d+x))&1)===1, B=(e,d,x)=>((b>>(4*e+2*d+x))&1)===1; const orig=all(e=>ex(d=>all(x=> !A(e,d,x) || B(e,d,x)))); const neg=!orig; const opts=[ex(e=>all(d=>ex(x=> A(e,d,x) && !B(e,d,x)))), all(e=> !ex(d=>all(x=> A(e,d,x) && !B(e,d,x)))), ex(e=>ex(d=>all(x=> A(e,d,x) || !B(e,d,x)))), all(e=>all(d=>ex(x=> !A(e,d,x) && B(e,d,x))))]; opts.forEach((o,i)=>{ if(o!==neg) ok[i]=false; }); } return {indices: ok.flatMap((v,i)=> v?[i]:[])};"
+    }
+  },
+  {
+    "id": "L3-023",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "inference",
+      "quantifiers"
+    ],
+    "prompt": "Assume ∀x (P(x) → Q(x)) and ∃x P(x). Which statement **must** be true?",
+    "options": [
+      "∃x Q(x)",
+      "∀x Q(x)",
+      "∃x ¬P(x)",
+      "∀x P(x)"
+    ],
+    "answer": 0,
+    "hint": "Take the witness from ∃x P(x) and apply the universal statement to it.",
+    "explanation": "Let a be an element with P(a). By ∀x (P(x) → Q(x)), Q(a) holds, so ∃x Q(x). Nothing forces Q to hold for everything, nor that some element lacks P.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const M2=[]; for(const P of unary) for(const Q of unary) M2.push({P,Q}); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const prem=m=> all(x=> !m.P(x)||m.Q(x)) && ex(x=>m.P(x)); const opts=[m=>ex(x=>m.Q(x)), m=>all(x=>m.Q(x)), m=>ex(x=>!m.P(x)), m=>all(x=>m.P(x))]; return {indices: opts.flatMap((o,i)=> M2.every(m=> !prem(m) || o(m)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "L3-024",
+    "unit": "L3",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "finite-domain",
+      "relations"
+    ],
+    "prompt": "Three people A, B and C. K(x, y) means \"x knows y\", and it holds exactly for (A, B), (B, C), (C, A) and (A, C). Is ∀x (K(x, C) → K(C, x)) true?",
+    "options": [
+      "True",
+      "False"
+    ],
+    "answer": 1,
+    "hint": "Check every person who knows C.",
+    "explanation": "A knows C and C knows A — fine. B knows C, but C does not know B. So the statement is false.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[\"A\",\"B\",\"C\"]; const E=[\"AB\",\"BC\",\"CA\",\"AC\"]; const K=(x,y)=>E.includes(x+y); return {index: D.every(x=> !K(x,\"C\") || K(\"C\",x)) ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L3-025",
+    "unit": "L3",
+    "type": "multi",
+    "difficulty": 3,
+    "tags": [
+      "equivalence",
+      "quantifiers"
+    ],
+    "prompt": "Select **all** valid equivalences (valid in every domain, for every P and Q).",
+    "options": [
+      "¬∃x ∀y P(x, y) ≡ ∀x ∃y ¬P(x, y)",
+      "∀x ∀y P(x, y) ≡ ∀y ∀x P(x, y)",
+      "∃x ∀y P(x, y) ≡ ∀y ∃x P(x, y)",
+      "∃x (P(x) ∨ Q(x)) ≡ ∃x P(x) ∨ ∃x Q(x)",
+      "∀x (P(x) ∨ Q(x)) ≡ ∀x P(x) ∨ ∀x Q(x)"
+    ],
+    "answer": [
+      0,
+      1,
+      3
+    ],
+    "hint": "Test each one on a domain with two or three elements and look for a counterexample.",
+    "explanation": "Negation rule: ¬∃x ∀y P ≡ ∀x ∃y ¬P — valid. Two ∀s commute — valid. ∃x ∀y P(x,y) is stronger than ∀y ∃x P(x,y) — not equivalent. ∃ distributes over ∨ — valid. ∀ does not distribute over ∨ — not valid.",
+    "estSeconds": 240,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const D=[0,1,2]; const rels=[]; for(let m=0;m<512;m++) rels.push((x,y)=>((m>>(3*x+y))&1)===1); const all=(f)=>D.every(f), ex=(f)=>D.some(f);const unary=[]; for(let m=0;m<8;m++) unary.push(x=>((m>>x)&1)===1); const binOk=(f,g)=> rels.every(R=> f(R)===g(R)); const unOk=(f,g)=> unary.every(P=> unary.every(Q=> f(P,Q)===g(P,Q))); return [binOk(R=> !ex(x=>all(y=>R(x,y))), R=> all(x=>ex(y=>!R(x,y)))), binOk(R=> all(x=>all(y=>R(x,y))), R=> all(y=>all(x=>R(x,y)))), binOk(R=> ex(x=>all(y=>R(x,y))), R=> all(y=>ex(x=>R(x,y)))), unOk((P,Q)=> ex(x=>P(x)||Q(x)), (P,Q)=> ex(x=>P(x))||ex(x=>Q(x))), unOk((P,Q)=> all(x=>P(x)||Q(x)), (P,Q)=> all(x=>P(x))||all(x=>Q(x)))];"
+    }
+  }
+]

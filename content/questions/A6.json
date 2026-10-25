@@ -1,0 +1,593 @@
+[
+  {
+    "id": "A6-001",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "binary"
+    ],
+    "prompt": "What is the binary number 1011 in decimal?",
+    "answer": {
+      "kind": "numeric",
+      "value": 11
+    },
+    "hint": "Add the place values of the 1-bits.",
+    "explanation": "1011₂ = 8 + 2 + 1 = 11.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return parseInt(\"1011\",2);"
+    }
+  },
+  {
+    "id": "A6-002",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "binary"
+    ],
+    "prompt": "Write the decimal number 37 in binary.",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "100101"
+      ],
+      "ignoreSpaces": true
+    },
+    "placeholder": "e.g. 1011",
+    "hint": "Subtract the largest powers of two that fit.",
+    "explanation": "37 = 32 + 4 + 1, so the binary form is 100101.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return (37).toString(2);"
+    }
+  },
+  {
+    "id": "A6-003",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "binary",
+      "counting"
+    ],
+    "prompt": "How many different values can be represented with 8 bits?",
+    "answer": {
+      "kind": "numeric",
+      "value": 256
+    },
+    "hint": "Each bit doubles the number of possibilities.",
+    "explanation": "2⁸ = 256 values (0 to 255 for unsigned numbers).",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.tuples([0,1],8).length;"
+    }
+  },
+  {
+    "id": "A6-004",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "hexadecimal"
+    ],
+    "prompt": "What is the hexadecimal number 2F in decimal?",
+    "answer": {
+      "kind": "numeric",
+      "value": 47
+    },
+    "hint": "F stands for 15.",
+    "explanation": "2F₁₆ = 2 · 16 + 15 = 47.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return parseInt(\"2F\",16);"
+    }
+  },
+  {
+    "id": "A6-005",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "bitwise",
+      "xor"
+    ],
+    "prompt": "Compute 12 XOR 10 (bitwise exclusive or).",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "Write both numbers in binary and compare column by column.",
+    "explanation": "1100 XOR 1010 = 0110 = 6.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return 12 ^ 10;"
+    }
+  },
+  {
+    "id": "A6-006",
+    "unit": "A6",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "parity"
+    ],
+    "prompt": "An even-parity bit is appended to the 7-bit message 1011001 so that the total number of 1s is even. What is the parity bit?",
+    "options": [
+      "0",
+      "1"
+    ],
+    "answer": 0,
+    "hint": "Count the 1s in the message.",
+    "explanation": "1011001 contains four 1s, which is already even, so the parity bit is 0.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return \"1011001\".split(\"\").filter(c=>c===\"1\").length % 2;"
+    }
+  },
+  {
+    "id": "A6-007",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "caesar-cipher"
+    ],
+    "prompt": "A Caesar cipher shifts every letter 3 places forward in the alphabet (A → D, B → E, …). Encrypt the word CAT.",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "FDW"
+      ]
+    },
+    "hint": "Shift each letter separately.",
+    "explanation": "C → F, A → D, T → W: FDW.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return \"CAT\".split(\"\").map(c=> String.fromCharCode((c.charCodeAt(0)-65+3)%26+65)).join(\"\");"
+    }
+  },
+  {
+    "id": "A6-008",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "binary"
+    ],
+    "prompt": "What is the largest (unsigned) number you can write with 6 bits?",
+    "answer": {
+      "kind": "numeric",
+      "value": 63
+    },
+    "hint": "All six bits are 1.",
+    "explanation": "111111₂ = 2⁶ − 1 = 63.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return Math.max(...h.tuples([0,1],6).map(t=> parseInt(t.join(\"\"),2)));"
+    }
+  },
+  {
+    "id": "A6-009",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "binary",
+      "shift"
+    ],
+    "prompt": "The binary representation of 13 is shifted 2 places to the left (zeros are added on the right). What is the result in decimal?",
+    "answer": {
+      "kind": "numeric",
+      "value": 52
+    },
+    "hint": "A left shift by k multiplies by 2ᵏ.",
+    "explanation": "13 = 1101₂ → 110100₂ = 52 = 13 · 4.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return parseInt((13).toString(2)+\"00\",2);"
+    }
+  },
+  {
+    "id": "A6-010",
+    "unit": "A6",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "binary-addition"
+    ],
+    "prompt": "Compute the binary sum 1011 + 0110.",
+    "options": [
+      "10001",
+      "1101",
+      "10010",
+      "1111"
+    ],
+    "answer": 0,
+    "hint": "Add column by column with carries, or convert to decimal.",
+    "explanation": "1011₂ = 11 and 0110₂ = 6; 11 + 6 = 17 = 10001₂.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return (parseInt(\"1011\",2)+parseInt(\"0110\",2)).toString(2);"
+    }
+  },
+  {
+    "id": "A6-011",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "run-length-encoding"
+    ],
+    "prompt": "Run-length encoding writes each run of equal letters as (count)(letter), e.g. AAB → 2A1B. Encode AAABBC.",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "3A2B1C"
+      ],
+      "ignoreSpaces": true
+    },
+    "hint": "Split the word into runs first.",
+    "explanation": "Runs: AAA, BB, C → 3A2B1C.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return \"AAABBC\".replace(/(.)\\1*/g, m=> m.length + m[0]);"
+    }
+  },
+  {
+    "id": "A6-012",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "run-length-encoding"
+    ],
+    "prompt": "Decode the run-length code 2X3Y1Z (same scheme: count, then letter).",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "XXYYYZ"
+      ],
+      "ignoreSpaces": true
+    },
+    "hint": "Expand each count–letter pair.",
+    "explanation": "2X → XX, 3Y → YYY, 1Z → Z: XXYYYZ.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return \"2X3Y1Z\".replace(/(\\d+)(\\D)/g, (_,n,c)=> c.repeat(Number(n)));"
+    }
+  },
+  {
+    "id": "A6-013",
+    "unit": "A6",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "state-machine"
+    ],
+    "prompt": "A machine starts in state S0. On input 1 it switches state (S0 ↔ S1); on input 0 it stays. It accepts a string if it ends in S1. Which string is accepted?",
+    "options": [
+      "10110",
+      "1001",
+      "0000",
+      "11"
+    ],
+    "answer": 0,
+    "hint": "What does the state tell you about the 1s read so far?",
+    "explanation": "The machine is in S1 exactly when it has read an odd number of 1s. 10110 has three 1s (accepted); 1001 and 11 have two, 0000 has none.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const run=(s)=> s.split(\"\").reduce((st,c)=> c===\"1\" ? 1-st : st, 0)===1; return {indices: q.options.flatMap((o,i)=> run(o)?[i]:[])};"
+    }
+  },
+  {
+    "id": "A6-014",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "state-machine"
+    ],
+    "prompt": "The table gives the transitions of a machine with states A, B and C. It starts in A. In which state is it after reading abba?",
+    "code": "state | on a | on b\n  A   |  B   |  A\n  B   |  C   |  A\n  C   |  C   |  B",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "B"
+      ]
+    },
+    "hint": "Follow the table one letter at a time.",
+    "explanation": "A —a→ B —b→ A —b→ A —a→ B. It ends in state B.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const T={A:{a:\"B\",b:\"A\"},B:{a:\"C\",b:\"A\"},C:{a:\"C\",b:\"B\"}}; return \"abba\".split(\"\").reduce((s,c)=> T[s][c], \"A\");"
+    }
+  },
+  {
+    "id": "A6-015",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "binary"
+    ],
+    "prompt": "How many 1-bits does the binary representation of 200 contain?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "200 = 128 + 64 + 8.",
+    "explanation": "200 = 11001000₂, which has three 1-bits.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return (200).toString(2).split(\"\").filter(c=>c===\"1\").length;"
+    }
+  },
+  {
+    "id": "A6-016",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "twos-complement"
+    ],
+    "prompt": "In 8-bit two's complement, how is −5 written?",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "11111011"
+      ],
+      "ignoreSpaces": true
+    },
+    "hint": "Write +5, invert all bits, add 1.",
+    "explanation": "+5 = 00000101; inverted 11111010; adding 1 gives 11111011.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return ((256-5)&255).toString(2).padStart(8,\"0\");"
+    }
+  },
+  {
+    "id": "A6-017",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "bitwise"
+    ],
+    "prompt": "Compute (25 AND 15) OR 32.",
+    "answer": {
+      "kind": "numeric",
+      "value": 41
+    },
+    "hint": "Work in binary, one operation at a time.",
+    "explanation": "25 = 011001, 15 = 001111: AND = 001001 = 9. 9 OR 32 = 101001 = 41.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return (25 & 15) | 32;"
+    }
+  },
+  {
+    "id": "A6-018",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "check-digit"
+    ],
+    "prompt": "A code ends with a check digit chosen so that the sum of all digits is divisible by 10. The first digits are 4 8 3 7. What is the check digit?",
+    "answer": {
+      "kind": "numeric",
+      "value": 8
+    },
+    "hint": "Add the given digits first.",
+    "explanation": "4 + 8 + 3 + 7 = 22. Adding 8 gives 30, divisible by 10: the check digit is 8.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.range(0,9).find(d=> (4+8+3+7+d)%10===0);"
+    }
+  },
+  {
+    "id": "A6-019",
+    "unit": "A6",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "hexadecimal"
+    ],
+    "prompt": "What is FF + 1 in hexadecimal?",
+    "options": [
+      "100",
+      "FF1",
+      "1000",
+      "G0"
+    ],
+    "answer": 0,
+    "hint": "FF is the largest two-digit hex number.",
+    "explanation": "FF₁₆ = 255, and 255 + 1 = 256 = 100₁₆.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return (parseInt(\"FF\",16)+1).toString(16).toUpperCase();"
+    }
+  },
+  {
+    "id": "A6-020",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "state-machine",
+      "counting"
+    ],
+    "prompt": "The machine in the table starts in S. S and T are accepting; D is not. How many bit strings of length 6 does it accept?",
+    "code": "state | on 0 | on 1\n  S   |  S   |  T\n  T   |  S   |  D\n  D   |  D   |  D",
+    "answer": {
+      "kind": "numeric",
+      "value": 21
+    },
+    "hint": "What property of the string does this machine check?",
+    "explanation": "The machine rejects exactly the strings containing \"11\". Strings of length n without two consecutive 1s are counted by Fibonacci numbers: 2, 3, 5, 8, 13, 21 for n = 1…6. Answer: 21.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const T={S:[\"S\",\"T\"],T:[\"S\",\"D\"],D:[\"D\",\"D\"]}; return h.tuples([0,1],6).filter(t=> t.reduce((s,b)=> T[s][b],\"S\")!==\"D\").length;"
+    }
+  },
+  {
+    "id": "A6-021",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "hamming-distance"
+    ],
+    "prompt": "The Hamming distance between two bit strings of equal length is the number of positions where they differ. What is the Hamming distance between 1011101 and 1001001?",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Compare position by position.",
+    "explanation": "They differ in positions 3 and 5: distance 2.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const a=\"1011101\", b=\"1001001\"; return a.split(\"\").filter((c,i)=> c!==b[i]).length;"
+    }
+  },
+  {
+    "id": "A6-022",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "gray-code"
+    ],
+    "prompt": "The 4-bit Gray code of a number n is n XOR (n shifted right by 1). What is the Gray code of 11?",
+    "answer": {
+      "kind": "text",
+      "accepted": [
+        "1110"
+      ],
+      "ignoreSpaces": true
+    },
+    "hint": "11 = 1011₂; 11 shifted right by one is 0101₂.",
+    "explanation": "1011 XOR 0101 = 1110.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return (11 ^ (11>>1)).toString(2).padStart(4,\"0\");"
+    }
+  },
+  {
+    "id": "A6-023",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "binary-fractions"
+    ],
+    "prompt": "What is the binary fraction 0.101₂ in decimal?",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.625,
+      "tolerance": 1e-09
+    },
+    "hint": "The places after the point are worth 1/2, 1/4, 1/8, …",
+    "explanation": "0.101₂ = 1/2 + 0/4 + 1/8 = 0.625.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return \"101\".split(\"\").reduce((s,c,i)=> s + Number(c)/2**(i+1), 0);"
+    }
+  },
+  {
+    "id": "A6-024",
+    "unit": "A6",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "state-machine",
+      "languages"
+    ],
+    "prompt": "A machine reads a binary number from left to right. Its state r ∈ {0, 1, 2} starts at 0, and reading bit b changes it to (2r + b) mod 3. It accepts if it ends in state 0. Which strings does it accept?",
+    "options": [
+      "binary numbers divisible by 3",
+      "strings with an even number of 1s",
+      "strings ending in 0",
+      "strings whose number of 1s is a multiple of 3"
+    ],
+    "answer": 0,
+    "hint": "What number does r track as the bits come in?",
+    "explanation": "Reading a bit doubles the value read so far and adds b, so r is always the value of the prefix mod 3. The machine accepts exactly the binary numbers divisible by 3.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const strs=[]; for(let n=1;n<=9;n++) for(const t of h.tuples([0,1],n)) strs.push(t.join(\"\")); const acc=s=> s.split(\"\").reduce((r,b)=> (2*r+Number(b))%3, 0)===0; const cands=[s=> parseInt(s,2)%3===0, s=> s.split(\"\").filter(c=>c===\"1\").length%2===0, s=> s.endsWith(\"0\"), s=> s.split(\"\").filter(c=>c===\"1\").length%3===0]; return {indices: cands.flatMap((c,i)=> strs.every(s=> c(s)===acc(s)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "A6-025",
+    "unit": "A6",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "bases"
+    ],
+    "prompt": "How many digits does 2²⁰ have when written in base 8?",
+    "answer": {
+      "kind": "numeric",
+      "value": 7
+    },
+    "hint": "Write 2²⁰ as a power of 8 times something.",
+    "explanation": "2²⁰ = 2² · 2¹⁸ = 4 · 8⁶. In base 8 that is the digit 4 followed by six zeros: 7 digits.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return (2**20).toString(8).length;"
+    }
+  }
+]

@@ -1,0 +1,856 @@
+[
+  {
+    "id": "L4-001",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "modus-ponens",
+      "validity"
+    ],
+    "prompt": "Is this argument valid? \"If the light is red, the cars stop. The light is red. Therefore the cars stop.\"",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 0,
+    "hint": "Is there any situation in which both premises are true and the conclusion false?",
+    "explanation": "This is modus ponens (p → q, p ⊢ q): whenever both premises hold, q must hold. Valid.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "valid",
+      "premises": [
+        "r → s",
+        "r"
+      ],
+      "conclusion": "s",
+      "boolOptions": [
+        0,
+        1
+      ]
+    }
+  },
+  {
+    "id": "L4-002",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "fallacy",
+      "affirming-consequent"
+    ],
+    "prompt": "Is this argument valid? \"If it rains, the street is wet. The street is wet. Therefore it rained.\"",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 1,
+    "hint": "Could the street be wet for another reason?",
+    "explanation": "This is affirming the consequent (p → q, q ⊢ p), a fallacy: the premises are true but the conclusion false when the street was hosed down on a dry day. Invalid.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "valid",
+      "premises": [
+        "r → w",
+        "w"
+      ],
+      "conclusion": "r",
+      "boolOptions": [
+        0,
+        1
+      ]
+    }
+  },
+  {
+    "id": "L4-003",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "modus-tollens"
+    ],
+    "prompt": "\"If the program compiles, the tests run. The tests did not run.\" What follows?",
+    "options": [
+      "The program did not compile.",
+      "The program compiled.",
+      "The tests ran.",
+      "The program compiled but the tests did not run."
+    ],
+    "answer": 0,
+    "hint": "Use the contrapositive of the first premise.",
+    "explanation": "Modus tollens: from c → t and ¬t we get ¬c. The program did not compile.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "c → t",
+        "¬t"
+      ],
+      "formulas": [
+        "¬c",
+        "c",
+        "t",
+        "c ∧ ¬t"
+      ]
+    }
+  },
+  {
+    "id": "L4-004",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "fallacy",
+      "denying-antecedent"
+    ],
+    "prompt": "Is this argument valid? \"If x > 5, then x > 3. It is not the case that x > 5. Therefore it is not the case that x > 3.\"",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 1,
+    "hint": "Try x = 4.",
+    "explanation": "This is denying the antecedent (p → q, ¬p ⊢ ¬q). With x = 4 both premises are true but the conclusion is false. Invalid.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "valid",
+      "premises": [
+        "a → b",
+        "¬a"
+      ],
+      "conclusion": "¬b",
+      "boolOptions": [
+        0,
+        1
+      ]
+    }
+  },
+  {
+    "id": "L4-005",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "syllogism"
+    ],
+    "prompt": "Is this argument valid? \"All A are B. All B are C. Therefore all A are C.\"",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 0,
+    "hint": "Draw A inside B and B inside C.",
+    "explanation": "A lies inside B, which lies inside C, so A lies inside C. Valid (a chain of inclusions).",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=4; const sets=[]; for(let m=0;m<(1<<N);m++) sets.push(Array.from({length:N},(_,i)=>((m>>i)&1)===1)); const S={all:(X,Y)=>X.every((x,i)=>!x||Y[i]), some:(X,Y)=>X.some((x,i)=>x&&Y[i]), no:(X,Y)=>X.every((x,i)=>!(x&&Y[i])), someNot:(X,Y)=>X.some((x,i)=>x&&!Y[i])}; const models=(k)=> h.tuples(sets,k);const ok=models(3).every(([A,B,C,D])=> !(S.all(A,B) && S.all(B,C)) || (S.all(A,C))); return {index: ok ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L4-006",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "disjunctive-syllogism"
+    ],
+    "prompt": "From p ∨ q and ¬p, what follows?",
+    "options": [
+      "q",
+      "¬q",
+      "p",
+      "p ∧ q"
+    ],
+    "answer": 0,
+    "hint": "If one of two options is ruled out…",
+    "explanation": "Disjunctive syllogism: at least one of p, q holds and p does not, so q holds.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "p ∨ q",
+        "¬p"
+      ],
+      "formulas": [
+        "q",
+        "¬q",
+        "p",
+        "p ∧ q"
+      ]
+    }
+  },
+  {
+    "id": "L4-007",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "hypothetical-syllogism"
+    ],
+    "prompt": "From p → q and q → r, which conclusion follows?",
+    "options": [
+      "p → r",
+      "r → p",
+      "q → p",
+      "p ∧ r"
+    ],
+    "answer": 0,
+    "hint": "Chain the implications.",
+    "explanation": "Hypothetical syllogism: p gives q, and q gives r, so p → r. The reverse implications do not follow.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "p → q",
+        "q → r"
+      ],
+      "formulas": [
+        "p → r",
+        "r → p",
+        "q → p",
+        "p ∧ r"
+      ]
+    }
+  },
+  {
+    "id": "L4-008",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "counterexample"
+    ],
+    "prompt": "What is enough to refute the claim \"every prime number is odd\"?",
+    "options": [
+      "Show one even prime; 2 is one.",
+      "Show that all odd numbers are prime.",
+      "Show that infinitely many primes are odd.",
+      "Nothing; the claim is true."
+    ],
+    "answer": 0,
+    "hint": "A universal claim falls with a single counterexample.",
+    "explanation": "One even prime refutes the claim — and 2 is one. Facts about other numbers, however many, cannot refute or prove a universal claim.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return {index: h.range(2,100).some(n=> h.isPrime(n) && n%2===0) ? 0 : 3};"
+    }
+  },
+  {
+    "id": "L4-009",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "syllogism",
+      "fallacy"
+    ],
+    "prompt": "Is this argument valid? \"Some A are B. Some B are C. Therefore some A are C.\"",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 1,
+    "hint": "Could the B's that are A be different from the B's that are C?",
+    "explanation": "Counterexample: B = {1, 2}, A = {1}, C = {2}. Both premises hold, but no A is a C. Invalid.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=4; const sets=[]; for(let m=0;m<(1<<N);m++) sets.push(Array.from({length:N},(_,i)=>((m>>i)&1)===1)); const S={all:(X,Y)=>X.every((x,i)=>!x||Y[i]), some:(X,Y)=>X.some((x,i)=>x&&Y[i]), no:(X,Y)=>X.every((x,i)=>!(x&&Y[i])), someNot:(X,Y)=>X.some((x,i)=>x&&!Y[i])}; const models=(k)=> h.tuples(sets,k);const ok=models(3).every(([A,B,C,D])=> !(S.some(A,B) && S.some(B,C)) || (S.some(A,C))); return {index: ok ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L4-010",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "syllogism"
+    ],
+    "prompt": "Is this argument valid? \"No A are B. Some C are A. Therefore some C are not B.\"",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 0,
+    "hint": "Focus on the C's that are A.",
+    "explanation": "Take a C that is an A (it exists by premise 2). Since no A is a B, this element is not a B. So some C is not B. Valid.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=4; const sets=[]; for(let m=0;m<(1<<N);m++) sets.push(Array.from({length:N},(_,i)=>((m>>i)&1)===1)); const S={all:(X,Y)=>X.every((x,i)=>!x||Y[i]), some:(X,Y)=>X.some((x,i)=>x&&Y[i]), no:(X,Y)=>X.every((x,i)=>!(x&&Y[i])), someNot:(X,Y)=>X.some((x,i)=>x&&!Y[i])}; const models=(k)=> h.tuples(sets,k);const ok=models(3).every(([A,B,C,D])=> !(S.no(A,B) && S.some(C,A)) || (S.someNot(C,B))); return {index: ok ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L4-011",
+    "unit": "L4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "validity"
+    ],
+    "prompt": "How many of these four arguments are valid?\n\n1. p → q, q → r ⊢ p → r\n2. p ∨ q, p ⊢ ¬q\n3. p → q, ¬q ⊢ ¬p\n4. p → (q ∧ r), ¬r ⊢ ¬p",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Check each for a counterexample row.",
+    "explanation": "1 is hypothetical syllogism (valid). 2 is invalid: p and q can both be true. 3 is modus tollens (valid). 4: if p held, r would hold; r fails, so ¬p — valid. Three are valid.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const A=[[[\"p → q\",\"q → r\"],\"p → r\"],[[\"p ∨ q\",\"p\"],\"¬q\"],[[\"p → q\",\"¬q\"],\"¬p\"],[[\"p → (q ∧ r)\",\"¬r\"],\"¬p\"]]; return A.filter(([P,c])=> h.logic.entails(P,c)).length;"
+    }
+  },
+  {
+    "id": "L4-012",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "missing-premise"
+    ],
+    "prompt": "Premises: p, and p → q. Which extra premise makes the conclusion r follow?",
+    "options": [
+      "q → r",
+      "r → q",
+      "p ∨ r",
+      "¬q → r"
+    ],
+    "answer": 0,
+    "hint": "What do you already know from the first two premises?",
+    "explanation": "From p and p → q we get q. Adding q → r then gives r. The other options do not force r: r → q goes the wrong way, and p ∨ r and ¬q → r are already satisfied without r.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-valid",
+      "arguments": [
+        {
+          "premises": [
+            "p",
+            "p → q",
+            "q → r"
+          ],
+          "conclusion": "r"
+        },
+        {
+          "premises": [
+            "p",
+            "p → q",
+            "r → q"
+          ],
+          "conclusion": "r"
+        },
+        {
+          "premises": [
+            "p",
+            "p → q",
+            "p ∨ r"
+          ],
+          "conclusion": "r"
+        },
+        {
+          "premises": [
+            "p",
+            "p → q",
+            "¬q → r"
+          ],
+          "conclusion": "r"
+        }
+      ]
+    }
+  },
+  {
+    "id": "L4-013",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "proof-by-contradiction"
+    ],
+    "prompt": "You want to prove that √2 is irrational **by contradiction**. What do you assume at the start?",
+    "options": [
+      "√2 = a/b for integers a, b with no common factor",
+      "√2 is irrational",
+      "a² = 2 for some integer a",
+      "√2 is not a real number"
+    ],
+    "answer": 0,
+    "hint": "A proof by contradiction assumes the negation of what you want to prove.",
+    "explanation": "You assume the opposite of the claim: √2 is rational, i.e. √2 = a/b for integers a, b with no common factor. Then you derive that a and b are both even — a contradiction.",
+    "estSeconds": 60,
+    "source": "original",
+    "verified": "manual",
+    "manualNote": "Conceptual question about proof structure; answer checked by hand against the definition of proof by contradiction."
+  },
+  {
+    "id": "L4-014",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "contrapositive",
+      "proof"
+    ],
+    "prompt": "To prove \"if n² is even, then n is even\" **by contrapositive**, which statement do you actually prove?",
+    "options": [
+      "If n is odd, then n² is odd.",
+      "If n is even, then n² is even.",
+      "If n² is odd, then n is odd.",
+      "n² is even and n is odd."
+    ],
+    "answer": 0,
+    "hint": "Contrapositive: negate both parts and swap them.",
+    "explanation": "With s = \"n² is even\" and e = \"n is even\", the claim is s → e; its contrapositive is ¬e → ¬s: \"if n is odd, then n² is odd\".",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-equivalent",
+      "target": "s → e",
+      "formulas": [
+        "¬e → ¬s",
+        "e → s",
+        "¬s → ¬e",
+        "s ∧ ¬e"
+      ]
+    }
+  },
+  {
+    "id": "L4-015",
+    "unit": "L4",
+    "type": "multi",
+    "difficulty": 2,
+    "tags": [
+      "validity",
+      "fallacy"
+    ],
+    "prompt": "Select **all** valid argument forms.",
+    "options": [
+      "p → q, p ⊢ q",
+      "p → q, q ⊢ p",
+      "p → q, ¬q ⊢ ¬p",
+      "p → q, ¬p ⊢ ¬q",
+      "p ∨ q, ¬p ⊢ q",
+      "p ∨ q, p ⊢ ¬q"
+    ],
+    "answer": [
+      0,
+      2,
+      4
+    ],
+    "hint": "Name each form: modus ponens, modus tollens, disjunctive syllogism … or a fallacy.",
+    "explanation": "Valid: modus ponens, modus tollens, disjunctive syllogism. Invalid: affirming the consequent, denying the antecedent, and \"p ∨ q, p ⊢ ¬q\" (inclusive or allows both).",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-valid",
+      "arguments": [
+        {
+          "premises": [
+            "p → q",
+            "p"
+          ],
+          "conclusion": "q"
+        },
+        {
+          "premises": [
+            "p → q",
+            "q"
+          ],
+          "conclusion": "p"
+        },
+        {
+          "premises": [
+            "p → q",
+            "¬q"
+          ],
+          "conclusion": "¬p"
+        },
+        {
+          "premises": [
+            "p → q",
+            "¬p"
+          ],
+          "conclusion": "¬q"
+        },
+        {
+          "premises": [
+            "p ∨ q",
+            "¬p"
+          ],
+          "conclusion": "q"
+        },
+        {
+          "premises": [
+            "p ∨ q",
+            "p"
+          ],
+          "conclusion": "¬q"
+        }
+      ]
+    }
+  },
+  {
+    "id": "L4-016",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "syllogism",
+      "fallacy"
+    ],
+    "prompt": "Is this argument valid? \"All programmers drink coffee. Some coffee drinkers are night owls. Therefore some programmers are night owls.\"",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 1,
+    "hint": "Could all the night owls be non-programmer coffee drinkers?",
+    "explanation": "The coffee drinkers who are night owls might all be non-programmers. Programmers ⊆ coffee drinkers does not force any overlap with the night owls. Invalid.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=4; const sets=[]; for(let m=0;m<(1<<N);m++) sets.push(Array.from({length:N},(_,i)=>((m>>i)&1)===1)); const S={all:(X,Y)=>X.every((x,i)=>!x||Y[i]), some:(X,Y)=>X.some((x,i)=>x&&Y[i]), no:(X,Y)=>X.every((x,i)=>!(x&&Y[i])), someNot:(X,Y)=>X.some((x,i)=>x&&!Y[i])}; const models=(k)=> h.tuples(sets,k);const ok=models(3).every(([A,B,C,D])=> !(S.all(A,B) && S.some(B,C)) || (S.some(A,C))); return {index: ok ? 0 : 1};"
+    }
+  },
+  {
+    "id": "L4-017",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "fallacy"
+    ],
+    "prompt": "\"Every multiple of 6 is a multiple of 3. 21 is a multiple of 3. Therefore 21 is a multiple of 6.\" Is the argument valid?",
+    "options": [
+      "Valid",
+      "Invalid"
+    ],
+    "answer": 1,
+    "hint": "Which form is this: p → q, q ⊢ p?",
+    "explanation": "It affirms the consequent. The premises are true, yet 21 is not a multiple of 6 — a counterexample showing the form is invalid.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "valid",
+      "premises": [
+        "s → t",
+        "t"
+      ],
+      "conclusion": "s",
+      "boolOptions": [
+        0,
+        1
+      ]
+    }
+  },
+  {
+    "id": "L4-018",
+    "unit": "L4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "chain",
+      "modus-tollens"
+    ],
+    "prompt": "Given a → b, b → c, c → d and ¬d: how many of the four variables a, b, c, d are forced to be **false**?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Apply modus tollens repeatedly, from the back.",
+    "explanation": "¬d with c → d gives ¬c; then ¬b; then ¬a. All four are forced false.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const P=[\"a → b\",\"b → c\",\"c → d\",\"¬d\"]; return [\"a\",\"b\",\"c\",\"d\"].filter(v=> h.logic.entails(P,\"¬\"+v)).length;"
+    }
+  },
+  {
+    "id": "L4-019",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "inference"
+    ],
+    "prompt": "\"If I study, I pass. If I don't study, I go out. I did not go out.\" What follows?",
+    "options": [
+      "I passed.",
+      "I did not pass.",
+      "I did not study.",
+      "I went out."
+    ],
+    "answer": 0,
+    "hint": "Start from the last premise and work backwards.",
+    "explanation": "Not going out with ¬s → o gives s (I studied) by modus tollens; then s → p gives p: I passed.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "s → p",
+        "¬s → o",
+        "¬o"
+      ],
+      "formulas": [
+        "p",
+        "¬p",
+        "¬s",
+        "o"
+      ]
+    }
+  },
+  {
+    "id": "L4-020",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "inference"
+    ],
+    "prompt": "From (p ∧ q) → r, ¬r and p, what follows?",
+    "options": [
+      "¬q",
+      "q",
+      "¬p",
+      "r"
+    ],
+    "answer": 0,
+    "hint": "Modus tollens on the first premise, then use p.",
+    "explanation": "¬r with (p ∧ q) → r gives ¬(p ∧ q), i.e. ¬p ∨ ¬q. Since p holds, ¬q must hold.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "(p ∧ q) → r",
+        "¬r",
+        "p"
+      ],
+      "formulas": [
+        "¬q",
+        "q",
+        "¬p",
+        "r"
+      ]
+    }
+  },
+  {
+    "id": "L4-021",
+    "unit": "L4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "inference",
+      "chain"
+    ],
+    "prompt": "Premises: p → q, q → r, r → p, p ∨ s, ¬s. How many of p, q, r are forced to be **true**?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Use the last two premises first.",
+    "explanation": "p ∨ s and ¬s give p. Then p → q gives q, and q → r gives r. All 3 are forced true.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const P=[\"p → q\",\"q → r\",\"r → p\",\"p ∨ s\",\"¬s\"]; return [\"p\",\"q\",\"r\"].filter(v=> h.logic.entails(P,v)).length;"
+    }
+  },
+  {
+    "id": "L4-022",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "syllogism"
+    ],
+    "prompt": "\"No A are B. All C are B. Some D are C.\" Which conclusion follows?",
+    "options": [
+      "Some D are not A.",
+      "No D are A.",
+      "Some A are D.",
+      "All D are B."
+    ],
+    "answer": 0,
+    "hint": "Look at the D's that are C: what else do you know about them?",
+    "explanation": "A D that is a C is also a B (all C are B), and no B is an A, so that D is not an A: some D are not A. None of the other options is forced.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=4; const sets=[]; for(let m=0;m<(1<<N);m++) sets.push(Array.from({length:N},(_,i)=>((m>>i)&1)===1)); const S={all:(X,Y)=>X.every((x,i)=>!x||Y[i]), some:(X,Y)=>X.some((x,i)=>x&&Y[i]), no:(X,Y)=>X.every((x,i)=>!(x&&Y[i])), someNot:(X,Y)=>X.some((x,i)=>x&&!Y[i])}; const models=(k)=> h.tuples(sets,k);const prem=([A,B,C,D])=> S.no(A,B) && S.all(C,B) && S.some(D,C); const opts=[([A,B,C,D])=>S.someNot(D,A), ([A,B,C,D])=>S.no(D,A), ([A,B,C,D])=>S.some(A,D), ([A,B,C,D])=>S.all(D,B)]; const ms=models(4).filter(prem); return {indices: opts.flatMap((o,i)=> ms.every(o)?[i]:[])};"
+    }
+  },
+  {
+    "id": "L4-023",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "inference",
+      "only-if"
+    ],
+    "prompt": "If the meeting is on Monday, Anna attends. Bob attends only if Anna does not. Bob attends. What follows?",
+    "options": [
+      "The meeting is not on Monday.",
+      "The meeting is on Monday.",
+      "Anna attends.",
+      "Bob does not attend."
+    ],
+    "answer": 0,
+    "hint": "Translate \"Bob attends only if Anna does not\" carefully.",
+    "explanation": "b → ¬a and b give ¬a. Then m → a and ¬a give ¬m: the meeting is not on Monday.",
+    "estSeconds": 140,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "m → a",
+        "b → ¬a",
+        "b"
+      ],
+      "formulas": [
+        "¬m",
+        "m",
+        "a",
+        "¬b"
+      ]
+    }
+  },
+  {
+    "id": "L4-024",
+    "unit": "L4",
+    "type": "multi",
+    "difficulty": 3,
+    "tags": [
+      "validity",
+      "dilemma"
+    ],
+    "prompt": "Select **all** valid arguments.",
+    "options": [
+      "p → q, r → s, p ∨ r ⊢ q ∨ s",
+      "p → q, r → s, ¬q ∨ ¬s ⊢ ¬p ∨ ¬r",
+      "p → q ⊢ (p ∧ r) → q",
+      "p → q ⊢ (p ∨ r) → q",
+      "(p ∨ q) → r ⊢ p → r"
+    ],
+    "answer": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "hint": "Constructive and destructive dilemmas are valid; check the others for a counterexample.",
+    "explanation": "Constructive dilemma and destructive dilemma are valid. Strengthening the premise ((p ∧ r) → q from p → q) is valid. Weakening it ((p ∨ r) → q) is not: r true, p and q false. (p ∨ q) → r gives p → r — valid.",
+    "estSeconds": 220,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-valid",
+      "arguments": [
+        {
+          "premises": [
+            "p → q",
+            "r → s",
+            "p ∨ r"
+          ],
+          "conclusion": "q ∨ s"
+        },
+        {
+          "premises": [
+            "p → q",
+            "r → s",
+            "¬q ∨ ¬s"
+          ],
+          "conclusion": "¬p ∨ ¬r"
+        },
+        {
+          "premises": [
+            "p → q"
+          ],
+          "conclusion": "(p ∧ r) → q"
+        },
+        {
+          "premises": [
+            "p → q"
+          ],
+          "conclusion": "(p ∨ r) → q"
+        },
+        {
+          "premises": [
+            "(p ∨ q) → r"
+          ],
+          "conclusion": "p → r"
+        }
+      ]
+    }
+  },
+  {
+    "id": "L4-025",
+    "unit": "L4",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "inference",
+      "puzzle"
+    ],
+    "prompt": "A detective knows: (1) If the butler did it, the knife is in the kitchen. (2) The knife is in the kitchen or in the garden. (3) If the knife is in the garden, the gardener lied. (4) The gardener did not lie. What can be concluded for certain?",
+    "options": [
+      "The knife is in the kitchen.",
+      "The butler did it.",
+      "The butler did not do it.",
+      "The knife is in the garden."
+    ],
+    "answer": 0,
+    "hint": "Which premises talk about the garden?",
+    "explanation": "(3) and (4) give: the knife is not in the garden. With (2): the knife is in the kitchen. Nothing follows about the butler — (1) only goes from butler to kitchen.",
+    "estSeconds": 180,
+    "source": "original",
+    "verifier": {
+      "kind": "logic",
+      "task": "options-implied",
+      "premises": [
+        "b → k",
+        "k ∨ g",
+        "g → l",
+        "¬l"
+      ],
+      "formulas": [
+        "k",
+        "b",
+        "¬b",
+        "g"
+      ]
+    }
+  }
+]

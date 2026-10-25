@@ -1,0 +1,564 @@
+[
+  {
+    "id": "A5-001",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "multiplication-principle"
+    ],
+    "prompt": "You have 3 shirts and 4 pairs of trousers. How many different outfits (one shirt, one pair of trousers) can you make?",
+    "answer": {
+      "kind": "numeric",
+      "value": 12
+    },
+    "hint": "Each shirt can be combined with each pair of trousers.",
+    "explanation": "Multiplication principle: 3 · 4 = 12.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.product(h.range(1,3),h.range(1,4)).length;"
+    }
+  },
+  {
+    "id": "A5-002",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "permutations"
+    ],
+    "prompt": "In how many different orders can the letters of the word WORD be arranged?",
+    "answer": {
+      "kind": "numeric",
+      "value": 24
+    },
+    "hint": "All four letters are different.",
+    "explanation": "Four different letters can be ordered in 4! = 4 · 3 · 2 · 1 = 24 ways.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return new Set(h.permutations(\"WORD\".split(\"\")).map(p=>p.join(\"\"))).size;"
+    }
+  },
+  {
+    "id": "A5-003",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "combinations"
+    ],
+    "prompt": "How many different 3-person committees can be chosen from 8 people?",
+    "answer": {
+      "kind": "numeric",
+      "value": 56
+    },
+    "hint": "The order of choosing does not matter.",
+    "explanation": "C(8, 3) = 8 · 7 · 6 / 3! = 56.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.combinations(h.range(1,8),3).length;"
+    }
+  },
+  {
+    "id": "A5-004",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "multiplication-principle"
+    ],
+    "prompt": "How many 4-digit PIN codes are possible if every digit can be 0–9 and digits may repeat?",
+    "answer": {
+      "kind": "numeric",
+      "value": 10000
+    },
+    "hint": "10 choices for each position.",
+    "explanation": "10 · 10 · 10 · 10 = 10 000.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.tuples(h.range(0,9),4).length;"
+    }
+  },
+  {
+    "id": "A5-005",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "counting",
+      "dice"
+    ],
+    "prompt": "Two dice (one red, one blue) are rolled. In how many of the 36 outcomes is the sum 7?",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "List the pairs (red, blue).",
+    "explanation": "(1,6), (2,5), (3,4), (4,3), (5,2), (6,1): 6 outcomes.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.product(h.range(1,6),h.range(1,6)).filter(([a,b])=>a+b===7).length;"
+    }
+  },
+  {
+    "id": "A5-006",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "binary",
+      "multiplication-principle"
+    ],
+    "prompt": "How many different bit strings of length 5 are there?",
+    "answer": {
+      "kind": "numeric",
+      "value": 32
+    },
+    "hint": "Each position is 0 or 1.",
+    "explanation": "Each of the 5 positions has 2 choices: 2⁵ = 32.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.tuples([0,1],5).length;"
+    }
+  },
+  {
+    "id": "A5-007",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "multiplication-principle"
+    ],
+    "prompt": "A code consists of two letters (A–Z, repetition allowed) followed by one digit (0–9). How many codes are possible?",
+    "answer": {
+      "kind": "numeric",
+      "value": 6760
+    },
+    "hint": "Multiply the choices per position.",
+    "explanation": "26 · 26 · 10 = 6760.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let n=0; for(let a=0;a<26;a++) for(let b=0;b<26;b++) for(let d=0;d<10;d++) n++; return n;"
+    }
+  },
+  {
+    "id": "A5-008",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "pigeonhole"
+    ],
+    "prompt": "A drawer contains many red, blue and green socks. You take socks out in the dark. How many socks must you take to be **sure** of having two of the same colour?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "What is the worst case?",
+    "explanation": "With 3 socks you might have one of each colour. The 4th sock must match one of them (pigeonhole principle): 4.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "for(let k=1;k<=10;k++){ if(h.tuples([0,1,2],k).every(t=> new Set(t).size<t.length)) return k; }"
+    }
+  },
+  {
+    "id": "A5-009",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "permutations",
+      "repetition"
+    ],
+    "prompt": "In how many different orders can the letters of the word LEVEL be arranged?",
+    "answer": {
+      "kind": "numeric",
+      "value": 30
+    },
+    "hint": "Divide by the arrangements of identical letters.",
+    "explanation": "5! / (2! · 2!) = 120 / 4 = 30 (L and E each appear twice).",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return new Set(h.permutations(\"LEVEL\".split(\"\")).map(p=>p.join(\"\"))).size;"
+    }
+  },
+  {
+    "id": "A5-010",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "permutations"
+    ],
+    "prompt": "How many 4-digit PIN codes (digits 0–9) have four **different** digits?",
+    "answer": {
+      "kind": "numeric",
+      "value": 5040
+    },
+    "hint": "10 choices, then 9, then …",
+    "explanation": "10 · 9 · 8 · 7 = 5040.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.tuples(h.range(0,9),4).filter(t=> new Set(t).size===4).length;"
+    }
+  },
+  {
+    "id": "A5-011",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "lattice-paths"
+    ],
+    "prompt": "A robot moves on a grid from (0, 0) to (4, 3), one unit right or one unit up per step. How many different routes are there?",
+    "answer": {
+      "kind": "numeric",
+      "value": 35
+    },
+    "hint": "Every route has 4 right-steps and 3 up-steps.",
+    "explanation": "Choose which 3 of the 7 steps are up-steps: C(7, 3) = 35.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const W={}; const f=(x,y)=> x===0||y===0 ? 1 : (W[x+\",\"+y] ??= f(x-1,y)+f(x,y-1)); return f(4,3);"
+    }
+  },
+  {
+    "id": "A5-012",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "inclusion-exclusion"
+    ],
+    "prompt": "How many of the numbers 1, 2, …, 100 are divisible by 2 or by 5?",
+    "answer": {
+      "kind": "numeric",
+      "value": 60
+    },
+    "hint": "Count each, then subtract the numbers counted twice.",
+    "explanation": "Divisible by 2: 50. By 5: 20. By both (by 10): 10. 50 + 20 − 10 = 60.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.range(1,100).filter(n=> n%2===0 || n%5===0).length;"
+    }
+  },
+  {
+    "id": "A5-013",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "combinations"
+    ],
+    "prompt": "A team of 4 is chosen from 6 boys and 5 girls. How many teams have exactly 2 girls?",
+    "answer": {
+      "kind": "numeric",
+      "value": 150
+    },
+    "hint": "Choose the girls and the boys separately.",
+    "explanation": "C(5, 2) · C(6, 2) = 10 · 15 = 150.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const P=[...h.range(1,6).map(i=>\"b\"+i), ...h.range(1,5).map(i=>\"g\"+i)]; return h.combinations(P,4).filter(t=> t.filter(x=>x[0]===\"g\").length===2).length;"
+    }
+  },
+  {
+    "id": "A5-014",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "combinations",
+      "binary"
+    ],
+    "prompt": "How many bit strings of length 8 contain exactly three 1s?",
+    "answer": {
+      "kind": "numeric",
+      "value": 56
+    },
+    "hint": "Choose the positions of the 1s.",
+    "explanation": "C(8, 3) = 56.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.tuples([0,1],8).filter(t=> h.sum(t)===3).length;"
+    }
+  },
+  {
+    "id": "A5-015",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "complement"
+    ],
+    "prompt": "A die is rolled 3 times, giving 6³ = 216 equally likely outcomes. In how many of them does at least one 6 appear?",
+    "answer": {
+      "kind": "numeric",
+      "value": 91
+    },
+    "hint": "Count the outcomes with no 6 and subtract.",
+    "explanation": "Outcomes without any 6: 5³ = 125. So 216 − 125 = 91 contain at least one 6.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.tuples(h.range(1,6),3).filter(t=> t.includes(6)).length;"
+    }
+  },
+  {
+    "id": "A5-016",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "partitions",
+      "coins"
+    ],
+    "prompt": "In how many ways can you pay exactly 10 cents with coins of 1, 2 and 5 cents? (Only the numbers of each coin matter, not their order.)",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "Fix the number of 5-cent coins first.",
+    "explanation": "No 5-cent coin: 0–5 two-cent coins (6 ways). One 5-cent coin: 0–2 two-cent coins (3 ways). Two 5-cent coins: 1 way. Total 10.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let n=0; for(let c=0;c<=2;c++) for(let b=0;b<=5;b++) for(let a=0;a<=10;a++) if(a+2*b+5*c===10) n++; return n;"
+    }
+  },
+  {
+    "id": "A5-017",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "knapsack",
+      "optimisation"
+    ],
+    "prompt": "A backpack can carry at most 5 kg. Items (weight, value): (2 kg, 3), (3 kg, 4), (4 kg, 5), (5 kg, 6). What is the highest total value you can carry?",
+    "answer": {
+      "kind": "numeric",
+      "value": 7
+    },
+    "hint": "Try all combinations that fit.",
+    "explanation": "2 kg + 3 kg = 5 kg with value 3 + 4 = 7. Any single item gives at most 6, and no other pair fits.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const I=[[2,3],[3,4],[4,5],[5,6]]; let best=0; for(let m=0;m<16;m++){ let w=0,v=0; I.forEach(([iw,iv],i)=>{ if((m>>i)&1){w+=iw;v+=iv;} }); if(w<=5) best=Math.max(best,v); } return best;"
+    }
+  },
+  {
+    "id": "A5-018",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "greedy",
+      "optimisation"
+    ],
+    "prompt": "Coins have values 1, 3 and 4. What is the minimum number of coins needed to pay exactly 6?",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Taking the largest coin first is not always optimal.",
+    "explanation": "Greedy picks 4 + 1 + 1 (3 coins), but 3 + 3 uses only 2 coins — the minimum.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const coins=[1,3,4]; const best=[0]; for(let a=1;a<=6;a++) best[a]=Math.min(...coins.filter(c=>c<=a).map(c=>best[a-c]+1)); return best[6];"
+    }
+  },
+  {
+    "id": "A5-019",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "circular-permutations"
+    ],
+    "prompt": "Five people sit around a round table. Two seatings count as the same if one is a rotation of the other. How many different seatings are there?",
+    "answer": {
+      "kind": "numeric",
+      "value": 24
+    },
+    "hint": "Fix one person's seat to remove rotations.",
+    "explanation": "Fix one person; the other 4 can be arranged in 4! = 24 ways.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const canon=(p)=>{ const r=[]; for(let i=0;i<p.length;i++) r.push([...p.slice(i),...p.slice(0,i)].join(\"\")); return r.sort()[0]; }; return new Set(h.permutations(\"ABCDE\".split(\"\")).map(canon)).size;"
+    }
+  },
+  {
+    "id": "A5-020",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "derangements"
+    ],
+    "prompt": "Four letters are put into four addressed envelopes at random. In how many of the 4! = 24 ways does **no** letter end up in its own envelope?",
+    "answer": {
+      "kind": "numeric",
+      "value": 9
+    },
+    "hint": "Use inclusion–exclusion, or list them systematically.",
+    "explanation": "Inclusion–exclusion: 24 − C(4,1)·3! + C(4,2)·2! − C(4,3)·1! + C(4,4)·0! = 24 − 24 + 12 − 4 + 1 = 9.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.permutations([0,1,2,3]).filter(p=> p.every((x,i)=> x!==i)).length;"
+    }
+  },
+  {
+    "id": "A5-021",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "recurrence",
+      "stairs"
+    ],
+    "prompt": "You climb a staircase of 10 steps, taking 1 or 2 steps at a time. In how many different ways can you reach the top?",
+    "answer": {
+      "kind": "numeric",
+      "value": 89
+    },
+    "hint": "The last move is a 1-step or a 2-step.",
+    "explanation": "ways(n) = ways(n − 1) + ways(n − 2) with ways(1) = 1, ways(2) = 2: 1, 2, 3, 5, 8, 13, 21, 34, 55, 89.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let n=0; const go=(left)=>{ if(left===0){ n++; return; } if(left>=1) go(left-1); if(left>=2) go(left-2); }; go(10); return n;"
+    }
+  },
+  {
+    "id": "A5-022",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "scheduling",
+      "optimisation"
+    ],
+    "prompt": "Four jobs take 2, 4, 6 and 8 hours. Two identical machines run in parallel; each job runs on one machine. What is the earliest time at which all jobs can be finished?",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "The total work is 20 hours. Can it be split evenly?",
+    "explanation": "Total 20 hours, so at least 10 hours are needed. 2 + 8 = 10 and 4 + 6 = 10 achieve it.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const J=[2,4,6,8]; let best=Infinity; for(let m=0;m<16;m++){ let a=0,b=0; J.forEach((d,i)=> ((m>>i)&1) ? a+=d : b+=d); best=Math.min(best,Math.max(a,b)); } return best;"
+    }
+  },
+  {
+    "id": "A5-023",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "pigeonhole"
+    ],
+    "prompt": "How many numbers must you choose from 1, 2, …, 20 to be sure that two of the chosen numbers add up to 21?",
+    "answer": {
+      "kind": "numeric",
+      "value": 11
+    },
+    "hint": "Group the numbers into pairs that add up to 21.",
+    "explanation": "The pairs (1, 20), (2, 19), …, (10, 11) form 10 boxes. You can take one number from each pair (10 numbers) without a sum of 21; the 11th number completes a pair. Answer: 11.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "let maxFree=0; for(let m=0;m<(1<<20);m++){ let ok=true; for(let a=1;a<=10;a++){ if(((m>>(a-1))&1) && ((m>>(21-a-1))&1)){ ok=false; break; } } if(ok){ let c=0, x=m; while(x){ c+=x&1; x>>>=1; } if(c>maxFree) maxFree=c; } } return maxFree+1;"
+    }
+  },
+  {
+    "id": "A5-024",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "lattice-paths",
+      "complement"
+    ],
+    "prompt": "A robot walks from (0, 0) to (4, 4), one unit right or up per step, but the point (2, 2) is blocked. How many routes avoid it?",
+    "answer": {
+      "kind": "numeric",
+      "value": 34
+    },
+    "hint": "Count all routes, then subtract the routes through (2, 2).",
+    "explanation": "All routes: C(8, 4) = 70. Through (2, 2): C(4, 2) · C(4, 2) = 36. Avoiding it: 70 − 36 = 34.",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const W={}; const f=(x,y)=>{ if(x===2&&y===2) return 0; if(x===0&&y===0) return 1; if(x<0||y<0) return 0; return W[x+\",\"+y] ??= f(x-1,y)+f(x,y-1); }; return f(4,4);"
+    }
+  },
+  {
+    "id": "A5-025",
+    "unit": "A5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "assignment",
+      "optimisation"
+    ],
+    "prompt": "Three workers must each do one of three tasks. The cost table (rows = workers W1–W3, columns = tasks T1–T3) is shown. What is the minimum total cost?",
+    "code": "      T1  T2  T3\nW1     4   2   8\nW2     4   3   7\nW3     3   1   6",
+    "answer": {
+      "kind": "numeric",
+      "value": 12
+    },
+    "hint": "There are only 3! = 6 ways to assign the tasks.",
+    "explanation": "Checking all 6 assignments gives totals 13, 12, 12, 12, 13 and 14. The minimum is 12 (for example W1→T2, W2→T1, W3→T3: 2 + 4 + 6).",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const C=[[4,2,8],[4,3,7],[3,1,6]]; return Math.min(...h.permutations([0,1,2]).map(p=> p.reduce((s,t,w)=> s+C[w][t],0)));"
+    }
+  }
+]

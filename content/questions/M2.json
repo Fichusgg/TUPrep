@@ -1,0 +1,459 @@
+[
+  {
+    "id": "M2-001",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "substitution"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 2} (x^2+3x)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "Polynomials are continuous: just substitute.",
+    "explanation": "$4 + 6 = 10$.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*x+3*x; return h.limit(f,2,\"both\");"
+    }
+  },
+  {
+    "id": "M2-002",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "factoring"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 3} \\frac{x^2-9}{x-3}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "Factor the numerator.",
+    "explanation": "$\\frac{(x-3)(x+3)}{x-3} = x+3 \\to 6$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (x*x-9)/(x-3); return h.limit(f,3,\"both\");"
+    }
+  },
+  {
+    "id": "M2-003",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "infinity",
+      "rational-functions"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to\\infty} \\frac{3x^2+1}{x^2-5}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Compare the highest powers.",
+    "explanation": "Same degree: the limit is the ratio of the leading coefficients, $3/1 = 3$.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (3*x*x+1)/(x*x-5); return f(1e7);"
+    }
+  },
+  {
+    "id": "M2-004",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "standard-limits"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 0} \\frac{\\sin x}{x}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "A standard limit worth memorising.",
+    "explanation": "$\\lim_{x\\to0}\\frac{\\sin x}{x} = 1$.",
+    "estSeconds": 20,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.sin(x)/x; return h.limit(f,0,\"both\");"
+    }
+  },
+  {
+    "id": "M2-005",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "asymptotes"
+    ],
+    "prompt": "The graph of $f(x) = \\dfrac{x+1}{x-4}$ has a vertical asymptote $x = a$. What is $a$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Where is the denominator zero while the numerator is not?",
+    "explanation": "The denominator vanishes at $x = 4$, where the numerator is $5 \\ne 0$: vertical asymptote $x = 4$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> (x+1)/(x-4); const r=h.roots(x=>x-4,-50,50); return r.filter(a=> Math.abs(f(a+1e-6))>1e5)[0];"
+    }
+  },
+  {
+    "id": "M2-006",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "asymptotes"
+    ],
+    "prompt": "The graph of $f(x) = \\dfrac{2x+1}{x-3}$ has a horizontal asymptote $y = b$. What is $b$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Look at $x \\to \\pm\\infty$.",
+    "explanation": "Ratio of leading coefficients: $b = 2/1 = 2$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (2*x+1)/(x-3); return f(1e7);"
+    }
+  },
+  {
+    "id": "M2-007",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "rationalising"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 4} \\frac{\\sqrt x - 2}{x-4}$. Give the exact value as a fraction or decimal.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.25
+    },
+    "hint": "Write $x - 4 = (\\sqrt x - 2)(\\sqrt x + 2)$.",
+    "explanation": "$\\frac{\\sqrt x-2}{(\\sqrt x-2)(\\sqrt x+2)} = \\frac{1}{\\sqrt x + 2} \\to \\frac14$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (Math.sqrt(x)-2)/(x-4); return h.limit(f,4,\"both\");"
+    }
+  },
+  {
+    "id": "M2-008",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "infinity",
+      "rational-functions"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to\\infty} \\frac{5x^3 - x}{2x^3 + 7}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 2.5
+    },
+    "hint": "Divide numerator and denominator by the highest power.",
+    "explanation": "$\\frac{5 - 1/x^2}{2 + 7/x^3} \\to \\frac52$.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (5*x**3-x)/(2*x**3+7); return f(1e5);"
+    }
+  },
+  {
+    "id": "M2-009",
+    "unit": "M2",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "one-sided-limits"
+    ],
+    "prompt": "What is $\\displaystyle\\lim_{x\\to 0} \\frac{|x|}{x}$?",
+    "options": [
+      "1",
+      "−1",
+      "0",
+      "it does not exist"
+    ],
+    "answer": 3,
+    "hint": "Compare the limit from the left and from the right.",
+    "explanation": "For $x>0$ the quotient is $1$, for $x<0$ it is $-1$. The one-sided limits differ, so the limit does not exist.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> Math.abs(x)/x; const l=h.limit(f,0,\"left\"), r=h.limit(f,0,\"right\"); if(Math.abs(l-r)>1e-6) return {index:3}; return {index: [1,-1,0].findIndex(v=> Math.abs(v-l)<1e-6)};"
+    }
+  },
+  {
+    "id": "M2-010",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "factoring"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 1} \\frac{x^3-1}{x-1}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "$x^3 - 1 = (x-1)(x^2+x+1)$.",
+    "explanation": "After cancelling: $x^2 + x + 1 \\to 3$.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (x**3-1)/(x-1); return h.limit(f,1,\"both\");"
+    }
+  },
+  {
+    "id": "M2-011",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "continuity",
+      "piecewise"
+    ],
+    "prompt": "$f(x) = kx + 1$ for $x < 2$ and $f(x) = x^2$ for $x \\ge 2$. For which $k$ is $f$ continuous at $x=2$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 1.5
+    },
+    "hint": "The left limit must equal the function value.",
+    "explanation": "Left limit $2k+1$, value $f(2)=4$. Continuous when $2k+1 = 4$, i.e. $k = \\frac32$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const left=k=> h.limit(x=> k*x+1, 2, \"left\"); const right=h.limit(x=> x*x, 2, \"right\"); return h.root(k=> left(k)-right, -10, 10);"
+    }
+  },
+  {
+    "id": "M2-012",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "infinity",
+      "rationalising"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to\\infty} \\left(\\sqrt{x^2+6x} - x\\right)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Multiply and divide by the conjugate.",
+    "explanation": "$\\sqrt{x^2+6x}-x = \\frac{6x}{\\sqrt{x^2+6x}+x} = \\frac{6}{\\sqrt{1+6/x}+1} \\to \\frac62 = 3$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.sqrt(x*x+6*x)-x; return f(1e7);"
+    }
+  },
+  {
+    "id": "M2-013",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "trig-limits"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 0} \\frac{1-\\cos x}{x^2}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.5
+    },
+    "hint": "Multiply by $1+\\cos x$, or use $1-\\cos x = 2\\sin^2(x/2)$.",
+    "explanation": "$\\frac{1-\\cos x}{x^2} = \\frac{\\sin^2 x}{x^2(1+\\cos x)} \\to 1 \\cdot \\frac12 = \\frac12$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> (1-Math.cos(x))/(x*x); return (f(1e-4)+f(-1e-4))/2;"
+    }
+  },
+  {
+    "id": "M2-014",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "asymptotes",
+      "removable"
+    ],
+    "prompt": "How many vertical asymptotes does $f(x) = \\dfrac{x+2}{x^2-4}$ have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "Factor the denominator and cancel what you can.",
+    "explanation": "$\\frac{x+2}{(x-2)(x+2)} = \\frac{1}{x-2}$ for $x \\ne -2$. At $x=-2$ there is a hole (removable), at $x=2$ a vertical asymptote. One asymptote.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> (x+2)/(x*x-4); const zeros=h.roots(x=> x*x-4, -50.1, 50); return zeros.filter(a=> Math.abs(f(a+1e-7))>1e5).length;"
+    }
+  },
+  {
+    "id": "M2-015",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "standard-limits",
+      "exponential"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 0} \\frac{e^x - 1}{x}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "This is the derivative of $e^x$ at $0$.",
+    "explanation": "By definition of the derivative of $e^x$ at $0$: the limit is $e^0 = 1$.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (Math.exp(x)-1)/x; return h.limit(f,0,\"both\");"
+    }
+  },
+  {
+    "id": "M2-016",
+    "unit": "M2",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "infinity",
+      "e"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to\\infty} \\left(1 + \\frac{2}{x}\\right)^x$.",
+    "options": [
+      "$e^2$",
+      "$2$",
+      "$e$",
+      "$\\infty$"
+    ],
+    "answer": 0,
+    "hint": "Recall $\\lim_{n\\to\\infty}(1+\\frac1n)^n = e$.",
+    "explanation": "Write $x = 2n$: $(1+\\frac1n)^{2n} = \\left((1+\\frac1n)^n\\right)^2 \\to e^2$.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const v=(1+2/1e7)**1e7; const vals=[Math.E**2, 2, Math.E, Infinity]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-3) throw new Error(\"no match\"); return {index:i};"
+    }
+  },
+  {
+    "id": "M2-017",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "factoring"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 2} \\frac{x^2-5x+6}{x^2-4}$. Give an exact value.",
+    "answer": {
+      "kind": "numeric",
+      "value": -0.25
+    },
+    "hint": "Factor numerator and denominator.",
+    "explanation": "$\\frac{(x-2)(x-3)}{(x-2)(x+2)} = \\frac{x-3}{x+2} \\to -\\frac14$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (x*x-5*x+6)/(x*x-4); return h.limit(f,2,\"both\");"
+    }
+  },
+  {
+    "id": "M2-018",
+    "unit": "M2",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "continuity"
+    ],
+    "prompt": "$f(x) = \\dfrac{x^2-1}{x-1}$ for $x \\ne 1$ and $f(1) = 3$. Where is $f$ continuous?",
+    "options": [
+      "everywhere except at $x=1$",
+      "everywhere",
+      "everywhere except at $x=-1$",
+      "everywhere except at $x=1$ and $x=-1$"
+    ],
+    "answer": 0,
+    "hint": "Compute $\\lim_{x\\to1} f(x)$ and compare with $f(1)$.",
+    "explanation": "For $x\\ne1$, $f(x) = x+1$, so $\\lim_{x\\to1}f(x) = 2 \\ne 3 = f(1)$: a removable discontinuity at $x=1$. Elsewhere $f$ is continuous.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> x===1 ? 3 : (x*x-1)/(x-1); const cont=a=> Math.abs(h.limit(f,a)-f(a))<1e-6; const bad=[-1,1,0,2.5].filter(a=> !cont(a)); return {index: bad.join()===\"1\" ? 0 : bad.length===0 ? 1 : bad.join()===\"-1\" ? 2 : 3};"
+    }
+  },
+  {
+    "id": "M2-019",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "trig-limits"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to 0} \\frac{\\sin 3x}{\\sin 5x}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.6
+    },
+    "hint": "Use $\\sin(ax) \\approx ax$ near $0$.",
+    "explanation": "$\\frac{\\sin 3x}{\\sin 5x} = \\frac{\\sin 3x}{3x}\\cdot\\frac{5x}{\\sin 5x}\\cdot\\frac35 \\to \\frac35$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.sin(3*x)/Math.sin(5*x); return h.limit(f,0,\"both\");"
+    }
+  },
+  {
+    "id": "M2-020",
+    "unit": "M2",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "infinity",
+      "substitution"
+    ],
+    "prompt": "Compute $\\displaystyle\\lim_{x\\to\\infty} x\\sin\\left(\\frac1x\\right)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "Substitute $t = \\frac1x$.",
+    "explanation": "With $t = 1/x \\to 0^+$: $x\\sin\\frac1x = \\frac{\\sin t}{t} \\to 1$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*Math.sin(1/x); return f(1e7);"
+    }
+  }
+]

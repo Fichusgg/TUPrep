@@ -1,0 +1,468 @@
+[
+  {
+    "id": "M5-001",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "definite-integral",
+      "power-rule"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^3 x^2\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 9
+    },
+    "hint": "An antiderivative of $x^2$ is $\\frac{x^3}{3}$.",
+    "explanation": "$\\left[\\frac{x^3}{3}\\right]_0^3 = 9 - 0 = 9$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x*x; return h.integrate(f,0,3);"
+    }
+  },
+  {
+    "id": "M5-002",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "definite-integral"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_1^2 (2x+1)\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Find an antiderivative, then evaluate at the bounds.",
+    "explanation": "$\\left[x^2 + x\\right]_1^2 = (4+2) - (1+1) = 4$.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> 2*x+1; return h.integrate(f,1,2);"
+    }
+  },
+  {
+    "id": "M5-003",
+    "unit": "M5",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "antiderivatives",
+      "trig"
+    ],
+    "prompt": "Which function is an antiderivative of $\\cos x$?",
+    "options": [
+      "$\\sin x + C$",
+      "$-\\sin x + C$",
+      "$\\cos x + C$",
+      "$-\\cos x + C$"
+    ],
+    "answer": 0,
+    "hint": "Which function has derivative cos x?",
+    "explanation": "$(\\sin x)' = \\cos x$, so $\\int\\cos x\\,dx = \\sin x + C$.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.cos(x); const o=[(x)=> Math.sin(x),(x)=> -Math.sin(x),(x)=> Math.cos(x),(x)=> -Math.cos(x)]; const xs=[0.3,0.8,1.6,2.2]; return {indices: o.flatMap((F,i)=> xs.every(x=> Math.abs(h.deriv(F,x)-f(x))<1e-6*Math.max(1,Math.abs(f(x)))) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M5-004",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "definite-integral",
+      "trig"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^{\\pi} \\sin x\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "An antiderivative of $\\sin x$ is $-\\cos x$.",
+    "explanation": "$[-\\cos x]_0^\\pi = -\\cos\\pi + \\cos 0 = 1 + 1 = 2$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.sin(x); return h.integrate(f,0,Math.PI);"
+    }
+  },
+  {
+    "id": "M5-005",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "logarithm"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_1^e \\frac{1}{x}\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "$\\int\\frac1x\\,dx = \\ln|x| + C$.",
+    "explanation": "$[\\ln x]_1^e = 1 - 0 = 1$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> 1/x; return h.integrate(f,1,Math.E);"
+    }
+  },
+  {
+    "id": "M5-006",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "definite-integral",
+      "power-rule"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^2 x^3\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Antiderivative $\\frac{x^4}{4}$.",
+    "explanation": "$\\left[\\frac{x^4}{4}\\right]_0^2 = 4$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**3; return h.integrate(f,0,2);"
+    }
+  },
+  {
+    "id": "M5-007",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "linear-substitution"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^1 (2x+1)^3\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "$\\int f(ax+b)\\,dx = \\frac1a F(ax+b)$.",
+    "explanation": "$\\left[\\frac{(2x+1)^4}{8}\\right]_0^1 = \\frac{81 - 1}{8} = 10$.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> (2*x+1)**3; return h.integrate(f,0,1);"
+    }
+  },
+  {
+    "id": "M5-008",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "u-substitution"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^1 2x(x^2+1)^3\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 3.75
+    },
+    "hint": "Substitute $u = x^2 + 1$.",
+    "explanation": "With $u = x^2+1$, $du = 2x\\,dx$ and the bounds become $1$ and $2$: $\\int_1^2 u^3\\,du = \\frac{16 - 1}{4} = \\frac{15}{4} = 3.75$.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> 2*x*(x*x+1)**3; return h.integrate(f,0,1);"
+    }
+  },
+  {
+    "id": "M5-009",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "area-between-curves"
+    ],
+    "prompt": "What is the area of the region between $y = x$ and $y = x^2$ for $0 \\le x \\le 1$? Give an exact fraction.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.16666666666666666,
+      "tolerance": 1e-06
+    },
+    "hint": "Integrate top minus bottom.",
+    "explanation": "On $[0,1]$, $x \\ge x^2$. Area $= \\int_0^1 (x - x^2)\\,dx = \\frac12 - \\frac13 = \\frac16$.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x-x*x; return h.integrate(f,0,1);"
+    }
+  },
+  {
+    "id": "M5-010",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "mean-value"
+    ],
+    "prompt": "What is the mean value of $f(x) = x^2$ on $[0, 3]$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Mean value $= \\frac{1}{b-a}\\int_a^b f(x)\\,dx$.",
+    "explanation": "$\\frac13\\int_0^3 x^2\\,dx = \\frac13 \\cdot 9 = 3$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.integrate(x=> x*x,0,3)/3;"
+    }
+  },
+  {
+    "id": "M5-011",
+    "unit": "M5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "antiderivatives",
+      "exponential"
+    ],
+    "prompt": "Which function is an antiderivative of $e^{3x}$?",
+    "options": [
+      "$\\frac13 e^{3x} + C$",
+      "$3e^{3x} + C$",
+      "$e^{3x} + C$",
+      "$\\frac{e^{3x+1}}{3x+1} + C$"
+    ],
+    "answer": 0,
+    "hint": "Differentiate each option and compare.",
+    "explanation": "$\\left(\\frac13 e^{3x}\\right)' = e^{3x}$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.exp(3*x); const o=[(x)=> Math.exp(3*x)/3,(x)=> 3*Math.exp(3*x),(x)=> Math.exp(3*x),(x)=> Math.exp(3*x+1)/(3*x+1)]; const xs=[0.3,0.8,1.6,2.2]; return {indices: o.flatMap((F,i)=> xs.every(x=> Math.abs(h.deriv(F,x)-f(x))<1e-6*Math.max(1,Math.abs(f(x)))) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M5-012",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "ftc"
+    ],
+    "prompt": "Let $F(x) = \\displaystyle\\int_0^x t^2\\,dt$. Compute $F'(2)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Fundamental theorem of calculus, part 1.",
+    "explanation": "$F'(x) = x^2$, so $F'(2) = 4$.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const F=x=> h.integrate(t=> t*t, 0, x, 2000); return h.deriv(F, 2, 1e-3);"
+    }
+  },
+  {
+    "id": "M5-013",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "symmetry"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_{-2}^{2} x^3\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0
+    },
+    "hint": "Is $x^3$ even or odd?",
+    "explanation": "$x^3$ is odd, so the integral over a symmetric interval is $0$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**3; return h.integrate(f,-2,2);"
+    }
+  },
+  {
+    "id": "M5-014",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "linear-substitution",
+      "trig"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^{\\pi/4} \\cos(2x)\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 0.5
+    },
+    "hint": "An antiderivative is $\\frac12\\sin(2x)$.",
+    "explanation": "$\\left[\\frac12\\sin 2x\\right]_0^{\\pi/4} = \\frac12\\sin\\frac\\pi2 = \\frac12$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.cos(2*x); return h.integrate(f,0,Math.PI/4);"
+    }
+  },
+  {
+    "id": "M5-015",
+    "unit": "M5",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "volume-of-revolution"
+    ],
+    "prompt": "The region under $y = \\sqrt{x}$ for $0 \\le x \\le 4$ is rotated about the $x$-axis. What is the volume of the solid?",
+    "options": [
+      "$8\\pi$",
+      "$16\\pi$",
+      "$4\\pi$",
+      "$\\frac{32\\pi}{3}$"
+    ],
+    "answer": 0,
+    "hint": "$V = \\pi\\int_a^b f(x)^2\\,dx$.",
+    "explanation": "$V = \\pi\\int_0^4 x\\,dx = \\pi\\cdot 8 = 8\\pi$.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const v=Math.PI*h.integrate(x=> Math.sqrt(x)**2, 0, 4); const vals=[8*Math.PI,16*Math.PI,4*Math.PI,32*Math.PI/3]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-7*Math.max(1,Math.abs(v))) throw new Error(\"no option matches \"+v); return {index:i};"
+    }
+  },
+  {
+    "id": "M5-016",
+    "unit": "M5",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "u-substitution",
+      "exponential"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^1 x e^{x^2}\\,dx$.",
+    "options": [
+      "$\\dfrac{e-1}{2}$",
+      "$e - 1$",
+      "$\\dfrac{e}{2}$",
+      "$2(e-1)$"
+    ],
+    "answer": 0,
+    "hint": "Substitute $u = x^2$.",
+    "explanation": "$u = x^2$, $du = 2x\\,dx$: $\\frac12\\int_0^1 e^u\\,du = \\frac{e - 1}{2}$.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const v=h.integrate(x=> x*Math.exp(x*x), 0, 1); const vals=[(Math.E-1)/2,Math.E-1,Math.E/2,2*(Math.E-1)]; const d=vals.map(x=> Math.abs(x-v)); const i=d.indexOf(Math.min(...d)); if(d[i]>1e-7*Math.max(1,Math.abs(v))) throw new Error(\"no option matches \"+v); return {index:i};"
+    }
+  },
+  {
+    "id": "M5-017",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "power-rule",
+      "roots"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_1^4 \\frac{1}{\\sqrt{x}}\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "$\\frac{1}{\\sqrt x} = x^{-1/2}$.",
+    "explanation": "An antiderivative is $2\\sqrt x$: $2\\sqrt4 - 2\\sqrt1 = 4 - 2 = 2$.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> 1/Math.sqrt(x); return h.integrate(f,1,4);"
+    }
+  },
+  {
+    "id": "M5-018",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "area-between-curves"
+    ],
+    "prompt": "What is the area of the region enclosed by $y = x^2$ and $y = 2x$? Give an exact fraction.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1.3333333333333333,
+      "tolerance": 1e-06
+    },
+    "hint": "Find the intersection points first.",
+    "explanation": "$x^2 = 2x$ at $x = 0$ and $x = 2$. Area $= \\int_0^2 (2x - x^2)\\,dx = 4 - \\frac83 = \\frac43$.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const r=h.roots(x=> x*x-2*x, -10.3, 10); return Math.abs(h.integrate(x=> 2*x-x*x, r[0], r[1]));"
+    }
+  },
+  {
+    "id": "M5-019",
+    "unit": "M5",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "absolute-value"
+    ],
+    "prompt": "Compute $\\displaystyle\\int_0^2 |x - 1|\\,dx$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 1
+    },
+    "hint": "Split the integral at $x = 1$.",
+    "explanation": "$\\int_0^1 (1-x)\\,dx + \\int_1^2 (x-1)\\,dx = \\frac12 + \\frac12 = 1$. (Two triangles of area ½.)",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.abs(x-1); return h.integrate(f,0,2);"
+    }
+  },
+  {
+    "id": "M5-020",
+    "unit": "M5",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "u-substitution",
+      "logarithm"
+    ],
+    "prompt": "Which function is an antiderivative of $\\dfrac{x}{x^2+1}$?",
+    "options": [
+      "$\\frac12\\ln(x^2+1) + C$",
+      "$\\ln(x^2+1) + C$",
+      "$\\frac{1}{2(x^2+1)} + C$",
+      "$\\arctan x + C$"
+    ],
+    "answer": 0,
+    "hint": "The numerator is (almost) the derivative of the denominator.",
+    "explanation": "With $u = x^2+1$: $\\int\\frac{x}{x^2+1}\\,dx = \\frac12\\ln(x^2+1) + C$.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x/(x*x+1); const o=[(x)=> Math.log(x*x+1)/2,(x)=> Math.log(x*x+1),(x)=> 1/(2*(x*x+1)),(x)=> Math.atan(x)]; const xs=[0.3,0.8,1.6,2.2]; return {indices: o.flatMap((F,i)=> xs.every(x=> Math.abs(h.deriv(F,x)-f(x))<1e-6*Math.max(1,Math.abs(f(x)))) ? [i] : [])};"
+    }
+  }
+]

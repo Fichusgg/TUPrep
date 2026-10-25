@@ -1,0 +1,200 @@
+[
+  {
+    "unit": "L1",
+    "title": "L1 timed test \u2014 Propositional logic and truth tables",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "L2",
+    "title": "L2 timed test \u2014 Equivalence, Boolean algebra and simplification",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "L3",
+    "title": "L3 timed test \u2014 Predicates and quantifiers",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "L4",
+    "title": "L4 timed test \u2014 Deduction, valid and invalid arguments, proof patterns",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "L5",
+    "title": "L5 timed test \u2014 Logic puzzles and dense logical statements",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "A1",
+    "title": "A1 timed test \u2014 Patterns, sequences and rules",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "A2",
+    "title": "A2 timed test \u2014 Tracing algorithms and pseudocode",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "A3",
+    "title": "A3 timed test \u2014 Graphs, paths and trees",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "A4",
+    "title": "A4 timed test \u2014 Sorting, searching, recursion and complexity",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "A5",
+    "title": "A5 timed test \u2014 Counting, combinatorics and optimisation puzzles",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "A6",
+    "title": "A6 timed test \u2014 State machines, encodings and binary",
+    "count": 15,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "M1",
+    "title": "M1 timed test \u2014 Algebra and functions review",
+    "count": 12,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "M2",
+    "title": "M2 timed test \u2014 Limits and continuity",
+    "count": 12,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "M3",
+    "title": "M3 timed test \u2014 Derivatives (rules, chain, implicit)",
+    "count": 12,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "M4",
+    "title": "M4 timed test \u2014 Applications of derivatives",
+    "count": 12,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "M5",
+    "title": "M5 timed test \u2014 Integrals (definite, FTC, u-substitution)",
+    "count": 12,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "M6",
+    "title": "M6 timed test \u2014 Exponentials, logarithms and trigonometry",
+    "count": 12,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  },
+  {
+    "unit": "M7",
+    "title": "M7 timed test \u2014 Geometry and vectors",
+    "count": 12,
+    "difficultyMix": [
+      0.3,
+      0.45,
+      0.25
+    ],
+    "noGoingBackDefault": true
+  }
+]

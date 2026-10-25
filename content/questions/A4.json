@@ -1,0 +1,637 @@
+[
+  {
+    "id": "A4-001",
+    "unit": "A4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "binary-search"
+    ],
+    "prompt": "Binary search only works correctly if the list is …",
+    "options": [
+      "sorted",
+      "of even length",
+      "free of duplicates",
+      "stored in a stack"
+    ],
+    "answer": 0,
+    "hint": "Binary search discards half of the list after one comparison. When is that safe?",
+    "explanation": "After comparing with the middle element, binary search throws away one half. That is only valid if everything on the left is smaller and everything on the right larger — the list must be sorted.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const A=[9,2,7,4,5]; const bs=(A,t)=>{let lo=0,hi=A.length-1; while(lo<=hi){const m=(lo+hi)>>1; if(A[m]===t) return true; if(A[m]<t) lo=m+1; else hi=m-1;} return false;}; const failsUnsorted=A.some(t=>!bs(A,t)); const S=[...A].sort((a,b)=>a-b); const worksSorted=S.every(t=>bs(S,t)); return {index: failsUnsorted && worksSorted ? 0 : 3};"
+    }
+  },
+  {
+    "id": "A4-002",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "linear-search"
+    ],
+    "prompt": "Linear search checks the elements of an unsorted list of 50 numbers one by one. What is the maximum number of elements it may have to inspect?",
+    "answer": {
+      "kind": "numeric",
+      "value": 50
+    },
+    "hint": "Think about the worst case.",
+    "explanation": "In the worst case the value is last or absent, so all 50 elements are inspected.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const A=h.range(1,50); let worst=0; for(const t of [...A, 999]){ let k=0; for(const x of A){ k++; if(x===t) break; } worst=Math.max(worst,k); } return worst;"
+    }
+  },
+  {
+    "id": "A4-003",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "binary-search"
+    ],
+    "prompt": "Binary search on a sorted list of 1000 elements: what is the maximum number of elements it inspects?",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "How many times can you halve 1000 before nothing is left?",
+    "explanation": "Each inspection (at least) halves the range: ⌊log₂ 1000⌋ + 1 = 9 + 1 = 10.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const n=1000; const A=h.range(1,n); let worst=0; for(let t=0;t<=n+1;t++){ let lo=0,hi=n-1,k=0; while(lo<=hi){ const m=(lo+hi)>>1; k++; if(A[m]===t) break; if(A[m]<t) lo=m+1; else hi=m-1; } worst=Math.max(worst,k); } return worst;"
+    }
+  },
+  {
+    "id": "A4-004",
+    "unit": "A4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "growth-rates"
+    ],
+    "prompt": "Which function grows the fastest as n becomes large?",
+    "options": [
+      "2ⁿ",
+      "n³",
+      "n log n",
+      "n²"
+    ],
+    "answer": 0,
+    "hint": "Compare them at n = 100.",
+    "explanation": "Exponential growth beats every polynomial: at n = 100, 2ⁿ ≈ 10³⁰ while n³ = 10⁶.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const lg=[n=> n*Math.log(2), n=> 3*Math.log(n), n=> Math.log(n*Math.log2(n)), n=> 2*Math.log(n)]; const at=(n)=> lg.map(f=>f(n)); const a=at(1e3), b=at(1e6); const best=a.indexOf(Math.max(...a)); if(best!==b.indexOf(Math.max(...b))) throw new Error(\"unstable\"); return {index: best};"
+    }
+  },
+  {
+    "id": "A4-005",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "recursion"
+    ],
+    "prompt": "What value is printed?",
+    "code": "function p(n)\n  if n = 0 then return 1\n  return 2 · p(n − 1)\nprint p(10)",
+    "answer": {
+      "kind": "numeric",
+      "value": 1024
+    },
+    "hint": "Work bottom-up from p(0).",
+    "explanation": "Each level doubles the result of the level below: p(n) = 2ⁿ, so p(10) = 1024.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-006",
+    "unit": "A4",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "stack",
+      "data-structures"
+    ],
+    "prompt": "A text editor's \"undo\" always reverts the most recent action first. Which data structure fits best?",
+    "options": [
+      "Stack",
+      "Queue",
+      "Sorted list",
+      "Set"
+    ],
+    "answer": 0,
+    "hint": "Which structure is last-in-first-out?",
+    "explanation": "Undo needs last-in-first-out behaviour — exactly what a stack provides.",
+    "estSeconds": 25,
+    "source": "original",
+    "verified": "manual",
+    "manualNote": "Conceptual question (choice of data structure); checked by hand."
+  },
+  {
+    "id": "A4-007",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "bubble-sort",
+      "swaps"
+    ],
+    "prompt": "This is bubble sort with a swap counter. What value is printed?",
+    "code": "A ← [3, 1, 2]\nn ← length(A)\nswaps ← 0\nfor pass from 1 to n − 1\n  for i from 1 to n − pass\n    if A[i] > A[i + 1] then\n      swap A[i] and A[i + 1]\n      swaps ← swaps + 1\nprint swaps",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Each swap fixes exactly one pair that is in the wrong order.",
+    "explanation": "[3, 1, 2] has two inverted pairs (3, 1) and (3, 2), so bubble sort makes 2 swaps.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-008",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "halving",
+      "complexity"
+    ],
+    "prompt": "What value is printed?",
+    "code": "n ← 64\ni ← n\ncount ← 0\nwhile i > 1\n  i ← i div 2\n  count ← count + 1\nprint count",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "How often can you halve 64 before reaching 1?",
+    "explanation": "i goes 64 → 32 → 16 → 8 → 4 → 2 → 1: six halvings. In general ⌊log₂ n⌋.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-009",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "bubble-sort",
+      "inversions"
+    ],
+    "prompt": "This is bubble sort with a swap counter. What value is printed?",
+    "code": "A ← [5, 4, 3, 2, 1]\nn ← length(A)\nswaps ← 0\nfor pass from 1 to n − 1\n  for i from 1 to n − pass\n    if A[i] > A[i + 1] then\n      swap A[i] and A[i + 1]\n      swaps ← swaps + 1\nprint swaps",
+    "answer": {
+      "kind": "numeric",
+      "value": 10
+    },
+    "hint": "Count the pairs that are in the wrong order.",
+    "explanation": "Every pair in [5, 4, 3, 2, 1] is inverted: C(5, 2) = 10 pairs, so 10 swaps.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-010",
+    "unit": "A4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "selection-sort"
+    ],
+    "prompt": "Selection sort repeatedly swaps the minimum of the unsorted part to its front. What does this code print (two rounds)?",
+    "code": "A ← [4, 2, 5, 1, 3]\nfor i from 1 to 2\n  m ← i\n  for j from i + 1 to 5\n    if A[j] < A[m] then\n      m ← j\n  swap A[i] and A[m]\nprint A",
+    "options": [
+      "[1, 2, 5, 4, 3]",
+      "[1, 2, 3, 4, 5]",
+      "[2, 4, 5, 1, 3]",
+      "[1, 2, 4, 5, 3]"
+    ],
+    "answer": 0,
+    "hint": "Find the minimum of positions i..5 in each round.",
+    "explanation": "Round 1: the minimum 1 is swapped with 4 → [1, 2, 5, 4, 3]. Round 2: the minimum of [2, 5, 4, 3] is 2, already in place → [1, 2, 5, 4, 3].",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-011",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "insertion-sort"
+    ],
+    "prompt": "This is insertion sort with a counter of how often an element is shifted one place to the right. What value is printed?",
+    "code": "A ← [2, 4, 1, 3]\nshifts ← 0\nfor i from 2 to length(A)\n  key ← A[i]\n  j ← i − 1\n  while j ≥ 1 and A[j] > key\n    A[j + 1] ← A[j]\n    shifts ← shifts + 1\n    j ← j − 1\n  A[j + 1] ← key\nprint shifts",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Each shift removes one inverted pair.",
+    "explanation": "[2, 4, 1, 3] has 3 inverted pairs: (2, 1), (4, 1), (4, 3). Insertion sort makes exactly 3 shifts.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-012",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "recursion",
+      "call-count"
+    ],
+    "prompt": "C is a one-element array used as a counter (arrays are passed by reference). What value is printed?",
+    "code": "function f(n, C)\n  C[1] ← C[1] + 1\n  if n ≤ 1 then return n\n  return f(n − 1, C) + f(n − 2, C)\nC ← [0]\nx ← f(5, C)\nprint C[1]",
+    "answer": {
+      "kind": "numeric",
+      "value": 15
+    },
+    "hint": "Let calls(n) = 1 + calls(n − 1) + calls(n − 2), with calls(0) = calls(1) = 1.",
+    "explanation": "calls(2) = 3, calls(3) = 5, calls(4) = 9, calls(5) = 15. Naive recursive Fibonacci makes an exponential number of calls.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-013",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "complexity",
+      "scaling"
+    ],
+    "prompt": "An algorithm whose running time grows quadratically (proportional to n²) takes 2 seconds for n = 1000. About how many seconds will it take for n = 3000?",
+    "answer": {
+      "kind": "numeric",
+      "value": 18
+    },
+    "unitLabel": "s",
+    "hint": "What happens to n² when n triples?",
+    "explanation": "Tripling n multiplies n² by 9: 2 · 9 = 18 seconds.",
+    "estSeconds": 45,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const c=2/1000**2; return c*3000**2;"
+    }
+  },
+  {
+    "id": "A4-014",
+    "unit": "A4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "complexity",
+      "nested-loops"
+    ],
+    "prompt": "How does the number of iterations of this code grow with n?",
+    "code": "for i from 1 to n\n  for j from 1 to i\n    count ← count + 1",
+    "options": [
+      "like n²",
+      "like n",
+      "like n log n",
+      "like 2ⁿ"
+    ],
+    "answer": 0,
+    "hint": "Count the inner iterations for each i and add them up.",
+    "explanation": "The inner loop runs i times, so the total is 1 + 2 + … + n = n(n + 1)/2, which grows like n².",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const iters=(n)=> h.lastPrint(\"count ← 0\\nn ← \" + n + \"\\n\" + q.code + \"\\nprint count\"); const r=iters(400)/iters(200); const model=[4, 2, 2*Math.log(400)/Math.log(200), Infinity]; const d=model.map(m=> Math.abs(m-r)); return {index: d.indexOf(Math.min(...d))};"
+    }
+  },
+  {
+    "id": "A4-015",
+    "unit": "A4",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "complexity",
+      "comparison"
+    ],
+    "prompt": "Algorithm A needs 100·n steps, algorithm B needs n² steps. For which input sizes n ≥ 1 is B strictly faster?",
+    "options": [
+      "n < 100",
+      "n > 100",
+      "never",
+      "n < 10"
+    ],
+    "answer": 0,
+    "hint": "Solve n² < 100n.",
+    "explanation": "n² < 100n ⟺ n < 100. For larger inputs A wins — growth rate beats constants.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const N=h.range(1,1000); const faster=N.filter(n=> n*n < 100*n); const desc=[n=>n<100, n=>n>100, n=>false, n=>n<10]; return {indices: desc.flatMap((d,i)=> N.every(n=> d(n)===faster.includes(n)) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "A4-016",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "merge"
+    ],
+    "prompt": "This code merges two sorted lists and counts the comparisons. What value is printed?",
+    "code": "A ← [1, 4, 7]\nB ← [2, 3, 9]\ni ← 1\nj ← 1\nc ← 0\nR ← []\nwhile i ≤ 3 and j ≤ 3\n  c ← c + 1\n  if A[i] ≤ B[j] then\n    push(R, A[i])\n    i ← i + 1\n  else\n    push(R, B[j])\n    j ← j + 1\nprint c",
+    "answer": {
+      "kind": "numeric",
+      "value": 5
+    },
+    "hint": "Compare the two front elements, move the smaller one, and repeat.",
+    "explanation": "Comparisons: 1 vs 2, 4 vs 2, 4 vs 3, 4 vs 9, 7 vs 9. Then the first list is empty and 9 is copied without comparing: 5 comparisons.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-017",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "binary-search",
+      "trace"
+    ],
+    "prompt": "This is binary search for the value 63. How many elements does it inspect?",
+    "code": "A ← [3, 8, 12, 17, 21, 25, 30, 34, 41, 46, 50, 57, 63, 70, 77]\nlo ← 1\nhi ← 15\nk ← 0\nfound ← false\nwhile lo ≤ hi and not found\n  mid ← (lo + hi) div 2\n  k ← k + 1\n  if A[mid] = 63 then\n    found ← true\n  else if A[mid] < 63 then\n    lo ← mid + 1\n  else\n    hi ← mid − 1\nprint k",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Track lo, hi and mid in a table.",
+    "explanation": "mid = 8 (34 < 63) → lo = 9; mid = 12 (57 < 63) → lo = 13; mid = 14 (70 > 63) → hi = 13; mid = 13 (63) found. 4 inspections.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-018",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "recursion",
+      "fast-power"
+    ],
+    "prompt": "What value is printed?",
+    "code": "function pw(x, n)\n  if n = 0 then return 1\n  t ← pw(x, n div 2)\n  if n mod 2 = 0 then return t · t\n  return t · t · x\nprint pw(3, 5)",
+    "answer": {
+      "kind": "numeric",
+      "value": 243
+    },
+    "hint": "Compute pw(3, 1), pw(3, 2) and so on, following the code.",
+    "explanation": "pw(3, 5) uses t = pw(3, 2) = 9 and returns 9 · 9 · 3 = 243 = 3⁵. Repeated squaring needs only about log₂ n multiplications.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-019",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "recursion",
+      "hanoi"
+    ],
+    "prompt": "This function counts the moves needed for the Towers of Hanoi with n discs. What value is printed?",
+    "code": "function moves(n)\n  if n = 0 then return 0\n  return moves(n − 1) + 1 + moves(n − 1)\nprint moves(5)",
+    "answer": {
+      "kind": "numeric",
+      "value": 31
+    },
+    "hint": "moves(n) = 2 · moves(n − 1) + 1.",
+    "explanation": "moves: 1, 3, 7, 15, 31. In general 2ⁿ − 1, so 31 for 5 discs.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-020",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "recursion",
+      "divide-and-conquer"
+    ],
+    "prompt": "What value is printed?",
+    "code": "function c(n)\n  if n ≤ 1 then return 1\n  return c(n div 2) + c(n − n div 2) + 1\nprint c(10)",
+    "answer": {
+      "kind": "numeric",
+      "value": 19
+    },
+    "hint": "Compute c for small n first: c(1), c(2), c(3), c(5).",
+    "explanation": "c(1) = 1, c(2) = 3, c(3) = c(1) + c(2) + 1 = 5, c(5) = c(2) + c(3) + 1 = 9, c(10) = c(5) + c(5) + 1 = 19. (c counts the nodes of a merge-sort call tree: 2n − 1.)",
+    "estSeconds": 150,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-021",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "binary-search",
+      "logarithms"
+    ],
+    "prompt": "Binary search on a sorted list of 1 000 000 elements: what is the maximum number of elements it inspects?",
+    "answer": {
+      "kind": "numeric",
+      "value": 20
+    },
+    "hint": "Use powers of two: 2¹⁰ ≈ 1000.",
+    "explanation": "2¹⁹ = 524 288 ≤ 1 000 000 < 2²⁰, so ⌊log₂ 1 000 000⌋ + 1 = 19 + 1 = 20.",
+    "estSeconds": 100,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const W=(n)=> n===0 ? 0 : 1 + W(Math.ceil((n-1)/2)); return W(1000000);"
+    }
+  },
+  {
+    "id": "A4-022",
+    "unit": "A4",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "sorting",
+      "complexity"
+    ],
+    "prompt": "You must sort a large list in arbitrary order. Which algorithm needs the fewest comparisons in the worst case as the list grows?",
+    "options": [
+      "Merge sort",
+      "Bubble sort",
+      "Selection sort",
+      "Insertion sort"
+    ],
+    "answer": 0,
+    "hint": "Which one splits the problem in halves?",
+    "explanation": "Merge sort uses O(n log n) comparisons in every case. Bubble, selection and insertion sort need about n²/2 comparisons in the worst case.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const n=512; const worst=[...Array(n).keys()].reverse(); let c; const merge=(a)=>{ if(a.length<2) return a; const m=a.length>>1, L=merge(a.slice(0,m)), R=merge(a.slice(m)); const out=[]; let i=0,j=0; while(i<L.length&&j<R.length){ c++; out.push(L[i]<=R[j]?L[i++]:R[j++]); } return out.concat(L.slice(i),R.slice(j)); }; const bubble=(a)=>{ a=[...a]; for(let p=1;p<a.length;p++) for(let i=0;i<a.length-p;i++){ c++; if(a[i]>a[i+1]) [a[i],a[i+1]]=[a[i+1],a[i]]; } }; const selection=(a)=>{ a=[...a]; for(let i=0;i<a.length;i++){ let m=i; for(let j=i+1;j<a.length;j++){ c++; if(a[j]<a[m]) m=j; } [a[i],a[m]]=[a[m],a[i]]; } }; const insertion=(a)=>{ a=[...a]; for(let i=1;i<a.length;i++){ const k=a[i]; let j=i-1; while(j>=0){ c++; if(a[j]>k){ a[j+1]=a[j]; j--; } else break; } a[j+1]=k; } }; const counts=[merge,bubble,selection,insertion].map(f=>{ c=0; f(worst); return c; }); return {index: counts.indexOf(Math.min(...counts))};"
+    }
+  },
+  {
+    "id": "A4-023",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "complexity",
+      "nested-loops"
+    ],
+    "prompt": "What value is printed?",
+    "code": "n ← 16\nc ← 0\ni ← 1\nwhile i ≤ n\n  j ← 1\n  while j ≤ n\n    c ← c + 1\n    j ← j · 2\n  i ← i + 1\nprint c",
+    "answer": {
+      "kind": "numeric",
+      "value": 80
+    },
+    "hint": "How many times does the inner loop run for one value of i?",
+    "explanation": "For n = 16 the inner loop visits j = 1, 2, 4, 8, 16: 5 times. The outer loop runs 16 times: 16 · 5 = 80 (an n log n pattern).",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-024",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "recursion"
+    ],
+    "prompt": "What value is printed?",
+    "code": "function t(n)\n  if n ≤ 2 then return 1\n  return t(n − 1) + t(n − 2) + t(n − 3)\nprint t(8)",
+    "answer": {
+      "kind": "numeric",
+      "value": 57
+    },
+    "hint": "Evaluate bottom-up: t(0), t(1), t(2), t(3), …",
+    "explanation": "t(0) = t(1) = t(2) = 1, then each value is the sum of the previous three: 3, 5, 9, 17, 31, 57. So t(8) = 57.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "pseudocode",
+      "result": "last-print"
+    }
+  },
+  {
+    "id": "A4-025",
+    "unit": "A4",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "complexity",
+      "scaling"
+    ],
+    "prompt": "An algorithm takes 1 s for n = 1000, 4 s for n = 2000 and 9 s for n = 3000. If this pattern continues, how many seconds does it take for n = 10 000?",
+    "answer": {
+      "kind": "numeric",
+      "value": 100
+    },
+    "unitLabel": "s",
+    "hint": "Compare the times with (n / 1000)².",
+    "explanation": "The times are (n/1000)² seconds: quadratic growth. For n = 10 000: 10² = 100 seconds.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const data=[[1000,1],[2000,4],[3000,9]]; const k=Math.log(data[2][1]/data[0][1])/Math.log(data[2][0]/data[0][0]); if(Math.abs(k-2)>1e-9) throw new Error(\"not quadratic\"); return data[0][1]*(10000/1000)**k;"
+    }
+  },
+  {
+    "id": "A4-026",
+    "unit": "A4",
+    "type": "order",
+    "difficulty": 2,
+    "tags": [
+      "growth-rates",
+      "ordering"
+    ],
+    "prompt": "Put these functions in order from **slowest** to **fastest** growing (for large n).",
+    "options": [
+      "n²",
+      "log n",
+      "2ⁿ",
+      "n log n",
+      "n"
+    ],
+    "answer": [
+      1,
+      4,
+      3,
+      0,
+      2
+    ],
+    "hint": "Compare them at a large n, e.g. n = 1 000 000.",
+    "explanation": "log n < n < n log n < n² < 2ⁿ. Logarithms grow slower than any power of n; exponentials faster than any power.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const lg=[n=> 2*Math.log(n), n=> Math.log(Math.log(n)), n=> n*Math.log(2), n=> Math.log(n)+Math.log(Math.log(n)), n=> Math.log(n)]; const n=1e6; const v=lg.map(f=>f(n)); return {order: [...v.keys()].sort((a,b)=> v[a]-v[b])};"
+    }
+  }
+]

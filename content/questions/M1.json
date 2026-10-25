@@ -1,0 +1,465 @@
+[
+  {
+    "id": "M1-001",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "linear-equations"
+    ],
+    "prompt": "Solve for $x$: $3(x-2) = 2x+5$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 11
+    },
+    "hint": "Expand the bracket first.",
+    "explanation": "$3x - 6 = 2x + 5$, so $x = 11$.",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> 3*(x-2)-(2*x+5); const r=h.roots(f,-50,50).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+    }
+  },
+  {
+    "id": "M1-002",
+    "unit": "M1",
+    "type": "mc",
+    "difficulty": 1,
+    "tags": [
+      "expanding"
+    ],
+    "prompt": "$(a+b)^2 - (a-b)^2$ is equal to:",
+    "options": [
+      "$4ab$",
+      "$2ab$",
+      "$0$",
+      "$2a^2+2b^2$"
+    ],
+    "answer": 0,
+    "hint": "Expand both squares.",
+    "explanation": "$(a+b)^2 = a^2+2ab+b^2$ and $(a-b)^2 = a^2-2ab+b^2$. The difference is $4ab$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const t=(a,b)=> (a+b)**2-(a-b)**2; const o=[(a,b)=>4*a*b,(a,b)=>2*a*b,()=>0,(a,b)=>2*a*a+2*b*b]; const pts=[[1.3,2.1],[-2,0.7],[3,-4]]; return {indices: o.flatMap((g,i)=> pts.every(([a,b])=> Math.abs(g(a,b)-t(a,b))<1e-9)?[i]:[])};"
+    }
+  },
+  {
+    "id": "M1-003",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "absolute-value"
+    ],
+    "prompt": "What is the sum of all solutions of $|2x-3| = 7$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Split into two cases.",
+    "explanation": "$2x-3=7$ gives $x=5$; $2x-3=-7$ gives $x=-2$. Sum: $3$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.abs(2*x-3)-7; const r=h.roots(f,-50,50).map(x=> Math.round(x*1e9)/1e9); return h.sum(r);"
+    }
+  },
+  {
+    "id": "M1-004",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "domain"
+    ],
+    "prompt": "For which value of $x$ is $f(x)=\\dfrac{2x+1}{x-3}$ **not** defined?",
+    "answer": {
+      "kind": "numeric",
+      "value": 3
+    },
+    "hint": "Division by zero is not allowed.",
+    "explanation": "The denominator $x-3$ is zero for $x=3$.",
+    "estSeconds": 25,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const den=(x)=> x-3; const r=h.roots(den,-50,50); if(r.length!==1) throw new Error(\"?\"); return Math.round(r[0]*1e9)/1e9;"
+    }
+  },
+  {
+    "id": "M1-005",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "composition"
+    ],
+    "prompt": "$f(x) = 3x-4$. Compute $f(f(2))$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 2
+    },
+    "hint": "Inside first.",
+    "explanation": "$f(2) = 2$, so $f(f(2)) = f(2) = 2$. ($x=2$ is a fixed point: $3x-4=x$.)",
+    "estSeconds": 30,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=>3*x-4; return f(f(2));"
+    }
+  },
+  {
+    "id": "M1-006",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 1,
+    "tags": [
+      "lines",
+      "intersection"
+    ],
+    "prompt": "The lines $y=2x+3$ and $y=-x+12$ intersect at $(a, b)$. What is $b$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 9
+    },
+    "hint": "Set the right-hand sides equal.",
+    "explanation": "$2x+3 = -x+12$ gives $x=3$, and then $y = 2\\cdot 3 + 3 = 9$.",
+    "estSeconds": 35,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const r=h.roots(x=> (2*x+3)-(-x+12),-50,50); return 2*r[0]+3;"
+    }
+  },
+  {
+    "id": "M1-007",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "radical-equations",
+      "extraneous"
+    ],
+    "prompt": "Solve for $x$: $\\sqrt{x+7} = x-5$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 9
+    },
+    "hint": "Square both sides — and check your solutions afterwards.",
+    "explanation": "Squaring: $x+7 = x^2-10x+25$, so $x^2-11x+18 = (x-2)(x-9) = 0$. Check: $x=9$ gives $4=4$ ✓; $x=2$ gives $3 = -3$ ✗ (extraneous). Answer $x=9$.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x>=-7 ? Math.sqrt(x+7)-(x-5) : NaN; const r=h.roots(f,-7,50).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+    }
+  },
+  {
+    "id": "M1-008",
+    "unit": "M1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "inequalities"
+    ],
+    "prompt": "For which $x$ is $x^2 < 4x$?",
+    "options": [
+      "$0 < x < 4$",
+      "$x < 0$ or $x > 4$",
+      "$x < 4$",
+      "$-2 < x < 2$"
+    ],
+    "answer": 0,
+    "hint": "Bring everything to one side and factor.",
+    "explanation": "$x^2-4x = x(x-4) < 0$. The parabola is negative between its roots: $0 < x < 4$. (You may not divide by $x$: it could be negative.)",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const t=x=> x*x<4*x; const o=[x=>0<x&&x<4, x=>x<0||x>4, x=>x<4, x=>-2<x&&x<2]; const xs=h.range(-100,100).map(k=>k/10+0.013); return {indices: o.flatMap((g,i)=> xs.every(x=> g(x)===t(x))?[i]:[])};"
+    }
+  },
+  {
+    "id": "M1-009",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "systems",
+      "word-problems"
+    ],
+    "prompt": "Pens cost €2 and notebooks €5. Lena buys 11 items and pays €40. How many notebooks did she buy?",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "Two unknowns, two equations.",
+    "explanation": "$p+n=11$ and $2p+5n=40$. Substituting $p=11-n$: $22+3n=40$, so $n=6$ (and $p=5$).",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const s=[]; for(let p=0;p<=11;p++){ const n=11-p; if(2*p+5*n===40) s.push(n); } if(s.length!==1) throw new Error(\"not unique\"); return s[0];"
+    }
+  },
+  {
+    "id": "M1-010",
+    "unit": "M1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "range",
+      "quadratics"
+    ],
+    "prompt": "$f(x)=x^2-4x+1$ with domain $x \\ge 2$. What is the range of $f$?",
+    "options": [
+      "$y \\ge -3$",
+      "$y \\ge 1$",
+      "$y \\ge 2$",
+      "all real numbers"
+    ],
+    "answer": 0,
+    "hint": "Complete the square.",
+    "explanation": "$f(x) = (x-2)^2 - 3$. On $x\\ge 2$ it increases from $f(2)=-3$ without bound: range $y \\ge -3$.",
+    "estSeconds": 80,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> x*x-4*x+1; const ys=h.range(0,100000).map(k=> f(2+k/1000)); const m=Math.min(...ys); if(f(1000)<1e5) throw new Error(\"not unbounded\"); return {index: [ -3, 1, 2 ].findIndex(v=> Math.abs(v-m)<1e-9)};"
+    }
+  },
+  {
+    "id": "M1-011",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "inverse"
+    ],
+    "prompt": "$f(x) = \\dfrac{2x+1}{x-1}$. Compute $f^{-1}(3)$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "$f^{-1}(3)$ is the $x$ with $f(x)=3$.",
+    "explanation": "$\\frac{2x+1}{x-1} = 3 \\Rightarrow 2x+1 = 3x-3 \\Rightarrow x = 4$.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x===1 ? NaN : (2*x+1)/(x-1) - 3; const r=h.roots(f,1.0001,50).map(x=> Math.round(x*1e9)/1e9); if(r.length!==1) throw new Error(\"expected one root, got \"+r); return r[0];"
+    }
+  },
+  {
+    "id": "M1-012",
+    "unit": "M1",
+    "type": "mc",
+    "difficulty": 2,
+    "tags": [
+      "transformations"
+    ],
+    "prompt": "The graph of $y=(x-3)^2+2$ is the graph of $y=x^2$ shifted:",
+    "options": [
+      "3 right and 2 up",
+      "3 left and 2 up",
+      "3 right and 2 down",
+      "2 right and 3 up"
+    ],
+    "answer": 0,
+    "hint": "Replacing $x$ by $x-3$ moves the graph … ?",
+    "explanation": "$x \\mapsto x-3$ shifts 3 units to the right and $+2$ shifts 2 units up: the vertex moves from $(0,0)$ to $(3,2)$.",
+    "estSeconds": 40,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const t=(x)=> (x-3)**2+2; const o=[(x)=> (x-3)**2+2,(x)=> (x+3)**2+2,(x)=> (x-3)**2-2,(x)=> (x-2)**2+3]; const xs=[-3.7,-1.2,0.4,1.9,2.6,5.3]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(g(x)-t(x))<1e-9) ? [i] : [])};"
+    }
+  },
+  {
+    "id": "M1-013",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "algebraic-identities"
+    ],
+    "prompt": "Given that $x + \\dfrac1x = 5$, compute $x^2 + \\dfrac{1}{x^2}$.",
+    "answer": {
+      "kind": "numeric",
+      "value": 23
+    },
+    "hint": "Square the given equation.",
+    "explanation": "$\\left(x+\\frac1x\\right)^2 = x^2 + 2 + \\frac{1}{x^2} = 25$, so $x^2 + \\frac1{x^2} = 23$.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const r=h.roots(x=> x+1/x-5, 0.01, 50); const v=r.map(x=> x*x+1/(x*x)); if(v.some(y=> Math.abs(y-v[0])>1e-6)) throw new Error(\"differs\"); return v[0];"
+    }
+  },
+  {
+    "id": "M1-014",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "polynomials",
+      "substitution"
+    ],
+    "prompt": "How many real solutions does $x^4 - 5x^2 + 4 = 0$ have?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Substitute $u = x^2$.",
+    "explanation": "$u^2-5u+4 = (u-1)(u-4) = 0$, so $x^2 = 1$ or $x^2 = 4$: $x = \\pm1, \\pm2$. Four solutions.",
+    "estSeconds": 60,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> x**4-5*x**2+4; const r=h.roots(f,-10,10.3).map(x=> Math.round(x*1e9)/1e9); return r.length;"
+    }
+  },
+  {
+    "id": "M1-015",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 2,
+    "tags": [
+      "inequalities",
+      "integers"
+    ],
+    "prompt": "How many integers $x$ satisfy $(x-1)(x+2) \\le 0$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Where is this parabola below or on the axis?",
+    "explanation": "The product is $\\le 0$ for $-2 \\le x \\le 1$: the integers $-2, -1, 0, 1$. That is 4.",
+    "estSeconds": 50,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.range(-100,100).filter(x=> (x-1)*(x+2)<=0).length;"
+    }
+  },
+  {
+    "id": "M1-016",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "absolute-value"
+    ],
+    "prompt": "What is the sum of all solutions of $|x-1| + |x+2| = 5$?",
+    "answer": {
+      "kind": "numeric",
+      "value": -1
+    },
+    "hint": "Split at $x=-2$ and $x=1$.",
+    "explanation": "For $x \\ge 1$: $2x+1 = 5$, $x=2$. For $-2 \\le x < 1$: the sum is $3 \\ne 5$. For $x < -2$: $-2x-1 = 5$, $x=-3$. Sum: $2 + (-3) = -1$.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=(x)=> Math.abs(x-1)+Math.abs(x+2)-5; const r=h.roots(f,-50,50).map(x=> Math.round(x*1e9)/1e9); return h.sum(r);"
+    }
+  },
+  {
+    "id": "M1-017",
+    "unit": "M1",
+    "type": "mc",
+    "difficulty": 3,
+    "tags": [
+      "inverse"
+    ],
+    "prompt": "$f(x) = \\dfrac{x+1}{x-2}$. Which formula gives $f^{-1}(x)$?",
+    "options": [
+      "$\\dfrac{2x+1}{x-1}$",
+      "$\\dfrac{x-2}{x+1}$",
+      "$\\dfrac{2x-1}{x+1}$",
+      "$\\dfrac{x+2}{x-1}$"
+    ],
+    "answer": 0,
+    "hint": "Write $y = \\frac{x+1}{x-2}$, swap $x$ and $y$, and solve for $y$.",
+    "explanation": "$x = \\frac{y+1}{y-2} \\Rightarrow xy - 2x = y + 1 \\Rightarrow y(x-1) = 2x+1 \\Rightarrow y = \\frac{2x+1}{x-1}$.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=> (x+1)/(x-2); const o=[x=>(2*x+1)/(x-1), x=>(x-2)/(x+1), x=>(2*x-1)/(x+1), x=>(x+2)/(x-1)]; const xs=[-3.3,-0.7,0.4,3.1,5.9]; return {indices: o.flatMap((g,i)=> xs.every(x=> Math.abs(f(g(x))-x)<1e-9)?[i]:[])};"
+    }
+  },
+  {
+    "id": "M1-018",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "quadratics",
+      "discriminant"
+    ],
+    "prompt": "For which positive value of $k$ does $x^2 + kx + 9 = 0$ have exactly one solution?",
+    "answer": {
+      "kind": "numeric",
+      "value": 6
+    },
+    "hint": "Exactly one solution means a double root.",
+    "explanation": "The discriminant must be zero: $k^2 - 36 = 0$, so $k = 6$. Then $x^2+6x+9 = (x+3)^2$.",
+    "estSeconds": 70,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const ks=h.range(1,40).map(k=>k/2).filter(k=>{ const m=Math.min(...h.range(-4000,4000).map(i=> (i/100)**2 + k*(i/100) + 9)); return Math.abs(m)<1e-9; }); if(ks.length!==1) throw new Error(\"ks=\"+ks); return ks[0];"
+    }
+  },
+  {
+    "id": "M1-019",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "domain"
+    ],
+    "prompt": "How many integers lie in the domain of $f(x) = \\dfrac{\\sqrt{4-x^2}}{x-1}$?",
+    "answer": {
+      "kind": "numeric",
+      "value": 4
+    },
+    "hint": "Two conditions: the square root and the denominator.",
+    "explanation": "$4 - x^2 \\ge 0$ gives $-2 \\le x \\le 2$, and $x \\ne 1$. Integers: $-2, -1, 0, 2$. That is 4.",
+    "estSeconds": 90,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "return h.range(-100,100).filter(x=> 4-x*x>=0 && x-1!==0).length;"
+    }
+  },
+  {
+    "id": "M1-020",
+    "unit": "M1",
+    "type": "short",
+    "difficulty": 3,
+    "tags": [
+      "composition",
+      "equations"
+    ],
+    "prompt": "$f(x) = 2x+1$ and $g(x) = x^2$. What is the sum of all solutions of $f(g(x)) = g(f(x))$?",
+    "answer": {
+      "kind": "numeric",
+      "value": -2
+    },
+    "hint": "Write out both compositions.",
+    "explanation": "$f(g(x)) = 2x^2+1$ and $g(f(x)) = (2x+1)^2 = 4x^2+4x+1$. Equal when $2x^2 + 4x = 0$, i.e. $x=0$ or $x=-2$. Sum: $-2$.",
+    "estSeconds": 120,
+    "source": "original",
+    "verifier": {
+      "kind": "js",
+      "code": "const f=x=>2*x+1, g=x=>x*x; const F=x=> f(g(x))-g(f(x)); const r=h.roots(F,-50.3,50); return h.sum(r.map(x=>Math.round(x*1e9)/1e9));"
+    }
+  }
+]

@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# env
+.env*.local
+.env
+
+# testing
+test-results/
+playwright-report/
+blob-report/
+coverage/
+# Playwright browsers installed in-project via PLAYWRIGHT_BROWSERS_PATH=0
+# live inside node_modules/playwright-core/.local-browsers (already ignored)
+
+# vercel
+.vercel/
+
+# misc
+.DS_Store
+npm-debug.log*

@@ -1,0 +1,121 @@
+[
+  {
+    "id": "cst",
+    "title": "TU Delft CST (2027-2028 format)",
+    "estimated": true,
+    "note": "Two tests per Brochure 2 2027-2028: Mathematics (60 min, 50%) and Systematic Reasoning & Logical Thinking (45 min, 50%). Question counts are not published \u2014 20 per test is ESTIMATED.",
+    "sections": [
+      {
+        "part": "math",
+        "title": "Mathematics",
+        "count": 20,
+        "minutes": 60,
+        "units": {
+          "M1": 3,
+          "M2": 1,
+          "M3": 3,
+          "M4": 3,
+          "M5": 4,
+          "M6": 4,
+          "M7": 2
+        },
+        "difficultyMix": [
+          0.3,
+          0.45,
+          0.25
+        ]
+      },
+      {
+        "part": "logic",
+        "title": "Systematic Reasoning & Logical Thinking",
+        "count": 20,
+        "minutes": 45,
+        "units": {
+          "L1": 4,
+          "L2": 4,
+          "L3": 4,
+          "L4": 4,
+          "L5": 4
+        },
+        "difficultyMix": [
+          0.3,
+          0.45,
+          0.25
+        ]
+      }
+    ],
+    "weights": {
+      "math": 50,
+      "logic": 50
+    }
+  },
+  {
+    "id": "tue",
+    "title": "TU/e selection tests (2027-2028)",
+    "estimated": true,
+    "note": "Three tests per the 2027-2028 departmental regulations: Mathematics 10%, Logical Reasoning 40%, Algorithmic Thinking 40% (+ VWO grade 10%). 3 hours in total is confirmed; 60 min and 20\u201325 questions per test are ESTIMATED.",
+    "sections": [
+      {
+        "part": "math",
+        "title": "Mathematics test",
+        "count": 20,
+        "minutes": 60,
+        "units": {
+          "M1": 4,
+          "M2": 1,
+          "M3": 4,
+          "M4": 3,
+          "M5": 4,
+          "M6": 4
+        },
+        "difficultyMix": [
+          0.3,
+          0.45,
+          0.25
+        ]
+      },
+      {
+        "part": "logic",
+        "title": "Logical Reasoning test",
+        "count": 25,
+        "minutes": 60,
+        "units": {
+          "L1": 5,
+          "L2": 4,
+          "L3": 4,
+          "L4": 5,
+          "L5": 7
+        },
+        "difficultyMix": [
+          0.3,
+          0.45,
+          0.25
+        ]
+      },
+      {
+        "part": "algorithmic",
+        "title": "Algorithmic Thinking test",
+        "count": 25,
+        "minutes": 60,
+        "units": {
+          "A1": 4,
+          "A2": 6,
+          "A3": 5,
+          "A4": 4,
+          "A5": 3,
+          "A6": 3
+        },
+        "difficultyMix": [
+          0.3,
+          0.45,
+          0.25
+        ]
+      }
+    ],
+    "weights": {
+      "math": 10,
+      "logic": 40,
+      "algorithmic": 40
+    }
+  }
+]
