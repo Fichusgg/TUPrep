@@ -7,10 +7,13 @@ import { scheduleConfig } from "@config/schedule.config";
 import { BANK, getQuestion, PARTS } from "@/content";
 import type { PartId, Question } from "@/content/schema";
 import { PracticeSession } from "@/components/PracticeSession";
-import { Button, Card, PageHeader } from "@/components/ui";
+import { Button, ButtonLink, Card, PageHeader } from "@/components/ui";
 import { createRng, hashString, randomSeed } from "@/lib/rng";
 import { weakestTags } from "@/lib/stats";
+import { nextUnit } from "@/lib/progress";
+import { isDue } from "@/lib/srs";
 import { useAppState, useHydrated, type AttemptMode } from "@/lib/store";
+import { useClock } from "@/lib/useClock";
 
 interface Spec {
   title: string;
@@ -24,7 +27,10 @@ export function PracticeClient() {
   const params = useSearchParams();
   const router = useRouter();
   const hydrated = useHydrated();
-  const { attempts, bookmarks } = useAppState();
+  const state = useAppState();
+  const { attempts, bookmarks, errors } = state;
+  const now = useClock(60_000);
+  const due = Object.values(errors).filter((e) => isDue(e, now)).length;
   const [spec, setSpec] = useState<Spec | null>(null);
   const seen = useMemo(() => new Set(attempts.map((a) => a.qid)), [attempts]);
   const weak = useMemo(() => weakestTags(attempts, 3, 5), [attempts]);
@@ -90,44 +96,76 @@ export function PracticeClient() {
       />
     );
 
+  const nextLogic = hydrated ? nextUnit(state, "logic") : null;
+  const nextAlg = hydrated ? nextUnit(state, "algorithmic") : null;
+  const rec = (title: string, text: string, action: React.ReactNode) => (
+    <Card className="flex flex-col gap-3">
+      <div>
+        <h3 className="font-semibold">{title}</h3>
+        <p className="mt-1 text-sm text-muted">{text}</p>
+      </div>
+      <div className="mt-auto">{action}</div>
+    </Card>
+  );
+
   return (
-    <div className="space-y-6">
-      <PageHeader title="Practice" subtitle="Mixed sets across units. For practice inside one unit (by difficulty and tag, challenge mode, missed questions), open the unit page." />
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {PARTS.map((p) => (
-          <Card key={p.id} className="space-y-2">
-            <h2 className="font-semibold">{p.title}</h2>
-            <p className="text-xs text-muted">{p.delft ? `TU Delft ${p.delft} · ` : ""}TU/e {p.tue}</p>
-            <div className="grid grid-cols-1 gap-2 pt-1">
-              <Button onClick={() => setSpec(build({ part: p.id, count: 10 }))}>Mixed set · 10</Button>
-              <Button variant="secondary" onClick={() => setSpec(build({ part: p.id, count: 12, timed: true }))}>
-                Timed-pace set · 12
-              </Button>
-              <Button variant="secondary" onClick={() => setSpec(build({ part: p.id, count: 12, label: "diagnostic" }))}>
-                Diagnostic · 12
-              </Button>
-            </div>
-          </Card>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Card className="space-y-2">
-          <h2 className="font-semibold">Weakest-topic drill</h2>
-          <p className="text-sm text-muted">{weak.length ? `Your weakest tags: ${weak.map((w) => `${w.tag} (${w.accuracy}%)`).join(", ")}.` : "Answer a few more questions (3+ per tag) to unlock this."}</p>
-          <Button onClick={() => setSpec(build({ mode: "weakest", count: 12 }))} disabled={!weak.length}>
-            Start drill · 12
-          </Button>
-        </Card>
-        <Card className="space-y-2">
-          <h2 className="font-semibold">Review & bookmarks</h2>
-          <p className="text-sm text-muted">
-            Spaced review of your mistakes lives in <Link className="underline" href="/review">Review</Link>.
-          </p>
-          <Button variant="secondary" onClick={() => setSpec(build({ mode: "bookmarks", count: 30 }))} disabled={!bookmarks.length}>
-            Bookmarked questions ({bookmarks.length})
-          </Button>
-        </Card>
-      </div>
+    <div className="space-y-8">
+      <PageHeader title="Practice" subtitle="Pick a recommended set, or practise a whole part. Mistakes are saved automatically for review." />
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">Recommended for you</h2>
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+          {rec(
+            due ? `Review ${due} mistake${due === 1 ? "" : "s"}` : "Review queue is clear",
+            due ? "Spaced review: these are due today." : "Nothing is due. Missed questions come back after 1, 3, 7 and 21 days.",
+            <ButtonLink href="/review" variant={due ? "primary" : "secondary"}>
+              {due ? "Start review" : "Open review"}
+            </ButtonLink>,
+          )}
+          {rec(
+            "Weakest topics drill",
+            weak.length ? `Your weakest: ${weak.slice(0, 3).map((w) => `${w.tag} (${w.accuracy}%)`).join(", ")}.` : "Unlocks after a few answers per topic.",
+            <Button variant={weak.length ? "primary" : "secondary"} onClick={() => setSpec(build({ mode: "weakest", count: 12 }))} disabled={!weak.length}>
+              Start drill · 12
+            </Button>,
+          )}
+          {rec(
+            "Continue your path",
+            [nextLogic && `Logic: ${nextLogic.id} ${nextLogic.title}`, nextAlg && `Algorithmic: ${nextAlg.id} ${nextAlg.title}`].filter(Boolean).join(" · ") || "Every unit passed — try a mock.",
+            <ButtonLink href={nextLogic ? `/units/${nextLogic.id}?tab=practice` : "/mock"} variant="secondary">
+              {nextLogic ? `Practise ${nextLogic.id}` : "Mock exams"}
+            </ButtonLink>,
+          )}
+        </div>
+      </section>
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">Practise a whole part</h2>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {PARTS.map((p) => (
+            <Card key={p.id} className="space-y-2">
+              <h3 className="font-semibold">{p.title}</h3>
+              <p className="text-xs text-muted">{p.delft ? `TU Delft ${p.delft} · ` : ""}TU/e {p.tue}</p>
+              <div className="grid gap-2 pt-1">
+                <Button onClick={() => setSpec(build({ part: p.id, count: 10 }))}>Mixed set · 10</Button>
+                <Button variant="secondary" onClick={() => setSpec(build({ part: p.id, count: 12, timed: true }))}>
+                  At exam pace · 12
+                </Button>
+                <Button variant="ghost" onClick={() => setSpec(build({ part: p.id, count: 12, label: "diagnostic" }))}>
+                  Diagnostic · 12
+                </Button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+      <section className="flex flex-wrap items-center gap-3 text-sm text-muted">
+        <span>Also:</span>
+        <Link className="underline underline-offset-2 hover:text-fg" href="/mock">
+          Mock exams
+        </Link>
+        <button type="button" className="underline underline-offset-2 hover:text-fg disabled:no-underline disabled:opacity-50" disabled={!bookmarks.length} onClick={() => setSpec(build({ mode: "bookmarks", count: 30 }))}>
+          Bookmarked questions ({bookmarks.length})
+        </button>
+      </section>
     </div>
   );
 }

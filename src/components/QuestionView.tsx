@@ -7,6 +7,7 @@ import type { Question } from "@/content/schema";
 import { formatAnswer, isCorrect, type Response } from "@/lib/grading";
 import { createRng, hashString } from "@/lib/rng";
 import { CodeBlock, Inline, RichText } from "./RichText";
+import { IconCheck } from "./Icons";
 import { DifficultyDots, PartBadge } from "./ui";
 
 const LETTERS = "ABCDEFGH";
@@ -63,7 +64,7 @@ export function QuestionView({
 
   return (
     <div className="space-y-4">
-      <RichText text={q.prompt} className="text-base md:text-lg" />
+      <RichText text={q.prompt} className="text-[17px] leading-[1.7] md:text-lg" />
       {q.code && <CodeBlock code={q.code} />}
 
       {q.type === "mc" && (
@@ -82,7 +83,7 @@ export function QuestionView({
                 aria-checked={selected}
                 disabled={revealed}
                 onClick={() => onChange(i)}
-                className={`flex items-start gap-3 rounded-lg border px-4 py-3 text-left transition ${tone} disabled:cursor-default`}
+                className={`flex min-h-12 items-start gap-3 rounded-xl border px-4 py-3 text-left text-[16px] transition ${tone} disabled:cursor-default`}
               >
                 <span className={`mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-md border text-xs font-semibold ${selected ? "border-accent bg-accent text-white dark:text-bg" : "border-line text-muted"}`}>
                   {LETTERS[i]}
@@ -107,7 +108,7 @@ export function QuestionView({
             if (revealed && isAns) tone = "border-good bg-good-soft";
             else if (revealed && chosen) tone = "border-bad bg-bad-soft";
             return (
-              <label key={i} className={`flex cursor-pointer items-start gap-3 rounded-lg border px-4 py-3 transition ${tone}`}>
+              <label key={i} className={`flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border px-4 py-3 transition ${tone}`}>
                 <input
                   type="checkbox"
                   className="mt-1 h-4 w-4 accent-[var(--accent)]"
@@ -205,9 +206,10 @@ export function Feedback({ q, response }: { q: Question; response: Response }) {
   const correct = isCorrect(q, response);
   const unit = UNIT_BY_ID[q.unit];
   return (
-    <div role="status" className={`rounded-lg border p-4 ${correct ? "border-good/40 bg-good-soft" : "border-bad/40 bg-bad-soft"}`}>
-      <p className={`font-semibold ${correct ? "text-good" : "text-bad"}`}>
-        {correct ? "Correct" : "Not quite"}
+    <div role="status" className={`rounded-xl border p-4 md:p-5 ${correct ? "border-good/40 bg-good-soft" : "border-bad/40 bg-bad-soft"}`}>
+      <p className={`flex flex-wrap items-center gap-x-2 font-semibold ${correct ? "text-good" : "text-bad"}`}>
+        {correct ? <IconCheck className="h-5 w-5" /> : <span aria-hidden>✕</span>}
+        {correct ? "Correct!" : "Not quite"}
         {!correct && (
           <span className="font-normal text-fg">
             {" "}

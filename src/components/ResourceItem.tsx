@@ -11,10 +11,30 @@ const STATUS: Record<Resource["status"], { label: string; tone: "good" | "info" 
   unverified: { label: "unverified extra", tone: "muted", title: "Not on your list." },
 };
 
-export function ResourceItem({ r, weeks }: { r: Resource; weeks?: number[] }) {
+export function ResourceItem({ r, weeks, compact = false }: { r: Resource; weeks?: number[]; compact?: boolean }) {
   const { resourcesDone } = useAppState();
   const done = Boolean(resourcesDone[r.id]);
   const st = STATUS[r.status];
+  if (compact) {
+    return (
+      <label className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 ${done ? "border-good/40 bg-good-soft/40" : "border-line bg-surface"}`}>
+        <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-[var(--accent)]" checked={done} onChange={() => toggleResource(r.id)} aria-label={`Mark ${r.title} done`} />
+        <span className="min-w-0 text-sm">
+          {r.url ? (
+            <a href={r.url} target="_blank" rel="noopener noreferrer" className={`font-medium underline-offset-2 hover:underline ${done ? "text-muted line-through" : ""}`}>
+              {r.title} ↗
+            </a>
+          ) : (
+            <span className="font-medium">{r.title}</span>
+          )}
+          <span className="mt-0.5 block text-xs text-muted">
+            {r.type} · ≈ {r.minutes >= 120 ? `${Math.round(r.minutes / 60)} h` : `${r.minutes} min`}
+            {r.status === "link-needed" && " · link needed"}
+          </span>
+        </span>
+      </label>
+    );
+  }
   return (
     <div id={r.id} className={`scroll-mt-24 rounded-lg border p-4 ${done ? "border-good/40 bg-good-soft/40" : "border-line bg-surface"}`}>
       <div className="flex flex-wrap items-start justify-between gap-2">

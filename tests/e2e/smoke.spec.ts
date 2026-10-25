@@ -24,9 +24,10 @@ test.beforeEach(async ({ page }) => {
 
 test("dashboard, schedule and key dates render", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
-  await expect(page.getByText("TU Delft Cognitive Skills Test").first()).toBeVisible();
-  await expect(page.getByText("TU/e online selection day").first()).toBeVisible();
+  await expect(page.locator("#next-up")).toBeVisible();
+  await expect(page.getByText(/TU Delft CST/).first()).toBeVisible();
+  await expect(page.getByText(/TU\/e selection/).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Your learning path" })).toBeVisible();
   await shot(page, "01-dashboard");
 
   await page.goto("/schedule?view=all");
@@ -46,11 +47,12 @@ test("unit page tabs, practice with hint and error log", async ({ page }) => {
   await page.goto("/units/L1");
   await expect(page.getByRole("heading", { name: /L1 · Propositional logic/ })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Key ideas" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Common traps" })).toBeVisible();
   await shot(page, "04-unit-overview");
 
   await page.getByRole("tab", { name: "Practice" }).click();
-  await page.getByRole("button", { name: "Start" }).click();
-  await expect(page.getByText(/Question 1 \/ 10/)).toBeVisible();
+  await page.getByRole("button", { name: /Practise 10 questions/ }).click();
+  await expect(page.getByText("1/10")).toBeVisible();
   await page.getByRole("button", { name: "Show hint" }).click();
   await expect(page.getByRole("note")).toBeVisible();
   for (let i = 0; i < 3; i++) {
@@ -60,8 +62,8 @@ test("unit page tabs, practice with hint and error log", async ({ page }) => {
     if (i === 0) await shot(page, "05-practice-feedback");
     await page.getByRole("button", { name: "Next question" }).click();
   }
-  await page.getByRole("button", { name: "End session" }).click();
-  await expect(page.getByRole("heading", { name: "Session complete" })).toBeVisible();
+  await page.getByRole("button", { name: /End session/ }).click();
+  await expect(page.getByText(/Practice complete/)).toBeVisible();
 
   await page.goto("/units/L1?tab=ask");
   await page.getByLabel("Write down a question you want to resolve").fill("Why is p → q true when p is false?");
@@ -73,6 +75,7 @@ test("unit page tabs, practice with hint and error log", async ({ page }) => {
 
 test("timed unit test with no going back produces a result", async ({ page }) => {
   await page.goto("/units/A2?tab=test");
+  await page.getByText("Options", { exact: true }).click();
   await page.getByLabel("Questions").selectOption("5");
   await page.getByRole("button", { name: "Start timed test" }).click();
   await page.getByRole("button", { name: "Start section" }).click();
@@ -136,7 +139,9 @@ test("mobile layout has no horizontal overflow", async ({ page }) => {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(overflow, path).toBe(false);
   }
-  await page.getByRole("button", { name: "Menu" }).click();
-  await expect(page.locator("#mobile-nav").getByRole("link", { name: "Analytics" })).toBeVisible();
+  const tabBar = page.getByRole("navigation", { name: "Main" }).last();
+  await expect(tabBar.getByRole("link", { name: "Progress" })).toBeVisible();
+  await tabBar.getByRole("link", { name: "Learn" }).click();
+  await expect(page.getByRole("heading", { name: "Learn", exact: true })).toBeVisible();
   await shot(page, "14-mobile");
 });

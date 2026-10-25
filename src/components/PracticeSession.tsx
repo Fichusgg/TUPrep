@@ -9,7 +9,8 @@ import { formatAnswer, formatResponse, isAnswered, isCorrect, type Response } fr
 import { addToErrorLog, recordAnswers, toggleBookmark, useAppState, type AttemptMode } from "@/lib/store";
 import { Feedback, initialOrder, QuestionMeta, QuestionView } from "./QuestionView";
 import { CodeBlock, Inline, RichText } from "./RichText";
-import { Button, Card, ProgressBar } from "./ui";
+import { IconBulb } from "./Icons";
+import { Button, Card } from "./ui";
 
 interface Result {
   q: Question;
@@ -106,29 +107,33 @@ export function PracticeSession({
   }, [results]);
 
   if (done || !q) {
+    const pctScore = summary.total ? Math.round((summary.correct / summary.total) * 100) : 0;
     return (
-      <div className="space-y-6">
-        <Card>
-          <h2 className="text-xl font-semibold">Session complete</h2>
-          <p className="mt-1 text-muted">
-            {summary.correct} of {summary.total} correct ({summary.total ? Math.round((summary.correct / summary.total) * 100) : 0}%) · {formatDuration(summary.ms)} total ·{" "}
-            {summary.total ? formatDuration(summary.ms / summary.total) : "0:00"} per question
+      <div className="mx-auto max-w-3xl space-y-6">
+        <Card className="p-6 text-center md:p-8">
+          <p className="text-sm font-medium text-muted">{title ?? "Session"} complete</p>
+          <div className={`tabular mt-2 text-5xl font-semibold ${pctScore >= 70 ? "text-good" : ""}`}>{pctScore}%</div>
+          <p className="mt-2 text-muted">
+            {summary.correct} of {summary.total} correct · {summary.total ? formatDuration(summary.ms / summary.total) : "0:00"} per question
           </p>
-          {summary.correct < summary.total && <p className="mt-2 text-sm text-muted">Missed questions are now in your error log and will come back in the review queue tomorrow.</p>}
-          <div className="mt-4 flex flex-wrap gap-2">
-            {onRestart && <Button onClick={onRestart}>New set with the same settings</Button>}
+          <div className="mx-auto mt-4 max-w-md">
+            <Segments results={results} total={results.length} index={results.length} />
+          </div>
+          {summary.correct < summary.total && <p className="mt-4 text-sm text-muted">Your mistakes are saved and will come back in the review queue tomorrow.</p>}
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {onRestart && <Button onClick={onRestart}>Practise again</Button>}
             <Button variant="secondary" onClick={onExit}>
-              Back
+              Done
             </Button>
           </div>
         </Card>
+        {results.some((r) => !r.correct) && <h2 className="font-semibold">Look again at what you missed</h2>}
         <div className="space-y-3">
-          {results.map((r, i) => (
-            <details key={r.q.id + i} className="rounded-lg border border-line bg-surface p-4">
+          {[...results.filter((r) => !r.correct), ...results.filter((r) => r.correct)].map((r, i) => (
+            <details key={r.q.id + i} className="rounded-xl border border-line bg-surface p-4">
               <summary className="flex cursor-pointer items-center gap-3">
                 <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${r.correct ? "bg-good" : "bg-bad"}`} aria-hidden />
                 <span className="sr-only">{r.correct ? "Correct" : "Incorrect"}:</span>
-                <span className="tabular text-xs text-muted">{r.q.id}</span>
                 <span className="line-clamp-1 flex-1 text-sm">
                   <Inline text={r.q.prompt.split("\n")[0]} />
                 </span>
@@ -158,16 +163,21 @@ export function PracticeSession({
 
   return (
     <div className="mx-auto max-w-3xl space-y-4">
-      {title && <p className="text-sm font-medium text-muted">{title}</p>}
       <div className="flex items-center gap-3">
-        <ProgressBar value={(index / questions.length) * 100} label="Session progress" />
-        <span className="tabular shrink-0 text-xs text-muted">
-          {results.filter((r) => r.correct).length}/{results.length} correct
+        <button type="button" onClick={() => (results.length ? setIndex(questions.length) : onExit())} className="shrink-0 rounded-lg px-2 py-1 text-sm text-muted hover:bg-surface-2 hover:text-fg">
+          ✕ <span className="hidden sm:inline">End session</span>
+        </button>
+        <div className="flex-1">
+          <Segments results={results} total={questions.length} index={index} />
+        </div>
+        <span className="tabular shrink-0 text-sm text-muted">
+          {index + 1}/{questions.length}
         </span>
       </div>
-      <Card className="space-y-5">
+      {title && <p className="text-sm text-muted">{title}</p>}
+      <Card className="space-y-5 p-5 md:p-7">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <QuestionMeta q={q} index={index} total={questions.length} />
+          <QuestionMeta q={q} />
           <div className="flex items-center gap-1">
             {paceSeconds && !revealed && (
               <span className={`tabular rounded-md px-2 py-0.5 text-xs ${over ? "bg-bad-soft text-bad" : "bg-surface-2 text-muted"}`}>
@@ -182,9 +192,12 @@ export function PracticeSession({
         </div>
         <QuestionView key={q.id} q={q} response={response} onChange={setResponse} revealed={revealed} onSubmit={submit} />
         {!revealed && hint && (
-          <div role="note" className="rounded-lg border border-accent/30 bg-accent-soft p-3 text-sm">
-            <span className="font-medium">Hint: </span>
-            <Inline text={q.hint} />
+          <div role="note" className="flex gap-2 rounded-xl border border-accent/30 bg-accent-soft p-4 text-sm">
+            <IconBulb className="h-5 w-5 shrink-0 text-accent" />
+            <span>
+              <span className="font-medium">Hint: </span>
+              <Inline text={q.hint} />
+            </span>
           </div>
         )}
         {revealed && <Feedback q={q} response={response} />}
@@ -201,36 +214,45 @@ export function PracticeSession({
             ))}
           </p>
         )}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4">
-          <div className="flex flex-wrap gap-1">
-            <Button variant="ghost" onClick={() => (results.length ? setIndex(questions.length) : onExit())}>
-              End session
-            </Button>
-            {!revealed && !hint && (
-              <Button variant="ghost" onClick={() => setHint(true)}>
-                Show hint
-              </Button>
-            )}
-            {revealed && (
-              <Button variant="ghost" onClick={() => addToErrorLog(q)} disabled={inLog}>
-                {inLog ? "In error log" : "Add to error log"}
-              </Button>
-            )}
-          </div>
-          <div className="flex gap-2">
-            {revealed ? (
-              <Button onClick={next} autoFocus>
-                {index + 1 < questions.length ? "Next question" : "See summary"}
-              </Button>
-            ) : (
-              <Button onClick={submit} disabled={!isAnswered(response) && q.type !== "order"}>
-                Check answer
-              </Button>
-            )}
-          </div>
-        </div>
       </Card>
-      <p className="text-center text-xs text-muted">Keyboard: 1–6 or A–F to choose · Enter to check / continue</p>
+      {/* Action bar: sticky above the phone tab bar, inline on larger screens */}
+      <div className="sticky bottom-16 z-30 -mx-4 flex items-center gap-2 border-t border-line bg-bg/95 px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
+        {!revealed && !hint && (
+          <Button variant="secondary" onClick={() => setHint(true)}>
+            Show hint
+          </Button>
+        )}
+        {revealed && (
+          <Button variant="ghost" onClick={() => addToErrorLog(q)} disabled={inLog}>
+            {inLog ? "Saved for review" : "Save for review"}
+          </Button>
+        )}
+        <div className="ml-auto">
+          {revealed ? (
+            <Button onClick={next} autoFocus className="min-h-11 px-6">
+              {index + 1 < questions.length ? "Next question" : "See summary"}
+            </Button>
+          ) : (
+            <Button onClick={submit} disabled={!isAnswered(response) && q.type !== "order"} className="min-h-11 px-6">
+              Check answer
+            </Button>
+          )}
+        </div>
+      </div>
+      <p className="hidden text-center text-xs text-muted md:block">Keyboard: 1–6 or A–F to choose · Enter to check / continue</p>
+    </div>
+  );
+}
+
+/** One segment per question: green = right, orange = wrong, accent = current. */
+function Segments({ results, total, index }: { results: Result[]; total: number; index: number }) {
+  return (
+    <div className="flex gap-1" role="progressbar" aria-valuemin={0} aria-valuemax={total} aria-valuenow={results.length} aria-label="Session progress">
+      {Array.from({ length: total }, (_, i) => {
+        const r = results[i];
+        const cls = r ? (r.correct ? "bg-good" : "bg-bad") : i === index ? "bg-accent" : "bg-surface-2";
+        return <span key={i} className={`h-2 flex-1 rounded-full ${cls}`} />;
+      })}
     </div>
   );
 }

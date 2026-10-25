@@ -19,11 +19,29 @@ const KIND_LABEL: Partial<Record<Task["kind"], string>> = {
   "test-day": "TEST",
 };
 
+const KIND_COLOR: Partial<Record<Task["kind"], string>> = {
+  read: "border-l-sky-500",
+  resource: "border-l-sky-500",
+  prelearn: "border-l-sky-500",
+  setup: "border-l-sky-500",
+  practice: "border-l-violet-500",
+  warmup: "border-l-violet-500",
+  challenge: "border-l-violet-500",
+  drill: "border-l-violet-500",
+  diagnostic: "border-l-violet-500",
+  "timed-test": "border-l-amber-500",
+  mock: "border-l-amber-500",
+  "test-day": "border-l-rose-500",
+  review: "border-l-emerald-500",
+  "mock-review": "border-l-emerald-500",
+  taper: "border-l-emerald-500",
+};
+
 export function TaskRow({ task, showDate = false }: { task: Task; showDate?: boolean }) {
   const { tasksDone } = useAppState();
   const done = Boolean(tasksDone[task.id]);
   return (
-    <li className="flex items-start gap-3 py-2">
+    <li className={`flex items-start gap-3 border-l-[3px] py-2.5 pl-3 ${KIND_COLOR[task.kind] ?? "border-l-line"}`}>
       <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-[var(--accent)]" checked={done} onChange={() => toggleTask(task.id)} aria-label={`Mark "${task.title}" done`} />
       <div className="min-w-0 flex-1">
         <Link href={task.href} className={`text-sm hover:underline ${done ? "text-muted line-through" : ""}`}>

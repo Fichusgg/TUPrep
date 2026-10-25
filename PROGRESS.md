@@ -76,3 +76,15 @@ Checkpoints are recorded here instead of git commits (see README → "Working en
   key; mobile 375 px without horizontal overflow).
 - Not verified: a real tutor call against the Anthropic API (no key in this environment, by design).
 - README rewritten for the full brief (setup, env vars, adding questions, regenerating schedule/mocks, Vercel steps, assumptions).
+
+## Checkpoint 8 — UX/UI redesign (2026-10-24)
+
+- Prompt in `docs/UX_REDESIGN_PROMPT.md`; implemented the core of it:
+  - Navigation: 5 sections (Today, Learn, Practice, Plan, Progress) with sub-links, settings icon, bottom tab bar on phones.
+  - Today: one "Next up" hero action, today's checklist, streak / review / weekly-goal tiles, learning-path summary per part.
+  - Learn: unit cards in study order with status (Not started / In progress / Test passed) and Start/Continue;
+    unit pages as a 4-step path (Learn → Practice → Timed test → Review) with Key ideas / Common traps callouts.
+  - Practice: one-click "Practise 10 questions", customise panel, recommendations; focus mode with segmented progress,
+    larger text and targets, sticky action bar on phones, bigger session summary.
+  - Schedule tasks colour-coded by type; reduced-motion support.
+- lint, typecheck, unit tests, build and 6/6 Playwright smoke tests pass.
