@@ -89,6 +89,19 @@ src/app/                      pages (dashboard, schedule, units, practice, mocks
                               resources, ask, exam info, settings) and /api/tutor
 ```
 
+## Logic textbook page
+
+`/textbook` (Learn → Logic textbook) is a reading guide for TU Delft's preparation text: chapter 2 of *Delftse
+Foundations of Computation* (Hugtenburg & Yorke-Smith, 2nd ed., TU Delft OPEN, CC BY-NC-SA 4.0). Each section has
+tick boxes, an estimate and links to the matching units (L1–L5); starred sections are marked "skip". The section list
+lives in `src/content/textbook.ts`.
+
+TU Delft's site doesn't allow its book to be embedded in other sites, so the page links to the online version and the
+PDF. To read it inside TUPrep, download the PDF from the book page
+(https://books.open.tudelft.nl/home/catalog/book/211) and save it as
+`public/textbooks/delftse-foundations-of-computation.pdf`; the page then shows a built-in reader next to the guide.
+The licence allows this for non-commercial use with attribution (shown under the reader).
+
 ## Adding or editing questions
 
 Add an object to `content/questions/<UNIT>.json`. Every question needs:

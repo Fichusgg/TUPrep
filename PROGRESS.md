@@ -88,3 +88,11 @@ Checkpoints are recorded here instead of git commits (see README → "Working en
     larger text and targets, sticky action bar on phones, bigger session summary.
   - Schedule tasks colour-coded by type; reduced-motion support.
 - lint, typecheck, unit tests, build and 6/6 Playwright smoke tests pass.
+
+## Checkpoint 9 — Logic textbook page (2026-10-25)
+
+- `/textbook`: one page for Delftse Foundations of Computation ch. 2 — book card with online/PDF links and licence,
+  per-section reading guide with tick boxes (saved with resource progress), estimates, "skip" for starred sections and
+  links to units L1–L5; an embedded reader appears when the PDF is placed in `public/textbooks/` (not added: TU Delft
+  blocks embedding and downloading it needs your OK).
+- Linked from the Learn sub-nav, the L1–L5 unit pages, the foc-ch2 resource and the schedule's reading task.

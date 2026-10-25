@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { Resource } from "@/content/schema";
 import { toggleResource, useAppState } from "@/lib/store";
 import { Badge } from "./ui";
@@ -63,6 +64,11 @@ export function ResourceItem({ r, weeks, compact = false }: { r: Resource; weeks
       </div>
       <p className="mt-2 text-sm text-muted">{r.why}</p>
       {r.note && <p className="mt-1 text-xs text-muted">{r.note}</p>}
+      {r.id === "foc-ch2" && (
+        <Link href="/textbook" className="mt-2 inline-block text-sm font-medium text-accent underline-offset-4 hover:underline">
+          Open the chapter 2 reading guide →
+        </Link>
+      )}
       {r.doNotCopy && <p className="mt-1 text-xs text-muted">Use for practice only — none of its questions are copied into TUPrep.</p>}
       {weeks && weeks.length > 0 && <p className="mt-1 text-xs text-muted">Scheduled in week {weeks.map((w) => w + 1).join(", ")}.</p>}
     </div>

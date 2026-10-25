@@ -10,7 +10,7 @@ import { IconLearn, IconPlan, IconPractice, IconProgress, IconSettings, IconToda
 /** Five learner-centred sections; each lists the routes it owns (first = landing page). */
 const SECTIONS = [
   { label: "Today", icon: IconToday, links: [{ href: "/", label: "Today" }] },
-  { label: "Learn", icon: IconLearn, links: [{ href: "/units", label: "Units" }, { href: "/resources", label: "Resources" }, { href: "/ask", label: "My questions" }] },
+  { label: "Learn", icon: IconLearn, links: [{ href: "/units", label: "Units" }, { href: "/textbook", label: "Logic textbook" }, { href: "/resources", label: "Resources" }, { href: "/ask", label: "My questions" }] },
   { label: "Practice", icon: IconPractice, links: [{ href: "/practice", label: "Practice" }, { href: "/review", label: "Review mistakes" }, { href: "/mock", label: "Mock exams" }] },
   { label: "Plan", icon: IconPlan, links: [{ href: "/schedule", label: "Schedule" }, { href: "/exams", label: "Exam info" }] },
   { label: "Progress", icon: IconProgress, links: [{ href: "/analytics", label: "Progress" }] },

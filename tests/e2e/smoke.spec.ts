@@ -120,6 +120,14 @@ test("analytics, resources, settings and tutor API", async ({ page, request }) =
   await page.goto("/resources");
   await expect(page.getByText(/Delftse Foundations of Computation/).first()).toBeVisible();
   await shot(page, "12-resources");
+  await page.goto("/textbook");
+  await expect(page.getByRole("heading", { name: "Chapter 2 reading guide" })).toBeVisible();
+  const part = page.getByRole("checkbox", { name: "Propositions", exact: true });
+  await part.check();
+  await page.reload();
+  await expect(part).toBeChecked();
+  await expect(page.getByText("Logic gates")).toBeVisible();
+  await shot(page, "12b-textbook");
   await page.goto("/settings");
   await page.getByRole("radio", { name: "Dark" }).click();
   await expect(page.locator("html")).toHaveClass(/dark/);
@@ -134,7 +142,7 @@ test("analytics, resources, settings and tutor API", async ({ page, request }) =
 
 test("mobile layout has no horizontal overflow", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 800 });
-  for (const path of ["/", "/schedule", "/units/M3", "/mock"]) {
+  for (const path of ["/", "/schedule", "/units/M3", "/mock", "/textbook"]) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
     expect(overflow, path).toBe(false);

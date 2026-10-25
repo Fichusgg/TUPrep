@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { scheduleConfig } from "@config/schedule.config";
 import { bankForUnit, PART_BY_ID, RESOURCE_BY_ID, UNIT_BY_ID, UNIT_TESTS } from "@/content";
 import type { Question } from "@/content/schema";
+import { CHAPTER_2 } from "@/content/textbook";
 import { QuestionLog, TutorChat } from "@/components/AskPanel";
 import { ErrorList } from "@/components/ErrorList";
 import { IconArrow, IconBulb, IconCheck, IconWarn } from "@/components/Icons";
@@ -198,6 +199,14 @@ function Overview({ unitId, summary, apNote, onPractise }: { unitId: string; sum
             Resources <span className="tabular text-xs font-normal text-muted">{done}/{unit.resources.length} done</span>
           </h2>
           {unit.resources.map((rid) => RESOURCE_BY_ID[rid] && <ResourceItem key={rid} r={RESOURCE_BY_ID[rid]} compact />)}
+          {CHAPTER_2.some((s) => s.units.includes(unit.id)) && (
+            <Link href="/textbook" className="flex items-center justify-between rounded-lg border border-line px-3 py-2 text-sm hover:border-accent">
+              <span>
+                Textbook: <strong>§{CHAPTER_2.filter((s) => s.units.includes(unit.id)).map((s) => s.id).join(", §")}</strong> reading guide
+              </span>
+              <IconArrow className="h-4 w-4 shrink-0 text-muted" />
+            </Link>
+          )}
         </section>
       </aside>
     </div>

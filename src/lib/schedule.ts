@@ -211,7 +211,7 @@ export function buildSchedule(cfg: ScheduleConfig = scheduleConfig): Week[] {
         }
         add({ title: "Tag the error type of every diagnostic mistake", kind: "review", minutes: 30, href: "/review" });
         add({ title: "Bebras warm-up: past Elite challenge (bebras.uk)", kind: "warmup", minutes: 40, href: "/resources", resourceId: "bebras-uk" });
-        add({ title: "Read Foundations of Computation ch. 2 — sections 2.1–2.2", kind: "resource", minutes: 90, href: "/resources", resourceId: "foc-ch2" });
+        add({ title: "Read Foundations of Computation ch. 2 — sections 2.1–2.2", kind: "resource", minutes: 90, href: "/textbook", resourceId: "foc-ch2" });
         checkpoint = { text: "Timed diagnostics done: 36 questions answered; note your baseline accuracy per part.", metric: { kind: "practice", count: 36, accuracy: 0 } };
       }
     } else if (phase.id === "P1" || phase.id === "P2") {
