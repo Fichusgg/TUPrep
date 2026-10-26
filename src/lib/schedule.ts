@@ -6,6 +6,7 @@
 import { scheduleConfig, type Phase, type ScheduleConfig } from "@config/schedule.config";
 import { BANK, RESOURCE_BY_ID, UNIT_BY_ID, UNIT_TESTS, UNITS } from "@/content";
 import type { PartId } from "@/content/schema";
+import { READING_BLOCKS, sectionsForUnit } from "@/content/textbook";
 
 // ------------------------------------------------------------------ dates
 
@@ -150,8 +151,11 @@ export function buildSchedule(cfg: ScheduleConfig = scheduleConfig): Week[] {
 
   const REPEATABLE = new Set(["foc-ch2", "delftx-precalc", "bebras-uk", "tue-math-practice", "cst-lecture-2024"]);
   const usedResources = new Set<string>(["tud-brochure2", "yt-logic-prep", "yt-alg-prep", "yt-math-prep", "bebras-uk"]);
+  // Chapter 2 is read block by block in date order; titles are filled in after the days are placed (see below).
+  const READING = "FoC reading block";
+  const nextReading = () => READING;
 
-  return starts.map((start, index) => {
+  const weeks: Week[] = starts.map((start, index) => {
     const end = addDaysIso(start, 6);
     const phase = cfg.phases.find((p) => start >= p.start && start <= p.end) ?? cfg.phases[cfg.phases.length - 1];
     const heavy = (cfg.heavyWeeks as readonly string[]).includes(start);
@@ -211,7 +215,8 @@ export function buildSchedule(cfg: ScheduleConfig = scheduleConfig): Week[] {
         }
         add({ title: "Tag the error type of every diagnostic mistake", kind: "review", minutes: 30, href: "/review" });
         add({ title: "Bebras warm-up: past Elite challenge (bebras.uk)", kind: "warmup", minutes: 40, href: "/resources", resourceId: "bebras-uk" });
-        add({ title: "Read Foundations of Computation ch. 2 — sections 2.1–2.2", kind: "resource", minutes: 90, href: "/textbook", resourceId: "foc-ch2" });
+        add({ title: nextReading(), kind: "resource", minutes: 45, href: "/textbook", resourceId: "foc-ch2" });
+        add({ title: nextReading(), kind: "resource", minutes: 45, href: "/textbook", resourceId: "foc-ch2" });
         checkpoint = { text: "Timed diagnostics done: 36 questions answered; note your baseline accuracy per part.", metric: { kind: "practice", count: 36, accuracy: 0 } };
       }
     } else if (phase.id === "P1" || phase.id === "P2") {
@@ -244,7 +249,8 @@ export function buildSchedule(cfg: ScheduleConfig = scheduleConfig): Week[] {
               if (!REPEATABLE.has(rid) && usedResources.has(rid)) continue;
               usedResources.add(rid);
               const m = Math.min(r.minutes, 45);
-              add({ prio: added === 0 ? 3 : 7, title: REPEATABLE.has(rid) ? `Study: ${r.title} — the part on ${u}` : `Study: ${r.title}`, kind: "resource", minutes: m, href: "/resources", unit: u, part: unit.part, resourceId: rid });
+              const title = rid === "foc-ch2" ? `Read (or re-read) FoC ${sectionsForUnit(u)} — the parts behind ${u}` : REPEATABLE.has(rid) ? `Study: ${r.title} — the part on ${u}` : `Study: ${r.title}`;
+              add({ prio: added === 0 ? 3 : 7, title, kind: "resource", minutes: m, href: rid === "foc-ch2" ? "/textbook" : "/resources", unit: u, part: unit.part, resourceId: rid });
               left -= m;
               added++;
             }
@@ -356,7 +362,7 @@ export function buildSchedule(cfg: ScheduleConfig = scheduleConfig): Week[] {
       const cycle: { part: PartId; title: string; minutes: number }[] =
         phase.id === "P0"
           ? [
-              { part: "logic", title: "Read Foundations of Computation ch. 2 and try the in-text exercises", minutes: 45 },
+              { part: "logic", title: "(next chapter 2 reading block)", minutes: 45 },
               { part: "algorithmic", title: "Bebras-style warm-up set: 10 algorithmic puzzles", minutes: 25 },
             ]
           : [
@@ -377,10 +383,10 @@ export function buildSchedule(cfg: ScheduleConfig = scheduleConfig): Week[] {
         const timed = c.title.startsWith("Timed");
         add({
           prio: 9,
-          title: c.title,
+          title: phase.id === "P0" && c.part === "logic" ? nextReading() : c.title,
           kind: phase.id === "P0" ? (c.part === "logic" ? "resource" : "warmup") : "practice",
           minutes: c.minutes,
-          href: phase.id === "P0" && c.part === "logic" ? "/resources" : `/practice?part=${c.part}&count=${c.title.match(/(\d+) /)?.[1] ?? 10}${timed ? "&timed=1" : ""}`,
+          href: phase.id === "P0" && c.part === "logic" ? "/textbook" : `/practice?part=${c.part}&count=${c.title.match(/(\d+) /)?.[1] ?? 10}${timed ? "&timed=1" : ""}`,
           part: c.part,
           resourceId: phase.id === "P0" && c.part === "logic" ? "foc-ch2" : undefined,
         });
@@ -428,6 +434,14 @@ export function buildSchedule(cfg: ScheduleConfig = scheduleConfig): Week[] {
 
     return { index, start, end, phase, hours, kind, optionalExtra, focus, tasks: final, checkpoint, notes };
   });
+
+  let readIdx = 0;
+  for (const t of weeks.flatMap((w) => w.tasks)) {
+    if (t.title !== READING) continue;
+    const b = READING_BLOCKS[readIdx++];
+    t.title = b ? `Read FoC ${b.label}: ${b.parts} — then do its exercises` : "FoC ch. 2: redo the exercises you got wrong or skipped";
+  }
+  return weeks;
 }
 
 // --------------------------------------------------------- rescheduling

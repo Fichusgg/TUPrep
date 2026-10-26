@@ -88,3 +88,24 @@ export const CHAPTER_2: TextbookSection[] = [
 
 /** Key used for the done/to-do state of one part (stored with the resource toggles). */
 export const partKey = (sectionId: string, title: string) => `foc:${sectionId}:${title}`;
+
+/** Chapter 2 split into ~45-minute reading blocks, in book order; the schedule hands them out one per reading task. */
+export const READING_BLOCKS: { label: string; parts: string }[] = [
+  { label: "§2.1 (1/4)", parts: "Propositions, Logical operators, Precedence rules" },
+  { label: "§2.1 (2/4)", parts: "Logical equivalence, More logical operators" },
+  { label: "§2.1 (3/4)", parts: "Implications in English, More forms of implication, Exclusive or" },
+  { label: "§2.1 (4/4)", parts: "Universal operators, Classifying propositions" },
+  { label: "§2.2 (1/2)", parts: "Basics of Boolean Algebra, Substitution laws" },
+  { label: "§2.2 (2/2)", parts: "Simplifications, More rules of Boolean algebra" },
+  { label: "§2.3", parts: "Disjunctive Normal Form only (skip the starred circuit sections)" },
+  { label: "§2.4 (1/2)", parts: "Predicates, Quantifiers" },
+  { label: "§2.4 (2/2)", parts: "Operators, Tarski's world, Logical equivalence" },
+  { label: "§2.5 (1/2)", parts: "Arguments, Valid arguments and proofs" },
+  { label: "§2.5 (2/2)", parts: "Proofs in predicate logic" },
+];
+
+/** Section numbers of chapter 2 that a unit draws on, e.g. "§2.1, §2.2". */
+export const sectionsForUnit = (unit: string) =>
+  CHAPTER_2.filter((s) => s.units.includes(unit))
+    .map((s) => `§${s.id} ${s.title}`)
+    .join(" + ");
